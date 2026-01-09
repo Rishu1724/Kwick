@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="90" fill="#61DAFB"/>
+  <g transform="translate(100, 100) scale(0.8)">
+    <polygon fill="#FFFFFF" points="0,-70 60,30 -60,30"/>
+    <circle cx="0" cy="-30" r="10" fill="#61DAFB"/>
+  </g>
+</svg>

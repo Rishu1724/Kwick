@@ -1,0 +1,28 @@
+{
+  "name": "olx-marketplace",
+  "version": "1.0.0",
+  "description": "OLX Clone - Classified Ads Marketplace",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm run dev",
+    "install:all": "concurrently \"npm run install:server\" \"npm run install:client\"",
+    "install:server": "cd backend && npm install",
+    "install:client": "cd frontend && npm install"
+  },
+  "keywords": [
+    "olx",
+    "classified-ads",
+    "mern",
+    "marketplace"
+  ],
+  "author": "Developer",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "dependencies": {
+    "cloudinary": "^2.8.0"
+  }
+}
