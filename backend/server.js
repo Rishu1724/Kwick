@@ -17,7 +17,7 @@ const app = express();
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? process.env.FRONTEND_URL 
-    : ['http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176'], // Allow multiple Vite ports
+    : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176'], // Allow multiple Vite ports
   credentials: true,
   optionsSuccessStatus: 200
 }));
