@@ -1,6 +1,6 @@
 import React from 'react';
 import Categories from '../components/Categories';
-import FeaturedProducts from '../components/FeaturedProducts';
+import AllProducts from '../components/AllProducts';
 
 const Home = () => {
   return (
@@ -12,7 +12,7 @@ const Home = () => {
       
       <Categories />
       
-      <FeaturedProducts />
+      <AllProducts />
     </div>
   );
 };
