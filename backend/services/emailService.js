@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransporter({
 const sendEmailNotification = async (to, subject, html) => {
   try {
     const info = await transporter.sendMail({
-      from: `"OLX Clone" <${process.env.EMAIL_FROM || 'noreply@olxclone.com'}>`,
+      from: `"Kwick" <${process.env.EMAIL_FROM || 'noreply@kwick.com'}>`,
       to,
       subject,
       html
@@ -31,12 +31,12 @@ const sendEmailNotification = async (to, subject, html) => {
 
 // Send new message notification
 const sendNewMessageNotification = async (userEmail, senderName, productName) => {
-  const subject = 'New Message on OLX Clone';
+  const subject = 'New Message on Kwick';
   const html = `
     <h2>Hello!</h2>
     <p>You have received a new message from ${senderName} regarding your product "${productName}".</p>
     <p>Please log in to your account to view the message.</p>
-    <p>Thank you for using OLX Clone!</p>
+    <p>Thank you for using Kwick!</p>
   `;
 
   return await sendEmailNotification(userEmail, subject, html);
@@ -44,12 +44,12 @@ const sendNewMessageNotification = async (userEmail, senderName, productName) =>
 
 // Send new review notification
 const sendNewReviewNotification = async (userEmail, reviewerName, productName, rating) => {
-  const subject = 'New Review on OLX Clone';
+  const subject = 'New Review on Kwick';
   const html = `
     <h2>Hello!</h2>
     <p>${reviewerName} has left a ${rating}-star review on your product "${productName}".</p>
     <p>Please log in to your account to view the review.</p>
-    <p>Thank you for using OLX Clone!</p>
+    <p>Thank you for using Kwick!</p>
   `;
 
   return await sendEmailNotification(userEmail, subject, html);
@@ -60,9 +60,9 @@ const sendFeaturedAdNotification = async (userEmail, productName) => {
   const subject = 'Your Ad is Now Featured!';
   const html = `
     <h2>Congratulations!</h2>
-    <p>Your product "${productName}" is now featured on OLX Clone!</p>
+    <p>Your product "${productName}" is now featured on Kwick!</p>
     <p>This will help increase visibility and attract more potential buyers.</p>
-    <p>Thank you for using OLX Clone!</p>
+    <p>Thank you for using Kwick!</p>
   `;
 
   return await sendEmailNotification(userEmail, subject, html);

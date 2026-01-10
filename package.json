@@ -1,7 +1,7 @@
 {
   "name": "olx-marketplace",
   "version": "1.0.0",
-  "description": "OLX Clone - Classified Ads Marketplace",
+  "description": "Kwick - Classified Ads Marketplace",
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "dev": "concurrently \"npm run server\" \"npm run client\"",

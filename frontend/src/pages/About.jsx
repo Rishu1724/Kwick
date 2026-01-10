@@ -3,9 +3,9 @@ import React from 'react';
 const About = () => {
   return (
     <div className="about">
-      <h1>About OLX Clone</h1>
+      <h1>About Kwick</h1>
       <p>
-        OLX Clone is a classified ads marketplace where users can buy and sell items in their community.
+        Kwick is a classified ads marketplace where users can buy and sell items in their community.
         Our platform connects buyers and sellers in a simple and efficient way.
       </p>
       

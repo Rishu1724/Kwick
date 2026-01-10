@@ -1,7 +1,7 @@
 {
   "name": "olx-backend",
   "version": "1.0.0",
-  "description": "Backend for OLX-like classified ads marketplace",
+  "description": "Backend for Kwick classified ads marketplace",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
