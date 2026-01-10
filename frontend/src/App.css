@@ -355,6 +355,10 @@ body {
     font-size: 1.5rem;
     margin-bottom: 1rem;
   }
+  
+  .all-products {
+    margin-top: 1.5rem;
+  }
 }
 
 .featured-products h2 {
