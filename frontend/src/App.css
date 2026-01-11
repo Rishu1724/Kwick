@@ -5,22 +5,29 @@
   box-sizing: border-box;
 }
 
-html, body {
+html {
   height: 100%;
   overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
 }
 
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
-  color: #333;
-  line-height: 1.6;
+  flex: 1;
+  width: 100%;
 }
 
 .App {
@@ -28,6 +35,14 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
+  width: 100%;
+}
+
+/* Main Content Wrapper - ensures content fills space between navbar and footer */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }
 
@@ -44,6 +59,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
+  flex-shrink: 0;
 }
 
 .nav-brand a {
@@ -147,7 +163,6 @@ body {
   margin: 0 auto;
   width: 100%;
   flex: 1;
-  min-height: calc(100vh - 200px); /* Account for navbar and footer */
 }
 
 .hero {
@@ -275,7 +290,6 @@ body {
 
 /* Tablet Improvements */
 @media (max-width: 768px) and (min-width: 481px) {
-  /* Product Card improvements */
   .product-card img {
     height: 180px;
   }
@@ -288,12 +302,10 @@ body {
     font-size: 1.3rem;
   }
   
-  /* Home page adjustments */
   .home {
     padding: 1rem;
   }
   
-  /* All Products section */
   .all-products h2 {
     font-size: 1.8rem;
     margin-bottom: 1.2rem;
@@ -302,7 +314,6 @@ body {
 
 /* Additional Mobile Improvements */
 @media (max-width: 480px) {
-  /* Product Card improvements */
   .product-card img {
     height: 150px;
   }
@@ -323,34 +334,28 @@ body {
     font-size: 0.8rem;
   }
   
-  /* Button improvements */
   button {
     padding: 0.8rem 1.2rem;
     font-size: 1rem;
   }
   
-  /* Form improvements */
   .form-group input, .form-group select {
     padding: 0.6rem;
     font-size: 0.9rem;
   }
   
-  /* Navbar improvements */
   .nav-brand a {
     font-size: 1.3rem;
   }
   
-  /* Footer improvements */
   .footer-section {
     margin-bottom: 1.5rem;
   }
   
-  /* Home page adjustments */
   .home {
     padding: 0.5rem;
   }
   
-  /* All Products section */
   .all-products h2 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
@@ -386,7 +391,6 @@ body {
   gap: 1.5rem;
 }
 
-/* Extra small devices */
 @media (max-width: 360px) {
   .product-grid {
     grid-template-columns: 1fr;
@@ -425,8 +429,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: 1rem;
+  min-height: calc(100vh - 200px);
+  padding: 2rem 1rem;
   flex: 1;
 }
 
@@ -473,7 +477,6 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
 }
 
-/* Responsive form adjustments */
 @media (max-width: 768px) {
   .login-form, .register-form {
     padding: 2rem;
@@ -640,7 +643,6 @@ button:disabled {
   box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
 }
 
-/* Responsive Product Detail */
 @media (max-width: 992px) {
   .product-detail {
     grid-template-columns: 1fr;
@@ -670,7 +672,6 @@ button:disabled {
   }
 }
 
-/* Extra small mobile */
 @media (max-width: 360px) {
   .product-images img {
     height: 120px;
@@ -692,6 +693,7 @@ button:disabled {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  flex: 1;
 }
 
 .dashboard-sections {
@@ -727,7 +729,6 @@ button:disabled {
   box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
 }
 
-/* Responsive Dashboard */
 @media (max-width: 768px) {
   .buyer-dashboard, .seller-dashboard {
     padding: 1rem;
@@ -743,7 +744,6 @@ button:disabled {
   }
 }
 
-/* Extra small dashboard */
 @media (max-width: 480px) {
   .dashboard-sections {
     gap: 0.8rem;
@@ -820,7 +820,6 @@ button:disabled {
   border: 1px solid #c8e6c9;
 }
 
-/* Responsive Post Ad Form */
 @media (max-width: 768px) {
   .post-ad-form {
     padding: 1.5rem;
@@ -885,7 +884,6 @@ button:disabled {
   width: auto;
 }
 
-/* Responsive Profile */
 @media (max-width: 768px) {
   .profile {
     padding: 1.5rem;
@@ -920,6 +918,7 @@ button:disabled {
   padding: 3rem 0 1.5rem;
   margin-top: auto;
   width: 100%;
+  flex-shrink: 0;
 }
 
 .footer-content {
@@ -929,7 +928,7 @@ button:disabled {
   padding: 0 2rem;
   margin-bottom: 2rem;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 2rem;
 }
 
 .footer-section h3, .footer-section h4 {
@@ -964,7 +963,6 @@ button:disabled {
   color: #ccc;
 }
 
-/* Responsive Footer */
 @media (max-width: 768px) {
   .footer-content {
     grid-template-columns: 1fr;
@@ -1022,7 +1020,6 @@ button:disabled {
   box-shadow: 0 6px 15px rgba(255, 107, 0, 0.4);
 }
 
-/* Responsive Search Bar */
 @media (max-width: 768px) {
   .search-bar {
     max-width: 100%;
@@ -1040,7 +1037,6 @@ button:disabled {
   }
 }
 
-/* Extra small search */
 @media (max-width: 480px) {
   .search-bar input {
     font-size: 0.9rem;
@@ -1058,7 +1054,6 @@ button:disabled {
   margin: 0 auto;
   width: 100%;
   flex: 1;
-  min-height: calc(100vh - 200px);
 }
 
 .product-list h1 {
@@ -1094,6 +1089,15 @@ button:disabled {
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   border: 1px solid #eee;
+}
+
+/* Loading Container for Full Screen */
+.loading-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
 }
 
 /* Filter Sidebar */
@@ -1178,7 +1182,6 @@ button:disabled {
   box-shadow: 0 6px 15px rgba(108, 117, 125, 0.4);
 }
 
-/* Responsive Filter Sidebar */
 @media (max-width: 768px) {
   .filter-sidebar {
     padding: 1.2rem;
@@ -1232,7 +1235,6 @@ button:disabled {
   border-color: #ff6b00;
 }
 
-/* Responsive Pagination */
 @media (max-width: 480px) {
   .pagination {
     gap: 0.25rem;
@@ -1302,7 +1304,6 @@ button:disabled {
   padding: 1.5rem;
 }
 
-/* Responsive Modal */
 @media (max-width: 768px) {
   .modal-overlay {
     padding: 0.5rem;
@@ -1495,7 +1496,6 @@ button:disabled {
   font-size: 1.1rem;
 }
 
-/* Responsive Image Upload */
 @media (max-width: 480px) {
   .image-container {
     width: 80px;
@@ -1552,7 +1552,6 @@ button:disabled {
   box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
 }
 
-/* Responsive Sort Dropdown */
 @media (max-width: 480px) {
   .sort-dropdown {
     flex-direction: column;
@@ -1615,7 +1614,6 @@ button:disabled {
   box-shadow: 0 6px 15px rgba(244, 67, 54, 0.4);
 }
 
-/* Responsive Favorites */
 @media (max-width: 768px) {
   .favorites {
     padding: 1.5rem;
@@ -1683,7 +1681,6 @@ button:disabled {
   box-shadow: 0 6px 15px rgba(244, 67, 54, 0.4);
 }
 
-/* Responsive My Ads */
 @media (max-width: 768px) {
   .my-ads {
     padding: 1.5rem;
@@ -1709,6 +1706,7 @@ button:disabled {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  flex: 1;
 }
 
 .search-results h1 {
@@ -1717,7 +1715,6 @@ button:disabled {
   font-size: 2rem;
 }
 
-/* Responsive Search Results */
 @media (max-width: 768px) {
   .search-results {
     padding: 1rem;
@@ -1734,6 +1731,7 @@ button:disabled {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  flex: 1;
 }
 
 .category-page h1 {
@@ -1742,7 +1740,6 @@ button:disabled {
   font-size: 2rem;
 }
 
-/* Responsive Category Page */
 @media (max-width: 768px) {
   .category-page {
     padding: 1rem;
@@ -1816,7 +1813,6 @@ button:disabled {
   margin-right: 1rem;
 }
 
-/* Responsive Admin Panel */
 @media (max-width: 768px) {
   .admin-panel {
     padding: 1.5rem;
@@ -1847,6 +1843,7 @@ button:disabled {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  flex: 1;
 }
 
 .admin-dashboard h1 {
@@ -1856,7 +1853,6 @@ button:disabled {
   text-align: center;
 }
 
-/* Responsive Admin Dashboard */
 @media (max-width: 768px) {
   .admin-dashboard {
     padding: 1rem;
@@ -1920,7 +1916,6 @@ button:disabled {
   font-size: 1.4rem;
 }
 
-/* Responsive About Page */
 @media (max-width: 768px) {
   .about {
     padding: 1.5rem;
@@ -2030,7 +2025,6 @@ button:disabled {
   font-size: 2rem;
 }
 
-/* Responsive Contact Page */
 @media (max-width: 768px) {
   .contact {
     padding: 1.5rem;
@@ -2085,6 +2079,7 @@ button:disabled {
   text-align: center;
   max-width: 800px;
   border: 1px solid #eee;
+  min-height: 50vh;
 }
 
 .not-found h1 {
@@ -2106,7 +2101,6 @@ button:disabled {
   color: #555;
 }
 
-/* Responsive NotFound Page */
 @media (max-width: 768px) {
   .not-found {
     padding: 2rem;
@@ -2186,18 +2180,6 @@ button:disabled {
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-/* Form Actions */
-.form-actions {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.form-actions button {
-  flex: 1;
-  width: auto;
-}
-
 /* Chat Window */
 .chat-window {
   position: fixed;
@@ -2232,574 +2214,88 @@ button:disabled {
 
 .chat-header h3 {
   margin: 0;
-  font-size: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
-.close-btn {
+.chat-close {
   background: none;
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 1.5rem;
   cursor: pointer;
-  padding: 0;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.chat-messages {
+.chat-body {
   flex: 1;
   padding: 15px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+  background-color: #f9f9f9;
 }
 
-.no-messages {
-  text-align: center;
-  color: #757575;
-  font-style: italic;
-  margin: auto;
-}
-
-.message {
-  max-width: 70%;
-  padding: 10px 15px;
+.chat-message {
   margin-bottom: 10px;
-  border-radius: 18px;
-  position: relative;
-  word-wrap: break-word;
-}
-
-.message.sent {
-  align-self: flex-end;
-  background: linear-gradient(135deg, #2196f3 0%, #21cbf3 100%);
-  color: white;
-  border-bottom-right-radius: 4px;
-}
-
-.message.received {
-  align-self: flex-start;
-  background: #f0f0f0;
-  color: #333;
-  border-bottom-left-radius: 4px;
-}
-
-.message-content {
-  font-size: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  max-width: 80%;
+  font-size: 0.95rem;
   line-height: 1.4;
 }
 
-.message-time {
-  font-size: 11px;
-  text-align: right;
-  margin-top: 5px;
-  opacity: 0.7;
+.chat-message.user {
+  background-color: #2196f3;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
 }
 
-.message.sent .message-time {
-  color: rgba(255, 255, 255, 0.8);
+.chat-message.bot {
+  background-color: #e0e0e0;
+  color: #333;
+  margin-right: auto;
+  border-bottom-left-radius: 4px;
 }
 
-.message.received .message-time {
-  color: #757575;
-}
-
-.chat-input {
+.chat-footer {
   display: flex;
   padding: 10px;
   border-top: 1px solid #e0e0e0;
-  background: white;
-  border-radius: 0 0 15px 15px;
+  gap: 8px;
 }
 
-.chat-input input {
+.chat-footer input {
   flex: 1;
-  padding: 10px;
-  border: 1px solid #e0e0e0;
-  border-radius: 20px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.chat-footer input:focus {
   outline: none;
-  font-size: 14px;
+  border-color: #2196f3;
 }
 
-.chat-input input:focus {
-  border-color: #2196F3;
-}
-
-.chat-input button {
-  margin-left: 10px;
-  padding: 10px 15px;
+.chat-footer button {
   background: linear-gradient(135deg, #2196f3 0%, #21cbf3 100%);
   color: white;
   border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.chat-input button:hover {
-  background: linear-gradient(135deg, #1976d2 0%, #0ba8d6 100%);
-}
-
-.chat-input button:disabled {
-  background: #BBDEFB;
-  cursor: not-allowed;
-}
-
-/* Responsive Chat Window */
-@media (max-width: 768px) {
-  .chat-window {
-    width: 300px;
-    height: 350px;
-    bottom: 10px;
-    right: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .chat-window {
-    width: 280px;
-    height: 300px;
-  }
-  
-  .chat-header h3 {
-    font-size: 14px;
-  }
-  
-  .message {
-    max-width: 80%;
-    padding: 8px 12px;
-    font-size: 13px;
-  }
-  
-  .chat-input input {
-    padding: 8px;
-    font-size: 13px;
-  }
-  
-  .chat-input button {
-    padding: 8px 12px;
-    font-size: 13px;
-  }
-}
-
-/* Review Components */
-.review-list {
-  margin-top: 30px;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 12px;
-}
-
-.review-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.review-header h3 {
-  margin: 0;
-  color: #333;
-}
-
-.review-item {
-  padding: 15px;
-  border-bottom: 1px solid #eee;
-}
-
-.review-item:last-child {
-  border-bottom: none;
-}
-
-.reviewer-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.reviewer-name {
-  font-weight: bold;
-  color: #333;
-}
-
-.review-date {
-  color: #777;
-  font-size: 0.9em;
-}
-
-.review-comment {
-  margin-top: 10px;
-  color: #555;
-  line-height: 1.5;
-}
-
-.review-form {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  margin-bottom: 20px;
-  border: 1px solid #eee;
-}
-
-.review-form h3 {
-  margin-top: 0;
-  color: #333;
-}
-
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.rating.editable .star {
-  cursor: pointer;
-}
-
-.rating .star.filled {
-  color: #ffc107;
-}
-
-.rating .star.empty {
-  color: #ddd;
-}
-
-.rating-text {
-  margin-left: 10px;
-  color: #666;
-  font-size: 0.9em;
-}
-
-.char-count {
-  text-align: right;
-  font-size: 0.8em;
-  color: #777;
-  margin-top: 5px;
-}
-
-/* Responsive Reviews */
-@media (max-width: 768px) {
-  .review-list {
-    padding: 15px;
-  }
-  
-  .review-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  
-  .review-form {
-    padding: 15px;
-  }
-  
-  .reviewer-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-}
-
-/* Report Ad */
-.report-ad {
-  background: none;
-  border: none;
-  color: #f44336;
-  text-decoration: underline;
-  cursor: pointer;
-  font-size: 0.9rem;
-  padding: 0;
-  margin-top: 10px;
-  font-weight: 500;
-}
-
-.report-ad:hover {
-  color: #d32f2f;
-}
-
-/* Price Negotiation */
-.price-negotiation {
-  margin-top: 10px;
-}
-
-/* Social Share */
-.social-share {
-  margin-top: 20px;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 12px;
-}
-
-.social-share h3 {
-  margin-top: 0;
-  color: #333;
-}
-
-.share-buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.share-button {
-  padding: 8px 16px;
-  border: none;
+  padding: 8px 14px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: opacity 0.3s;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.share-button:hover {
-  opacity: 0.8;
+.chat-footer button:hover {
+  transform: translateY(-1px);
 }
 
-.share-button.facebook {
-  background-color: #3b5998;
-  color: white;
-}
-
-.share-button.twitter {
-  background-color: #1da1f2;
-  color: white;
-}
-
-.share-button.whatsapp {
-  background-color: #25d366;
-  color: white;
-}
-
-.share-button.copy {
-  background-color: #607d8b;
-  color: white;
-}
-
-/* Responsive Social Share */
+/* Mobile Chat */
 @media (max-width: 480px) {
-  .social-share {
-    padding: 15px;
-  }
-  
-  .share-buttons {
-    flex-direction: column;
-  }
-  
-  .share-button {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-/* Location Based Search */
-.location-search {
-  margin-bottom: 20px;
-}
-
-.location-search .form-group {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.location-search input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.location-search button {
-  width: auto;
-  padding: 10px 20px;
-}
-
-/* Advanced Search */
-.advanced-search {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  margin-bottom: 20px;
-  border: 1px solid #eee;
-}
-
-.advanced-search h3 {
-  margin-top: 0;
-  color: #333;
-}
-
-.price-range {
-  display: flex;
-  gap: 10px;
-}
-
-.price-range .form-group {
-  flex: 1;
-}
-
-.price-range input {
-  width: 100%;
-}
-
-/* Admin Reports */
-.admin-reports {
-  padding: 20px;
-}
-
-.report-item {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  margin-bottom: 20px;
-  border: 1px solid #eee;
-}
-
-.report-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.report-header h3 {
-  margin: 0;
-  color: #333;
-}
-
-.status {
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-.status.pending {
-  background-color: #ffeb3b;
-  color: #333;
-}
-
-.status.reviewed {
-  background-color: #2196f3;
-  color: white;
-}
-
-.status.resolved {
-  background-color: #4caf50;
-  color: white;
-}
-
-.status.dismissed {
-  background-color: #f44336;
-  color: white;
-}
-
-.report-details {
-  margin-bottom: 15px;
-}
-
-.report-details p {
-  margin: 5px 0;
-}
-
-.report-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.report-actions select {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.report-actions button {
-  width: auto;
-  padding: 8px 16px;
-}
-
-/* Responsive Admin Reports */
-@media (max-width: 768px) {
-  .report-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  
-  .report-actions {
-    flex-wrap: wrap;
-  }
-  
-  .report-actions button {
-    flex: 1;
-    min-width: 100px;
-  }
-}
-
-/* Admin Dashboard Tabs */
-.admin-tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ddd;
-  flex-wrap: wrap;
-}
-
-.admin-tabs button {
-  padding: 10px 20px;
-  background: none;
-  border: none;
-  border-bottom: 3px solid transparent;
-  cursor: pointer;
-  font-weight: bold;
-  color: #666;
-}
-
-.admin-tabs button.active {
-  border-bottom-color: #ff6b00;
-  color: #333;
-}
-
-.admin-tabs button:hover {
-  background-color: #f5f5f5;
-}
-
-.admin-content {
-  min-height: 400px;
-}
-
-/* Responsive Admin Tabs */
-@media (max-width: 768px) {
-  .admin-tabs {
-    gap: 5px;
-  }
-  
-  .admin-tabs button {
-    padding: 8px 12px;
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .admin-tabs {
-    flex-direction: column;
-  }
-  
-  .admin-tabs button {
-    width: 100%;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    border-left: 3px solid transparent;
-  }
-  
-  .admin-tabs button.active {
-    border-bottom-color: #ddd;
-    border-left-color: #ff6b00;
+  .chat-window {
+    width: 95%;
+    height: 70%;
+    right: 2.5%;
+    bottom: 10px;
   }
 }

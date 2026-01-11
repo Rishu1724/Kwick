@@ -14,10 +14,16 @@ const AllProducts = () => {
   const fetchAllProducts = async () => {
     try {
       setLoading(true);
+
       const response = await api.get('/api/products?pageNumber=1');
-      setProducts(response.data.products || []);
+
+      // ✅ handle both response types
+      const data = response.data.products || response.data;
+
+      setProducts(data);
       setLoading(false);
     } catch (err) {
+      console.error(err);
       setError('Failed to load products');
       setLoading(false);
     }
@@ -29,6 +35,7 @@ const AllProducts = () => {
   return (
     <div className="all-products">
       <h2>All Products</h2>
+
       {products.length === 0 ? (
         <p>No products available.</p>
       ) : (
