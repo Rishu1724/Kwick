@@ -17,10 +17,8 @@ const ConversationsPage = () => {
   const fetchConversations = async () => {
     try {
       setLoading(true);
-      // In a real app, you would fetch conversations from the backend
-      // const response = await api.get('/api/chats/conversations');
-      // setConversations(response.data);
-      setConversations([]);
+      const response = await api.get('/api/chats/conversations');
+      setConversations(response.data);
       setLoading(false);
     } catch (err) {
       setError('Failed to load conversations');
@@ -64,7 +62,7 @@ const ConversationsPage = () => {
                 </div>
                 <div className="conversation-meta">
                   <span className="timestamp">
-                    {new Date(conversation.lastMessage?.createdAt).toLocaleDateString()}
+                    {conversation.lastMessage?.createdAt ? new Date(conversation.lastMessage.createdAt).toLocaleDateString() : ''}
                   </span>
                   {conversation.unreadCount > 0 && (
                     <span className="unread-count">{conversation.unreadCount}</span>

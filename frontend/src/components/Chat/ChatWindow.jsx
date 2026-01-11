@@ -30,9 +30,15 @@ const ChatWindow = ({ productId, sellerId, onClose }) => {
   const fetchMessages = async () => {
     try {
       setLoading(true);
-      // For now, we'll create a new message to initiate the conversation
-      // In a real app, you would fetch existing messages
-      setMessages([]);
+      
+      // Generate conversation ID
+      const userIds = [user._id, sellerId].sort();
+      const conversationId = userIds.join('-');
+      
+      // Fetch existing messages for this conversation
+      const response = await api.get(`/api/chats/${conversationId}`);
+      setMessages(response.data);
+      
       setLoading(false);
     } catch (err) {
       setError('Failed to load messages');
@@ -53,7 +59,8 @@ const ChatWindow = ({ productId, sellerId, onClose }) => {
 
       const response = await api.post('/api/chats', messageData);
       
-      setMessages([...messages, response.data]);
+      // Add the sent message to the local state
+      setMessages(prevMessages => [...prevMessages, response.data]);
       setNewMessage('');
     } catch (err) {
       setError('Failed to send message');

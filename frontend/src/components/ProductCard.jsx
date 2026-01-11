@@ -15,30 +15,32 @@ const ProductCard = ({ product }) => {
   const isSpecialOffer = Math.random() > 0.7; // Random special offer for demo
 
   return (
-    <div className="product-card-enhanced">
-      <div className="product-image-container-enhanced">
-        <img 
-          src={product.images?.[0] || 'https://via.placeholder.com/300'} 
-          alt={product.title} 
-        />
-        <FavoriteToggle 
-          productId={product._id} 
-          isFavorited={false} 
-          onToggle={handleFavoriteToggle} 
-        />
+    <Link to={`/product/${product._id}`} className="product-card-link-enhanced">
+      <div className="product-card-enhanced">
+        <div className="product-image-container-enhanced">
+          <img 
+            src={product.images?.[0] || 'https://via.placeholder.com/300'} 
+            alt={product.title} 
+          />
+          <FavoriteToggle 
+            productId={product._id} 
+            isFavorited={false} 
+            onToggle={handleFavoriteToggle} 
+          />
+        </div>
+        <div className="product-info-enhanced">
+          <h3 className="product-title-enhanced">
+            {product.title}
+          </h3>
+          {isSpecialOffer && (
+            <p className="special-offer-tag">Special offer</p>
+          )}
+          <p className="discount-text">Min. {discountPercentage}% Off</p>
+          <p className="price-enhanced">${product.price}</p>
+          <p className="location-enhanced">{product.location?.city || 'Location not specified'}</p>
+        </div>
       </div>
-      <div className="product-info-enhanced">
-        <h3 className="product-title-enhanced">
-          <Link to={`/product/${product._id}`}>{product.title}</Link>
-        </h3>
-        {isSpecialOffer && (
-          <p className="special-offer-tag">Special offer</p>
-        )}
-        <p className="discount-text">Min. {discountPercentage}% Off</p>
-        <p className="price-enhanced">${product.price}</p>
-        <p className="location-enhanced">{product.location?.city || 'Location not specified'}</p>
-      </div>
-    </div>
+    </Link>
   );
 };
 
