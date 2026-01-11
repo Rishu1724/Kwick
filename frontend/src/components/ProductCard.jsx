@@ -10,9 +10,13 @@ const ProductCard = ({ product }) => {
     console.log(`Product ${product._id} is now ${isFavorited ? 'favorited' : 'unfavorited'}`);
   };
 
+  // Calculate discount percentage for display (this could be calculated based on original vs current price)
+  const discountPercentage = Math.floor(Math.random() * 40) + 10; // Random discount for demo
+  const isSpecialOffer = Math.random() > 0.7; // Random special offer for demo
+
   return (
-    <div className="product-card">
-      <div className="product-image-container">
+    <div className="product-card-enhanced">
+      <div className="product-image-container-enhanced">
         <img 
           src={product.images?.[0] || 'https://via.placeholder.com/300'} 
           alt={product.title} 
@@ -23,13 +27,16 @@ const ProductCard = ({ product }) => {
           onToggle={handleFavoriteToggle} 
         />
       </div>
-      <div className="product-info">
-        <h3>
+      <div className="product-info-enhanced">
+        <h3 className="product-title-enhanced">
           <Link to={`/product/${product._id}`}>{product.title}</Link>
         </h3>
-        <p className="price">${product.price}</p>
-        <p className="location">{product.location?.city || 'Location not specified'}</p>
-        <p className="condition">{product.condition}</p>
+        {isSpecialOffer && (
+          <p className="special-offer-tag">Special offer</p>
+        )}
+        <p className="discount-text">Min. {discountPercentage}% Off</p>
+        <p className="price-enhanced">${product.price}</p>
+        <p className="location-enhanced">{product.location?.city || 'Location not specified'}</p>
       </div>
     </div>
   );

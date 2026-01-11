@@ -55,9 +55,15 @@ const ProductDetail = () => {
           )}
         </div>
         
+        <div className="buy-options">
+          <h3>Want to buy this product?</h3>
+          <div className="action-buttons">
+            <ContactSeller sellerId={product.sellerId?._id} productId={product._id} />
+            <PriceNegotiation productId={product._id} currentPrice={product.price} />
+          </div>
+        </div>
+        
         <div className="product-actions">
-          <ContactSeller sellerId={product.sellerId?._id} productId={product._id} />
-          <PriceNegotiation productId={product._id} currentPrice={product.price} />
           <ReportAd productId={product._id} />
         </div>
       </div>
