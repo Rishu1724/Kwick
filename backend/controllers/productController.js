@@ -1,7 +1,7 @@
 const Product = require('../models/Product');
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
-const cloudinary = require('../config/cloudinary');
+const { cloudinary } = require('../config/cloudinary');
 
 // @desc    Create new product
 // @route   POST /api/products
@@ -24,33 +24,12 @@ const createProduct = asyncHandler(async (req, res) => {
     throw new Error('Not authorized as a seller');
   }
 
-  // Handle image uploads to Cloudinary
+  // Use images uploaded to Cloudinary via middleware
   let uploadedImages = [];
-  if (req.files && req.files.length > 0) {
-    try {
-      // Upload each image to Cloudinary
-      const uploadPromises = req.files.map(file => {
-        return new Promise((resolve, reject) => {
-          const uploadStream = cloudinary.uploader.upload_stream(
-            { resource_type: 'image', folder: 'products' },
-            (error, result) => {
-              if (error) {
-                reject(error);
-              } else {
-                resolve(result.secure_url);
-              }
-            }
-          );
-          uploadStream.end(file.buffer);
-        });
-      });
-      
-      uploadedImages = await Promise.all(uploadPromises);
-    } catch (uploadError) {
-      console.error('Product image upload error:', uploadError);
-      res.status(500);
-      throw new Error('Error uploading product images');
-    }
+  
+  // Check if images were uploaded to Cloudinary via middleware
+  if (req.cloudinaryResults && req.cloudinaryResults.length > 0) {
+    uploadedImages = req.cloudinaryResults.map(result => result.secure_url);
   }
   
   // Use uploaded images or fallback to images passed in request body
@@ -202,34 +181,12 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.tags = tags || product.tags;
     product.status = status || product.status;
     
-    // Handle image uploads to Cloudinary
-    if (req.files && req.files.length > 0) {
-      try {
-        // Upload each image to Cloudinary
-        const uploadPromises = req.files.map(file => {
-          return new Promise((resolve, reject) => {
-            const uploadStream = cloudinary.uploader.upload_stream(
-              { resource_type: 'image', folder: 'products' },
-              (error, result) => {
-                if (error) {
-                  reject(error);
-                } else {
-                  resolve(result.secure_url);
-                }
-              }
-            );
-            uploadStream.end(file.buffer);
-          });
-        });
-        
-        const uploadedImages = await Promise.all(uploadPromises);
-        // Append new images to existing ones or replace them
-        product.images = [...(product.images || []), ...uploadedImages];
-      } catch (uploadError) {
-        console.error('Product image upload error:', uploadError);
-        res.status(500);
-        throw new Error('Error uploading product images');
-      }
+    // Handle image uploads via Cloudinary middleware
+    if (req.cloudinaryResults && req.cloudinaryResults.length > 0) {
+      // Get URLs from Cloudinary results
+      const uploadedImages = req.cloudinaryResults.map(result => result.secure_url);
+      // Append new images to existing ones
+      product.images = [...(product.images || []), ...uploadedImages];
     } else {
       // Use images from request body if no new files uploaded
       if (req.body.images) {

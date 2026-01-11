@@ -8,12 +8,12 @@ const {
   deleteProduct,
   getProductsByCategory,
 } = require('../controllers/productController');
-const { upload } = require('../middlewares/upload');
+const { upload, uploadMultipleImages } = require('../middlewares/upload');
 
 const router = express.Router();
 
 router.route('/')
-  .post(protect, upload.array('images', 5), createProduct)
+  .post(protect, upload.array('images', 5), uploadMultipleImages, createProduct)
   .get(getProducts);
 
 router.route('/featured')
@@ -24,7 +24,7 @@ router.route('/featured')
 
 router.route('/:id')
   .get(getProductById)
-  .put(protect, upload.array('images', 5), updateProduct)
+  .put(protect, upload.array('images', 5), uploadMultipleImages, updateProduct)
   .delete(protect, deleteProduct);
 
 router.route('/category/:category')

@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
-const cloudinary = require('../config/cloudinary');
+const { cloudinary } = require('../config/cloudinary');
 
 // @desc    Get user profile
 // @route   GET /api/users/profile

@@ -2,11 +2,13 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const cors = require('cors');
-const cloudinary = require('./config/cloudinary');
 const { errorHandler } = require('./middlewares/errorHandler');
 
 // Load env vars
 dotenv.config();
+
+// Import Cloudinary after environment variables are loaded
+const { cloudinary } = require('./config/cloudinary');
 
 // Connect to database
 connectDB();
