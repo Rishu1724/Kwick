@@ -1,4 +1,4 @@
-# OLX Clone - Classified Ads Marketplace
+# Kwick Clone - Classified Ads Marketplace
 
 A full-featured classified ads marketplace built with the MERN stack (MongoDB, Express.js, React, Node.js), similar to OLX.
 
