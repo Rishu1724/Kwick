@@ -105,6 +105,11 @@ const getProducts = asyncHandler(async (req, res) => {
     filter.isFeatured = true;
   }
 
+  // Seller filter
+  if (req.query.sellerId) {
+    filter.sellerId = req.query.sellerId;
+  }
+
   // Build sort object based on sortBy parameter
   let sort = {};
   switch (sortBy) {

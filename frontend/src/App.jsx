@@ -21,59 +21,68 @@ import './App.css';
 
 function App() {
   const { user, loading } = useAuth();
-
+  
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loading-container">
+        <div className="loading">
+          <div className="spinner"></div>
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
   }
-
+  
   return (
     <Router>
       <div className="App">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/products" element={<ProductList />} />
-          <Route path="/category/:category" element={<CategoryPage />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/search" element={<SearchResults />} />
-          <Route 
-            path="/admin" 
-            element={
-              <PrivateRoute>
-                <AdminDashboard />
-              </PrivateRoute>
-            } 
-          />
-          <Route 
-            path="/admin/reports" 
-            element={
-              <PrivateRoute>
-                <AdminReportsPage />
-              </PrivateRoute>
-            } 
-          />
-          <Route 
-            path="/buyer/dashboard" 
-            element={
-              <PrivateRoute role="buyer">
-                <BuyerDashboardPage />
-              </PrivateRoute>
-            } 
-          />
-          <Route 
-            path="/seller/dashboard" 
-            element={
-              <PrivateRoute role="seller">
-                <SellerDashboardPage />
-              </PrivateRoute>
-            } 
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/products" element={<ProductList />} />
+            <Route path="/category/:category" element={<CategoryPage />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/search" element={<SearchResults />} />
+            <Route 
+              path="/admin" 
+              element={
+                <PrivateRoute>
+                  <AdminDashboard />
+                </PrivateRoute>
+              } 
+            />
+            <Route 
+              path="/admin/reports" 
+              element={
+                <PrivateRoute>
+                  <AdminReportsPage />
+                </PrivateRoute>
+              } 
+            />
+            <Route 
+              path="/buyer/dashboard" 
+              element={
+                <PrivateRoute role="buyer">
+                  <BuyerDashboardPage />
+                </PrivateRoute>
+              } 
+            />
+            <Route 
+              path="/seller/dashboard" 
+              element={
+                <PrivateRoute role="seller">
+                  <SellerDashboardPage />
+                </PrivateRoute>
+              } 
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
         <Footer />
       </div>
     </Router>

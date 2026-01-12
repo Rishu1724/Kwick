@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import ProductCard from './ProductCard';
 
@@ -7,12 +8,13 @@ const MyAds = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const { user } = useAuth();
+
   useEffect(() => {
     const fetchAds = async () => {
       try {
-        const response = await api.get('/api/products');
-        // In a real app, you would filter by sellerId
-        // For now, we'll just use all products as a placeholder
+        // Fetch only products created by the current user
+        const response = await api.get(`/api/products?sellerId=${user._id}`);
         setAds(response.data.products || []);
         setLoading(false);
       } catch (err) {
@@ -21,8 +23,10 @@ const MyAds = () => {
       }
     };
 
-    fetchAds();
-  }, []);
+    if (user) {
+      fetchAds();
+    }
+  }, [user]);
 
   const deleteAd = async (adId) => {
     try {
