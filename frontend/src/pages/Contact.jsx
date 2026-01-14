@@ -19,12 +19,13 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // In a real app, you would send this data to your backend
+    // In a real app, this data while send to the backend 
     console.log('Contact form submitted:', formData);
     setSubmitted(true);
     // Reset form
     setFormData({
       name: '',
+      suggestion: '',
       email: '',
       subject: '',
       message: ''
@@ -32,7 +33,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="contact">
+    <div className="contact our team ">
       <h1>Contact Us</h1>
       {submitted ? (
         <div className="success-message">
@@ -45,9 +46,9 @@ const Contact = () => {
             <h2>Get in Touch</h2>
             <p>Have questions or feedback? We'd love to hear from you.</p>
             <div className="contact-details">
-              <p><strong>Email:</strong> support@olxclone.com</p>
-              <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-              <p><strong>Address:</strong> 123 Main St, City, State 12345</p>
+              <p><strong>Email:</strong> rishukuamr1724rr@gmail.com</p>
+              <p><strong>Phone:</strong> +91 8235251976</p>
+              <p><strong>Address:</strong> Dayanand sagar college of engnieering Benglore</p>
             </div>
           </div>
           
