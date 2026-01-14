@@ -2458,3 +2458,106 @@ button:disabled {
     bottom: 10px;
   }
 }
+/* ============================= */
+/* SELLER DASHBOARD STYLES */
+/* ============================= */
+
+.seller-dashboard {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Header */
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Stats */
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #ff6b00, #ff8c00);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.stat-card h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card span {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Sections */
+.dashboard-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.section {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.section h2 {
+  margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #ff6b00;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: #e65f00;
+}
+
+/* Analytics */
+.analytics-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Messages */
+.section.messages {
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+/* Post Ad Form inside dashboard */
+.section .post-ad-form {
+  margin: 0;
+  max-width: 100%;
+  box-shadow: none;
+  border: none;
+}
+

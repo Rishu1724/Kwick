@@ -1,50 +1,101 @@
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import Profile from '../components/Profile';
-import PostAdForm from '../components/PostAdForm';
-import MyAds from '../components/MyAds';
-import ConversationsPage from './ConversationsPage';
+import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
+import Profile from "../components/Profile";
+import PostAdForm from "../components/PostAdForm";
+import MyAds from "../components/MyAds";
+import ConversationsPage from "./ConversationsPage";
+
+// import "../styles/sellerDashboard.css";
 
 const SellerDashboardPage = () => {
   const { user } = useAuth();
   const [showPostForm, setShowPostForm] = useState(false);
 
+  // Protect route
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div className="seller-dashboard">
-      <h1>Seller Dashboard</h1>
-      <p>Welcome, {user?.name}!</p>
-      
+      {/* Header */}
+      <div className="dashboard-header">
+        <h1>Seller Dashboard</h1>
+        <p>Welcome, <strong>{user.name}</strong> 👋</p>
+      </div>
+
+      {/* Quick Stats */}
+      <div className="dashboard-stats">
+        <div className="stat-card">
+          <h3>Total Ads</h3>
+          <span>12</span>
+        </div>
+        <div className="stat-card">
+          <h3>Active Ads</h3>
+          <span>8</span>
+        </div>
+        <div className="stat-card">
+          <h3>Messages</h3>
+          <span>5</span>
+        </div>
+      </div>
+
+      {/* Sections */}
       <div className="dashboard-sections">
+        
+        {/* Profile */}
         <div className="section">
           <h2>My Profile</h2>
           <Profile />
         </div>
-        
+
+        {/* Post Ad */}
         <div className="section">
           <h2>Post New Ad</h2>
+
           {showPostForm ? (
-            <PostAdForm />
+            <PostAdForm onClose={() => setShowPostForm(false)} />
           ) : (
-            <button className="btn-primary" onClick={() => setShowPostForm(true)}>
-              Create New Ad
+            <button
+              className="btn-primary"
+              onClick={() => setShowPostForm(true)}
+            >
+              ➕ Create New Ad
             </button>
           )}
         </div>
-        
+
+        {/* My Ads */}
         <div className="section">
           <h2>My Ads</h2>
           <MyAds />
         </div>
-        
+
+        {/* Analytics */}
         <div className="section">
           <h2>Analytics</h2>
-          <p>View statistics about your ads here.</p>
+          <div className="analytics-row">
+            <span>Ad Views</span>
+            <strong>1,245</strong>
+          </div>
+          <div className="analytics-row">
+            <span>Clicks</span>
+            <strong>312</strong>
+          </div>
+          <div className="analytics-row">
+            <span>Leads</span>
+            <strong>48</strong>
+          </div>
         </div>
-        
-        <div className="section">
+
+        {/* Messages */}
+        <div className="section messages">
           <h2>Messages</h2>
           <ConversationsPage />
         </div>
+
       </div>
     </div>
   );
