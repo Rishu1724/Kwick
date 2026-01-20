@@ -38,11 +38,11 @@ const EquipmentCard = ({ equipment }) => {
         <p className="sport-category">{equipment.category}</p>
         <div className="pricing-info">
           <div className="rate">
-            <span className="amount">${hourlyRate}</span>
+            <span className="amount">₹{hourlyRate}</span>
             <span className="period">/hour</span>
           </div>
           <div className="rate">
-            <span className="amount">${dailyRate}</span>
+            <span className="amount">₹{dailyRate}</span>
             <span className="period">/day</span>
           </div>
         </div>

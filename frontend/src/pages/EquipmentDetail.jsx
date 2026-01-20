@@ -66,15 +66,15 @@ const EquipmentDetail = () => {
           <div className="pricing-display">
             <div className="rates">
               <div className="rate-option">
-                <span className="rate-amount">${hourlyRate}</span>
+                <span className="rate-amount">₹{hourlyRate}</span>
                 <span className="rate-period">per hour</span>
               </div>
               <div className="rate-option">
-                <span className="rate-amount">${dailyRate}</span>
+                <span className="rate-amount">₹{dailyRate}</span>
                 <span className="rate-period">per day</span>
               </div>
               <div className="rate-option">
-                <span className="rate-amount">${weeklyRate}</span>
+                <span className="rate-amount">₹{weeklyRate}</span>
                 <span className="rate-period">per week</span>
               </div>
             </div>

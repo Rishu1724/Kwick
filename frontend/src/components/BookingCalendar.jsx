@@ -7,6 +7,7 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate }) => {
   const [endDate, setEndDate] = useState('');
   const [bookingType, setBookingType] = useState('daily');
   const [totalCost, setTotalCost] = useState(0);
+  const [showPayment, setShowPayment] = useState(false);
 
   const calculateCost = () => {
     if (!startDate || !endDate) return 0;
@@ -57,8 +58,13 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate }) => {
       return;
     }
     
-    // In a real app, this would make an API call to create the booking
-    alert(`Booking confirmed! Total cost: $${totalCost}`);
+    if (!startDate || !endDate) {
+      alert('Please select both start and end dates');
+      return;
+    }
+    
+    // Show payment options
+    setShowPayment(true);
   };
 
   return (
@@ -69,9 +75,9 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate }) => {
         <div className="form-group">
           <label>Booking Type:</label>
           <select value={bookingType} onChange={handleBookingTypeChange}>
-            <option value="hourly">Hourly (${hourlyRate}/hr)</option>
-            <option value="daily">Daily (${dailyRate}/day)</option>
-            <option value="weekly">Weekly (${dailyRate * 6}/week)</option>
+            <option value="hourly">Hourly (₹{hourlyRate}/hr)</option>
+            <option value="daily">Daily (₹{dailyRate}/day)</option>
+            <option value="weekly">Weekly (₹{dailyRate * 6}/week)</option>
           </select>
         </div>
         
@@ -99,7 +105,7 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate }) => {
         
         {totalCost > 0 && (
           <div className="cost-summary">
-            <h4>Total Cost: ${totalCost.toFixed(2)}</h4>
+            <h4>Total Cost: ₹{totalCost.toFixed(2)}</h4>
             <p>Includes taxes and fees</p>
           </div>
         )}
@@ -111,9 +117,103 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate }) => {
         >
           Book Now
         </button>
+        
+        {showPayment && (
+          <div className="payment-options">
+            <h4>Select Payment Method</h4>
+            <div className="payment-methods">
+              <div className="payment-method">
+                <input 
+                  type="radio" 
+                  id="upi" 
+                  name="payment" 
+                  value="upi"
+                  defaultChecked
+                />
+                <label htmlFor="upi">💳 UPI (Paytm, PhonePe, Google Pay)</label>
+              </div>
+              <div className="payment-method">
+                <input 
+                  type="radio" 
+                  id="netbanking" 
+                  name="payment" 
+                  value="netbanking"
+                />
+                <label htmlFor="netbanking">🏦 Net Banking</label>
+              </div>
+              <div className="payment-method">
+                <input 
+                  type="radio" 
+                  id="card" 
+                  name="payment" 
+                  value="card"
+                />
+                <label htmlFor="card">💳 Credit/Debit Card</label>
+              </div>
+              <div className="payment-method">
+                <input 
+                  type="radio" 
+                  id="cod" 
+                  name="payment" 
+                  value="cod"
+                />
+                <label htmlFor="cod">💵 Cash on Delivery</label>
+              </div>
+            </div>
+            
+            <div className="payment-actions">
+              <button 
+                className="btn-secondary" 
+                onClick={() => setShowPayment(false)}
+              >
+                Back
+              </button>
+              <button 
+                className="btn-primary" 
+                onClick={confirmBooking}
+              >
+                Confirm Payment (₹{totalCost.toFixed(2)})
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
+
+  const confirmBooking = async () => {
+    if (!user) {
+      alert('Please login to complete booking');
+      window.location.href = '/login';
+      return;
+    }
+    
+    try {
+      // Make API call to create booking
+      const bookingData = {
+        equipmentId,
+        ownerId,
+        startDate,
+        endDate,
+        totalAmount: totalCost,
+        bookingType
+      };
+      
+      // In a real app, this would be an API call
+      // await api.post('/api/bookings', bookingData);
+      
+      alert(`Booking confirmed! Total paid: ₹${totalCost.toFixed(2)}\n\nYour booking ID will be sent to your email.`);
+      
+      // Reset form
+      setStartDate('');
+      setEndDate('');
+      setTotalCost(0);
+      setShowPayment(false);
+    } catch (error) {
+      console.error('Booking error:', error);
+      alert('Failed to create booking. Please try again.');
+    }
+  };
 
 export default BookingCalendar;
