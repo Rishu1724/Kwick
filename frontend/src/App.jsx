@@ -3,13 +3,13 @@ import { useAuth } from './context/AuthContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import ProductDetail from './pages/ProductDetail';
-import ProductList from './pages/ProductList';
+import EquipmentDetail from './pages/EquipmentDetail';
+import EquipmentList from './pages/EquipmentList';
 import CategoryPage from './pages/CategoryPage';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminReportsPage from './pages/AdminReportsPage';
-import BuyerDashboardPage from './pages/BuyerDashboardPage';
-import SellerDashboardPage from './pages/SellerDashboardPage';
+import RenterDashboardPage from './pages/RenterDashboardPage';
+import OwnerDashboardPage from './pages/OwnerDashboardPage';
 import SearchResults from './pages/SearchResults';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -44,9 +44,9 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/products" element={<ProductList />} />
+            <Route path="/equipment" element={<EquipmentList />} />
             <Route path="/category/:category" element={<CategoryPage />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/equipment/:id" element={<EquipmentDetail />} />
             <Route path="/search" element={<SearchResults />} />
             <Route 
               path="/admin" 
@@ -65,18 +65,18 @@ function App() {
               } 
             />
             <Route 
-              path="/buyer/dashboard" 
+              path="/renter/dashboard" 
               element={
                 <PrivateRoute role="buyer">
-                  <BuyerDashboardPage />
+                  <RenterDashboardPage />
                 </PrivateRoute>
               } 
             />
             <Route 
-              path="/seller/dashboard" 
+              path="/owner/dashboard" 
               element={
                 <PrivateRoute role="seller">
-                  <SellerDashboardPage />
+                  <OwnerDashboardPage />
                 </PrivateRoute>
               } 
             />

@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-brand">
-        <Link to="/">Kwick</Link>
+        <Link to="/">SportRent</Link>
       </div>
       
       <button className="menu-toggle" onClick={toggleMenu}>
@@ -34,9 +34,9 @@ const Navbar = () => {
         {user ? (
           <>
             {user.role === 'seller' || user.role === 'both' ? (
-              <Link to="/seller/dashboard" onClick={() => setMenuOpen(false)}>Seller Dashboard</Link>
+              <Link to="/owner/dashboard" onClick={() => setMenuOpen(false)}>Owner Dashboard</Link>
             ) : (
-              <Link to="/buyer/dashboard" onClick={() => setMenuOpen(false)}>Buyer Dashboard</Link>
+              <Link to="/renter/dashboard" onClick={() => setMenuOpen(false)}>Renter Dashboard</Link>
             )}
             {/* Admin link - in a real app, you would check for admin role */}
             {user.role === 'admin' && (

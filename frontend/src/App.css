@@ -2561,3 +2561,578 @@ button:disabled {
   border: none;
 }
 
+
+
+/* =============================
+SPORTS EQUIPMENT RENTAL PLATFORM STYLES
+============================= */
+
+/* Renter Dashboard */
+.renter-dashboard {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.renter-dashboard .dashboard-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.renter-dashboard .dashboard-header h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.renter-dashboard .dashboard-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+  background-color: #f8f9fa;
+}
+
+.tab-button.active {
+  background-color: #ff6b00;
+  color: white;
+}
+
+.dashboard-content {
+  min-height: 400px;
+}
+
+.tab-section {
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.tab-section h2 {
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+/* Owner Dashboard */
+.owner-dashboard {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.owner-dashboard .dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.owner-dashboard .dashboard-header h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.owner-dashboard .dashboard-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Equipment Card Styles */
+.equipment-card-enhanced {
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #E0E0E0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.equipment-card-enhanced:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.equipment-image-container-enhanced {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-color: #FAFAFA;
+}
+
+.equipment-image-container-enhanced img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rental-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #4CAF50;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.rental-badge.unavailable {
+  background: #f44336;
+}
+
+.equipment-info-enhanced {
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.equipment-title-enhanced {
+  margin: 0 0 8px 0;
+  font-family: 'Inter', 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #212121;
+  line-height: 1.4;
+}
+
+.sport-category {
+  color: #ff6b00;
+  font-weight: 600;
+  margin: 4px 0;
+  font-size: 0.9rem;
+}
+
+.pricing-info {
+  display: flex;
+  gap: 1rem;
+  margin: 12px 0;
+}
+
+.rate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.amount {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ff6b00;
+}
+
+.period {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.location-enhanced {
+  margin: 8px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.location-icon {
+  margin-right: 4px;
+}
+
+.equipment-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+.condition-badge {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.rating {
+  font-size: 0.9rem;
+  color: #ff9800;
+  font-weight: 500;
+}
+
+/* Equipment List Page */
+.equipment-list-page {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.equipment-content {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+}
+
+.equipment-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.equipment-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.results-info {
+  font-weight: 500;
+  color: #333;
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.no-equipment {
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.no-equipment h3 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+/* Equipment Detail Page */
+.equipment-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.equipment-gallery {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1rem;
+}
+
+.equipment-gallery .main-image {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.equipment-gallery .thumbnail {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.equipment-gallery .thumbnail:hover {
+  opacity: 0.8;
+}
+
+.equipment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-header {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.info-header h1 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.pricing-display {
+  background: linear-gradient(135deg, #ff6b00, #ff8c00);
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: white;
+}
+
+.rates {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.rate-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rate-amount {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.rate-period {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+.equipment-specs {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.spec-group h3 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.spec-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+.label {
+  font-weight: 500;
+  color: #555;
+}
+
+.value {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.condition-value {
+  color: #4CAF50;
+  text-transform: capitalize;
+}
+
+.availability-available {
+  color: #4CAF50;
+  font-weight: 600;
+}
+
+.availability-rented {
+  color: #f44336;
+  font-weight: 600;
+}
+
+.booking-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.booking-section h3 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.equipment-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.equipment-actions button {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-contact {
+  background: #2196F3;
+  color: white;
+}
+
+.btn-contact:hover {
+  background: #1976D2;
+  transform: translateY(-2px);
+}
+
+.btn-report {
+  background: #f44336;
+  color: white;
+}
+
+.btn-report:hover {
+  background: #d32f2f;
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .renter-dashboard,
+  .owner-dashboard,
+  .equipment-list-page,
+  .equipment-detail {
+    padding: 1rem;
+  }
+  
+  .dashboard-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .dashboard-tabs {
+    flex-wrap: wrap;
+  }
+  
+  .tab-button {
+    flex: 1;
+    min-width: 120px;
+  }
+  
+  .equipment-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .equipment-detail {
+    grid-template-columns: 1fr;
+  }
+  
+  .equipment-gallery {
+    grid-template-columns: 1fr;
+  }
+  
+  .equipment-gallery .main-image {
+    grid-column: 1;
+    grid-row: 1;
+    height: 300px;
+  }
+  
+  .specs {
+    grid-template-columns: 1fr;
+  }
+  
+  .rates {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .equipment-actions {
+    flex-direction: column;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .info-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .equipment-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-tabs {
+    gap: 0.5rem;
+  }
+  
+  .tab-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .pricing-display {
+    padding: 1rem;
+  }
+  
+  .rate-amount {
+    font-size: 1.4rem;
+  }
+}
