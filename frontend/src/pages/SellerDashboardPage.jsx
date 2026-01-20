@@ -6,6 +6,8 @@ import Profile from "../components/Profile";
 import PostAdForm from "../components/PostAdForm";
 import MyAds from "../components/MyAds";
 import ConversationsPage from "./ConversationsPage";
+import DashboardStats from "../components/DashboardStats";
+import DashboardAnalytics from "../components/DashboardAnalytics";
 
 // import "../styles/sellerDashboard.css";
 
@@ -27,20 +29,7 @@ const SellerDashboardPage = () => {
       </div>
 
       {/* Quick Stats */}
-      <div className="dashboard-stats">
-        <div className="stat-card">
-          <h3>Total Ads</h3>
-          <span>12</span>
-        </div>
-        <div className="stat-card">
-          <h3>Active Ads</h3>
-          <span>8</span>
-        </div>
-        <div className="stat-card">
-          <h3>Messages</h3>
-          <span>5</span>
-        </div>
-      </div>
+      <DashboardStats />
 
       {/* Sections */}
       <div className="dashboard-sections">
@@ -76,18 +65,7 @@ const SellerDashboardPage = () => {
         {/* Analytics */}
         <div className="section">
           <h2>Analytics</h2>
-          <div className="analytics-row">
-            <span>Ad Views</span>
-            <strong>1,245</strong>
-          </div>
-          <div className="analytics-row">
-            <span>Clicks</span>
-            <strong>312</strong>
-          </div>
-          <div className="analytics-row">
-            <span>Leads</span>
-            <strong>48</strong>
-          </div>
+          <DashboardAnalytics />
         </div>
 
         {/* Messages */}
