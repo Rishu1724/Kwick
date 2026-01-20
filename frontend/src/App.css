@@ -3466,3 +3466,76 @@ SPORTS EQUIPMENT RENTAL PLATFORM STYLES
     flex-direction: column;
   }
 }
+
+/* Dashboard Specific Styles */
+.renter-dashboard {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.owner-dashboard {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e9 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.dashboard-header {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+  text-align: center;
+  border-left: 5px solid #ff6b00; /* Renter color */
+}
+
+.owner-dashboard .dashboard-header {
+  border-left: 5px solid #2e7d32; /* Owner color */
+}
+
+.dashboard-subtitle {
+  color: #666;
+  font-size: 1rem;
+  margin: 0.5rem 0 0 0;
+  font-style: italic;
+}
+
+.renter-dashboard .dashboard-header h1 {
+  color: #ff6b00;
+  margin: 0 0 1rem 0;
+}
+
+.owner-dashboard .dashboard-header h1 {
+  color: #2e7d32;
+  margin: 0 0 1rem 0;
+}
+
+.renter-dashboard .btn-primary {
+  background: #ff6b00;
+}
+
+.owner-dashboard .btn-primary {
+  background: #2e7d32;
+}
+
+.renter-dashboard .tab-button.active,
+.renter-dashboard .tab-button:hover {
+  background: #ff6b00;
+  border-bottom: 3px solid #ff6b00;
+}
+
+.owner-dashboard .tab-button.active,
+.owner-dashboard .tab-button:hover {
+  background: #2e7d32;
+  border-bottom: 3px solid #2e7d32;
+}
+
+.renter-dashboard .tab-button {
+  border-bottom: 3px solid transparent;
+}
+
+.owner-dashboard .tab-button {
+  border-bottom: 3px solid transparent;
+}
+

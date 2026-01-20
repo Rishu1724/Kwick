@@ -31,25 +31,25 @@ const RenterDashboardPage = () => {
           className={`tab-button ${activeTab === 'bookings' ? 'active' : ''}`}
           onClick={() => setActiveTab('bookings')}
         >
-          My Bookings
+          📅 My Rentals
         </button>
         <button 
           className={`tab-button ${activeTab === 'wishlist' ? 'active' : ''}`}
           onClick={() => setActiveTab('wishlist')}
         >
-          Wishlist
+          ❤️ Wish List
         </button>
         <button 
           className={`tab-button ${activeTab === 'profile' ? 'active' : ''}`}
           onClick={() => setActiveTab('profile')}
         >
-          Profile
+          👤 My Profile
         </button>
         <button 
           className={`tab-button ${activeTab === 'messages' ? 'active' : ''}`}
           onClick={() => setActiveTab('messages')}
         >
-          Messages
+          💬 Messages
         </button>
       </div>
 
@@ -57,28 +57,28 @@ const RenterDashboardPage = () => {
       <div className="dashboard-content">
         {activeTab === 'bookings' && (
           <div className="tab-section">
-            <h2>My Bookings</h2>
+            <h2>📅 My Rental Bookings</h2>
             <MyBookings />
           </div>
         )}
 
         {activeTab === 'wishlist' && (
           <div className="tab-section">
-            <h2>My Wishlist</h2>
+            <h2>❤️ My Wish List</h2>
             <Wishlist />
           </div>
         )}
 
         {activeTab === 'profile' && (
           <div className="tab-section">
-            <h2>My Profile</h2>
+            <h2>👤 My Profile</h2>
             <Profile />
           </div>
         )}
 
         {activeTab === 'messages' && (
           <div className="tab-section messages-section">
-            <h2>Messages</h2>
+            <h2>💬 My Messages</h2>
             <ConversationsPage />
           </div>
         )}

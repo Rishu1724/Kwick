@@ -40,31 +40,31 @@ const OwnerDashboardPage = () => {
           className={`tab-button ${activeTab === 'overview' ? 'active' : ''}`}
           onClick={() => setActiveTab('overview')}
         >
-          Overview
+          🏠 Overview
         </button>
         <button 
           className={`tab-button ${activeTab === 'equipment' ? 'active' : ''}`}
           onClick={() => setActiveTab('equipment')}
         >
-          My Equipment
+          📦 My Equipment
         </button>
         <button 
           className={`tab-button ${activeTab === 'requests' ? 'active' : ''}`}
           onClick={() => setActiveTab('requests')}
         >
-          Booking Requests
+          📩 Booking Requests
         </button>
         <button 
           className={`tab-button ${activeTab === 'analytics' ? 'active' : ''}`}
           onClick={() => setActiveTab('analytics')}
         >
-          Analytics
+          📊 Earnings
         </button>
         <button 
           className={`tab-button ${activeTab === 'messages' ? 'active' : ''}`}
           onClick={() => setActiveTab('messages')}
         >
-          Messages
+          💬 Messages
         </button>
       </div>
 
@@ -72,14 +72,14 @@ const OwnerDashboardPage = () => {
       <div className="dashboard-content">
         {activeTab === 'overview' && (
           <div className="tab-section">
-            <h2>Dashboard Overview</h2>
+            <h2>🏠 Dashboard Overview</h2>
             <OwnerAnalytics overview={true} />
           </div>
         )}
 
         {activeTab === 'equipment' && (
           <div className="tab-section">
-            <h2>My Equipment</h2>
+            <h2>📦 My Equipment Inventory</h2>
             {showAddForm ? (
               <AddEquipmentForm onClose={() => setShowAddForm(false)} />
             ) : null}
@@ -89,21 +89,21 @@ const OwnerDashboardPage = () => {
 
         {activeTab === 'requests' && (
           <div className="tab-section">
-            <h2>Booking Requests</h2>
+            <h2>📩 Booking Requests</h2>
             <BookingRequests />
           </div>
         )}
 
         {activeTab === 'analytics' && (
           <div className="tab-section">
-            <h2>Earnings Analytics</h2>
+            <h2>📊 Earnings Analytics</h2>
             <OwnerAnalytics />
           </div>
         )}
 
         {activeTab === 'messages' && (
           <div className="tab-section messages-section">
-            <h2>Messages</h2>
+            <h2>💬 My Messages</h2>
             <ConversationsPage />
           </div>
         )}
