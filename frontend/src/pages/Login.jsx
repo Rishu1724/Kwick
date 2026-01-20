@@ -20,10 +20,10 @@ const Login = () => {
       const userData = await login(email, password);
       
       // Redirect based on user role
-      if (userData.role === 'seller' || userData.role === 'both') {
-        navigate('/seller/dashboard');
+      if (userData.role === 'owner' || userData.role === 'both') {
+        navigate('/owner/dashboard');
       } else {
-        navigate('/');
+        navigate('/renter/dashboard');
       }
     } catch (err) {
       setError(err.message || 'Failed to login');

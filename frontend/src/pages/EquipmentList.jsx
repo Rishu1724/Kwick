@@ -44,8 +44,18 @@ const EquipmentList = () => {
           pageNumber: currentPage
         });
         
-        const response = await api.get(`/api/equipment?${queryParams}`);
-        setEquipment(response.data.equipment || []);
+        // Use products API but transform to equipment format
+        const response = await api.get(`/api/products?${queryParams}`);
+        // Transform product data to equipment format
+        const equipmentData = response.data.products.map(product => ({
+          ...product,
+          dailyRate: product.price,
+          hourlyRate: Math.round(product.price / 8),
+          weeklyRate: product.price * 6,
+          availability: 'available',
+          ownerId: product.sellerId
+        })) || [];
+        setEquipment(equipmentData);
         setTotalPages(response.data.pages || 1);
         setLoading(false);
       } catch (err) {

@@ -7,7 +7,7 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('buyer');
+  const [role, setRole] = useState('renter');
   const [avatar, setAvatar] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [error, setError] = useState('');
@@ -52,10 +52,10 @@ const Register = () => {
       setUser(response.data); // This will set the user in context
       
       // Redirect based on user role
-      if (response.data.role === 'seller' || response.data.role === 'both') {
-        navigate('/seller/dashboard');
+      if (response.data.role === 'owner' || response.data.role === 'both') {
+        navigate('/owner/dashboard');
       } else {
-        navigate('/');
+        navigate('/renter/dashboard');
       }
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Failed to register');
@@ -98,11 +98,11 @@ const Register = () => {
             />
           </div>
           <div className="form-group">
-            <label>Role:</label>
+            <label>I want to:</label>
             <select value={role} onChange={(e) => setRole(e.target.value)}>
-              <option value="buyer">Buyer</option>
-              <option value="seller">Seller</option>
-              <option value="both">Both</option>
+              <option value="renter">Rent Equipment</option>
+              <option value="owner">Own Equipment</option>
+              <option value="both">Both Rent and Own</option>
             </select>
           </div>
           <div className="form-group">

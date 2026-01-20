@@ -191,7 +191,10 @@ const Profile = () => {
             <strong>Email:</strong> {user.email}
           </div>
           <div className="profile-field">
-            <strong>Role:</strong> {user.role}
+            <strong>Role:</strong> 
+            {user.role === 'renter' ? 'Equipment Renter' : 
+             user.role === 'owner' ? 'Equipment Owner' : 
+             'Both Renter and Owner'}
           </div>
           <div className="profile-field">
             <strong>Phone:</strong> {user.phone || 'Not provided'}

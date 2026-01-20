@@ -67,7 +67,7 @@ function App() {
             <Route 
               path="/renter/dashboard" 
               element={
-                <PrivateRoute role="buyer">
+                <PrivateRoute role="renter">
                   <RenterDashboardPage />
                 </PrivateRoute>
               } 
@@ -75,7 +75,7 @@ function App() {
             <Route 
               path="/owner/dashboard" 
               element={
-                <PrivateRoute role="seller">
+                <PrivateRoute role="owner">
                   <OwnerDashboardPage />
                 </PrivateRoute>
               } 

@@ -33,7 +33,7 @@ const Navbar = () => {
         <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
         {user ? (
           <>
-            {user.role === 'seller' || user.role === 'both' ? (
+            {user.role === 'owner' || user.role === 'both' ? (
               <Link to="/owner/dashboard" onClick={() => setMenuOpen(false)}>Owner Dashboard</Link>
             ) : (
               <Link to="/renter/dashboard" onClick={() => setMenuOpen(false)}>Renter Dashboard</Link>

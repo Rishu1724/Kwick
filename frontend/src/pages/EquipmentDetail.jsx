@@ -16,8 +16,18 @@ const EquipmentDetail = () => {
   useEffect(() => {
     const fetchEquipment = async () => {
       try {
-        const response = await api.get(`/api/equipment/${id}`);
-        setEquipment(response.data);
+        // Use products API but transform to equipment format
+        const response = await api.get(`/api/products/${id}`);
+        // Transform product data to equipment format
+        const equipmentData = {
+          ...response.data,
+          dailyRate: response.data.price,
+          hourlyRate: Math.round(response.data.price / 8),
+          weeklyRate: response.data.price * 6,
+          availability: 'available',
+          ownerId: response.data.sellerId
+        };
+        setEquipment(equipmentData);
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch equipment details');

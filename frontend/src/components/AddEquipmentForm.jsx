@@ -78,7 +78,8 @@ const AddEquipmentForm = ({ onClose }) => {
         });
       }
 
-      const response = await api.post('/api/equipment', formDataToSend);
+      // Use products API endpoint
+      const response = await api.post('/api/products', formDataToSend);
       setSuccess('Equipment listed successfully!');
       
       // Reset form
