@@ -23,8 +23,9 @@ const OwnerDashboardPage = () => {
     <div className="owner-dashboard">
       {/* Header */}
       <div className="dashboard-header">
-        <h1>Owner Dashboard</h1>
-        <p>Welcome, <strong>{user.name}</strong> 👋</p>
+        <h1>equipOwner Dashboard</h1>
+        <p>Welcome, <strong>{user.name}</strong> 👋 | Owner Mode Active</p>
+        <p className="dashboard-subtitle">Manage your equipment, earnings, and bookings</p>
         <button 
           className="btn-primary"
           onClick={() => setShowAddForm(true)}

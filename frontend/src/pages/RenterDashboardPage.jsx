@@ -20,8 +20,9 @@ const RenterDashboardPage = () => {
     <div className="renter-dashboard">
       {/* Header */}
       <div className="dashboard-header">
-        <h1>Renter Dashboard</h1>
-        <p>Welcome, <strong>{user.name}</strong> 👋</p>
+        <h1> equipRenter Dashboard</h1>
+        <p>Welcome, <strong>{user.name}</strong> 👋 | Renter Mode Active</p>
+        <p className="dashboard-subtitle">Manage your rentals, bookings, and wishlists</p>
       </div>
 
       {/* Tab Navigation */}
