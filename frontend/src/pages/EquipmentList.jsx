@@ -44,19 +44,18 @@ const EquipmentList = () => {
           pageNumber: currentPage
         });
         
-        // Use products API but transform to equipment format
-        const response = await api.get(`/api/products?${queryParams}`);
+        const response = await api.get(`/api/equipment?${queryParams}`);
         // Transform product data to equipment format
-        const equipmentData = response.data.products.map(product => ({
-          ...product,
-          dailyRate: product.price,
-          hourlyRate: Math.round(product.price / 8),
-          weeklyRate: product.price * 6,
-          availability: 'available',
-          ownerId: product.sellerId
+        const equipmentData = response.data.data.map(item => ({
+          ...item,
+          dailyRate: item.dailyRate || item.price,
+          hourlyRate: item.hourlyRate || Math.round((item.dailyRate || item.price) / 8),
+          weeklyRate: item.weeklyRate || (item.dailyRate || item.price) * 6,
+          availability: item.status,
+          ownerId: item.ownerId
         })) || [];
         setEquipment(equipmentData);
-        setTotalPages(response.data.pages || 1);
+        setTotalPages(Math.ceil(response.data.count / 20)); // Assuming default limit of 20 per page
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch equipment');

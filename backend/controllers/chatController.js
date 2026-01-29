@@ -1,6 +1,6 @@
 const Message = require('../models/Message');
 const User = require('../models/User');
-const Product = require('../models/Product');
+const Equipment = require('../models/Equipment');
 const asyncHandler = require('express-async-handler');
 
 // @desc    Send a new message
@@ -16,11 +16,11 @@ const sendMessage = asyncHandler(async (req, res) => {
     throw new Error('Receiver not found');
   }
 
-  // Validate product exists
-  const product = await Product.findById(productId);
-  if (!product) {
+  // Validate equipment exists
+  const equipment = await Equipment.findById(productId);
+  if (!equipment) {
     res.status(404);
-    throw new Error('Product not found');
+    throw new Error('Equipment not found');
   }
 
   // Create conversation ID (sorted concatenation of user IDs)
@@ -41,7 +41,7 @@ const sendMessage = asyncHandler(async (req, res) => {
   // Populate sender and receiver info
   await savedMessage.populate('senderId', 'name email');
   await savedMessage.populate('receiverId', 'name email');
-  await savedMessage.populate('productId', 'title price images');
+  await savedMessage.populate('productId', 'title dailyRate images');
 
   res.status(201).json(savedMessage);
 });
@@ -59,7 +59,7 @@ const getConversations = asyncHandler(async (req, res) => {
   })
   .populate('senderId', 'name email avatar')
   .populate('receiverId', 'name email avatar')
-  .populate('productId', 'title price images')
+  .populate('productId', 'title dailyRate images')
   .sort({ createdAt: -1 });
 
   // Group messages by conversation
@@ -122,7 +122,7 @@ const getMessages = asyncHandler(async (req, res) => {
   const messages = await Message.find({ conversationId })
     .populate('senderId', 'name email avatar')
     .populate('receiverId', 'name email avatar')
-    .populate('productId', 'title price images')
+    .populate('productId', 'title dailyRate images')
     .sort({ createdAt: 1 });
 
   // Mark messages as read if user is receiver

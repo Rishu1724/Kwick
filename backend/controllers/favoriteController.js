@@ -1,18 +1,18 @@
 const Favorite = require('../models/Favorite');
-const Product = require('../models/Product');
+const Equipment = require('../models/Equipment');
 const asyncHandler = require('express-async-handler');
 
-// @desc    Add product to favorites
+// @desc    Add equipment to favorites
 // @route   POST /api/favorites
 // @access  Private
 const addFavorite = asyncHandler(async (req, res) => {
   const { productId } = req.body;
 
-  // Check if product exists
-  const product = await Product.findById(productId);
-  if (!product) {
+  // Check if equipment exists
+  const equipment = await Equipment.findById(productId);
+  if (!equipment) {
     res.status(404);
-    throw new Error('Product not found');
+    throw new Error('Equipment not found');
   }
 
   // Check if already favorited
@@ -23,7 +23,7 @@ const addFavorite = asyncHandler(async (req, res) => {
 
   if (alreadyFavorited) {
     res.status(400);
-    throw new Error('Product already favorited');
+    throw new Error('Equipment already favorited');
   }
 
   const favorite = new Favorite({
@@ -45,7 +45,7 @@ const getFavorites = asyncHandler(async (req, res) => {
   res.json(favorites);
 });
 
-// @desc    Remove product from favorites
+// @desc    Remove equipment from favorites
 // @route   DELETE /api/favorites/:productId
 // @access  Private
 const removeFavorite = asyncHandler(async (req, res) => {
@@ -56,10 +56,10 @@ const removeFavorite = asyncHandler(async (req, res) => {
 
   if (favorite) {
     await favorite.remove();
-    res.json({ message: 'Product removed from favorites' });
+    res.json({ message: 'Equipment removed from favorites' });
   } else {
     res.status(404);
-    throw new Error('Favorite not found');
+    throw new Error('Favorite equipment not found');
   }
 });
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import api from '../services/api';
 
 const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate }) => {
   const { user } = useAuth();
@@ -190,20 +191,34 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate }) => {
     }
     
     try {
-      // Make API call to create booking
+      // Create booking
       const bookingData = {
         equipmentId,
-        ownerId,
         startDate,
         endDate,
+        bookingType,
         totalAmount: totalCost,
-        bookingType
+        securityDeposit: 0 // Will be calculated based on equipment
       };
       
-      // In a real app, this would be an API call
-      // await api.post('/api/bookings', bookingData);
+      const bookingResponse = await api.post('/api/bookings', bookingData);
       
-      alert(`Booking confirmed! Total paid: ₹${totalCost.toFixed(2)}\n\nYour booking ID will be sent to your email.`);
+      // Create payment intent
+      const paymentData = {
+        bookingId: bookingResponse.data.data._id,
+        amount: totalCost,
+        paymentMethod: document.querySelector('input[name="payment"]:checked').value
+      };
+      
+      const paymentResponse = await api.post('/api/payments/create-intent', paymentData);
+      
+      // For demo purposes, we'll simulate payment confirmation
+      // In a real app, this would redirect to payment gateway
+      alert(`Booking confirmed! Total paid: ₹${totalCost.toFixed(2)}
+
+Your booking ID: ${bookingResponse.data.data._id}
+
+Payment ID: ${paymentResponse.data.data.paymentId}`);
       
       // Reset form
       setStartDate('');

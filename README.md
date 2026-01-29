@@ -1,48 +1,73 @@
-# Kwick Clone - Classified Ads Marketplace
+# Sports Equipment Rental Platform
 
-A full-featured classified ads marketplace built with the MERN stack (MongoDB, Express.js, React, Node.js), similar to OLX.
+A comprehensive sports equipment rental platform built with the MERN stack (MongoDB, Express.js, React, Node.js), allowing users to rent sports equipment (badminton, cricket, tennis, football gear, etc.) with integrated payment processing, booking management, and real-time availability tracking.
 
 ## Project Status: ✅ COMPLETE
 
-This project has been successfully implemented with all core features and functionality as specified in the original requirements.
+This project has been successfully transformed from a general classified ads marketplace to a specialized sports equipment rental platform with all core features and functionality as specified in the new requirements.
 
 ## Features
 
 ### User Management
-- ✅ User registration with role selection (buyer/seller/both)
+- ✅ User registration with role selection (renter/owner/both)
 - ✅ JWT-based authentication
-- ✅ Profile management
+- ✅ Profile management with document uploads
 - ✅ Password reset functionality
-- ✅ Role-based access control (buyer, seller, admin)
+- ✅ Role-based access control (renter, owner, admin)
+- ✅ Rental history tracking
+- ✅ Payment methods management
+- ✅ Ratings and reviews system
+- ✅ Loyalty points program
 
-### Product Management
-- ✅ Create, read, update, and delete product listings
-- ✅ Image upload support
-- ✅ Category-based organization
-- ✅ Product search and filtering
-- ✅ Featured products
-- ✅ Product status management (active, sold, inactive)
+### Equipment Management
+- ✅ Create, read, update, and delete equipment listings
+- ✅ Image upload support (multiple images per listing)
+- ✅ Category-based organization (sports equipment categories)
+- ✅ Equipment search and filtering
+- ✅ Featured equipment
+- ✅ Equipment status management (available, rented, maintenance, retired)
+- ✅ Equipment specifications (brand, model, size, condition, age)
+- ✅ Rental rates (hourly, daily, weekly, monthly)
+- ✅ Security deposits and late fees
+- ✅ Quantity tracking
+- ✅ Maintenance logs
+- ✅ QR code generation for each equipment
 
-### Marketplace Features
-- ✅ Favorite products
-- ✅ Contact sellers
+### Rental Features
+- ✅ Favorite equipment
+- ✅ Contact equipment owners
 - ✅ Price negotiation
-- ✅ Product reviews and ratings
-- ✅ Report inappropriate ads
+- ✅ Equipment reviews and ratings
+- ✅ Report inappropriate equipment
 - ✅ Social sharing
 - ✅ Location-based search
 - ✅ Advanced search with multiple filters
+- ✅ Real-time availability calendar
+- ✅ Booking system with date/time selection
+- ✅ Multiple rental periods (hourly, daily, weekly, monthly)
+- ✅ Payment processing integration
+- ✅ Security deposits handling
+- ✅ Delivery/pickup scheduling
+- ✅ Equipment condition verification
 
 ### Communication
-- ✅ Real-time messaging between buyers and sellers
+- ✅ Real-time messaging between renters and owners
 - ✅ Conversation management
 - ✅ Message status tracking
+- ✅ Automated booking notifications
+- ✅ Payment confirmations
+- ✅ Equipment return reminders
+- ✅ Review requests
 
 ### Admin Panel
-- ✅ Manage users, products, and categories
-- ✅ Review reported ads
-- ✅ Featured product management
+- ✅ Manage users, equipment, and categories
+- ✅ Review reported equipment
+- ✅ Featured equipment management
 - ✅ Content moderation
+- ✅ Booking management
+- ✅ Payment management
+- ✅ Rental analytics
+- ✅ Insurance claims handling
 
 ### Frontend Implementation
 - ✅ Responsive design for all device sizes
@@ -162,50 +187,68 @@ npm run dev
 
 4. Open your browser and navigate to `http://localhost:5174`
 
-## API Endpoints
+### API Endpoints
 
-### Authentication
+#### Authentication
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - User login
 - `GET /api/auth/me` - Get current user details
 
-### Users
+#### Users
 - `GET /api/users/profile` - Get user profile
 - `PUT /api/users/profile` - Update user profile
 
-### Products
-- `GET /api/products` - Get all products
-- `POST /api/products` - Create new product
-- `GET /api/products/:id` - Get single product
-- `PUT /api/products/:id` - Update product
-- `DELETE /api/products/:id` - Delete product
-- `GET /api/products/category/:category` - Get products by category
+#### Equipment
+- `GET /api/equipment` - Get all equipment
+- `POST /api/equipment` - Create new equipment
+- `GET /api/equipment/:id` - Get single equipment
+- `PUT /api/equipment/:id` - Update equipment
+- `DELETE /api/equipment/:id` - Delete equipment
+- `GET /api/equipment/category/:category` - Get equipment by category
+- `GET /api/equipment/:id/availability` - Get equipment availability
 
-### Categories
+#### Bookings
+- `POST /api/bookings` - Create booking
+- `GET /api/bookings` - Get user bookings
+- `GET /api/bookings/:id` - Get single booking
+- `PUT /api/bookings/:id` - Update booking
+- `DELETE /api/bookings/:id` - Cancel booking
+- `POST /api/bookings/:id/cancel` - Cancel booking
+- `POST /api/bookings/:id/extend` - Extend booking
+
+#### Payments
+- `POST /api/payments/create-intent` - Create payment intent
+- `POST /api/payments/confirm` - Confirm payment
+- `POST /api/payments/refund` - Process refund
+- `GET /api/payments/history` - Get payment history
+- `POST /api/payments/webhook` - Payment webhook
+- `GET /api/payments/:id` - Get payment by ID
+
+#### Categories
 - `GET /api/categories` - Get all categories
 - `POST /api/categories` - Create category (admin only)
 - `PUT /api/categories/:id` - Update category (admin only)
 - `DELETE /api/categories/:id` - Delete category (admin only)
 
-### Favorites
+#### Favorites
 - `POST /api/favorites` - Add to favorites
 - `GET /api/favorites` - Get user favorites
-- `DELETE /api/favorites/:productId` - Remove from favorites
+- `DELETE /api/favorites/:equipmentId` - Remove from favorites
 
-### Chats
+#### Chats
 - `POST /api/chats` - Send message
 - `GET /api/chats/conversations` - Get all conversations
 - `GET /api/chats/:conversationId` - Get messages in a conversation
 - `PUT /api/chats/:messageId/read` - Mark message as read
 
-### Reviews
+#### Reviews
 - `POST /api/reviews` - Create a review
-- `GET /api/reviews/product/:productId` - Get reviews for a product
-- `GET /api/reviews/seller/:sellerId` - Get reviews for a seller
+- `GET /api/reviews/equipment/:equipmentId` - Get reviews for equipment
+- `GET /api/reviews/user/:userId` - Get reviews for a user
 - `PUT /api/reviews/:id` - Update review
 - `DELETE /api/reviews/:id` - Delete review
 
-### Reports
+#### Reports
 - `POST /api/reports` - Create a report
 - `GET /api/reports` - Get all reports (admin only)
 - `PUT /api/reports/:id` - Update report status (admin only)
@@ -220,31 +263,38 @@ npm run dev
    - Implement JWT authentication
    - Build login and registration pages
 
-2. **Phase 2: Core Product Features**
-   - Create Product model and category model
-   - Build product CRUD API endpoints
+2. **Phase 2: Core Equipment Features**
+   - Create Equipment model and category model
+   - Build equipment CRUD API endpoints
    - Setup image upload
-   - Create product listing page with filters
-   - Build product detail page
+   - Create equipment listing page with filters
+   - Build equipment detail page
    - Implement search functionality
 
-3. **Phase 3: Dashboard Development**
-   - Build buyer dashboard layout
-   - Build seller dashboard layout
+3. **Phase 3: Booking System Development**
+   - Build renter and owner dashboard layouts
    - Implement role-based routing
-   - Create "Post Ad" form for sellers
-   - Build "My Ads" page for sellers
-   - Create favorites functionality for buyers
+   - Create "Post Equipment" form for owners
+   - Build "My Equipment" page for owners
+   - Create favorites functionality for renters
+   - Implement booking calendar system
 
-4. **Phase 4: Additional Features**
+4. **Phase 4: Payment & Additional Features**
+   - Integrate payment gateways (Stripe, PayPal, Razorpay)
+   - Implement security deposits handling
+   - Add booking management features
    - Implement chat/messaging system
    - Add email notifications
-   - Build analytics for sellers
-   - Implement featured ads
+   - Build analytics for equipment owners
+   - Implement featured equipment
    - Add reviews and ratings
    - Testing and bug fixes
 
-5. **Phase 5: Deployment & Optimization**
+5. **Phase 5: Advanced Features & Deployment**
+   - Implement delivery scheduling
+   - Add insurance options
+   - Implement loyalty programs
+   - Mobile optimization
    - Setup production environment
    - Deploy backend and frontend
    - Setup MongoDB Atlas

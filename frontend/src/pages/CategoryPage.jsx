@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../services/api';
-import ProductCard from '../components/ProductCard';
+import EquipmentCard from '../components/EquipmentCard';
 import FilterSidebar from '../components/FilterSidebar';
 import SortDropdown from '../components/SortDropdown';
 import Pagination from '../components/Pagination';
 
 const CategoryPage = () => {
   const { category } = useParams();
-  const [products, setProducts] = useState([]);
+  const [equipment, setEquipment] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filters, setFilters] = useState({});
@@ -39,12 +39,12 @@ const CategoryPage = () => {
           pageNumber: currentPage
         });
         
-        const response = await api.get(`/api/products?${queryParams}`);
-        setProducts(response.data.products || []);
-        setTotalPages(response.data.pages || 1);
+        const response = await api.get(`/api/equipment?${queryParams}`);
+        setEquipment(response.data.data || []);
+        setTotalPages(Math.ceil(response.data.count / 20));
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch products');
+        setError('Failed to fetch equipment');
         setLoading(false);
       }
     };
@@ -70,32 +70,44 @@ const CategoryPage = () => {
 
   return (
     <div className="category-page">
-      <h1>{category} Products</h1>
+      <h1>{category} Equipment</h1>
       
-      <div className="product-list-content">
-        <div className="product-filters">
-          <FilterSidebar onFilterChange={handleFilterChange} />
-        </div>
+      <div className="equipment-content">
+        <FilterSidebar 
+          filters={filters} 
+          onFilterChange={handleFilterChange} 
+        />
         
-        <div className="product-grid-container">
-          <SortDropdown sortBy={sortBy} onSortChange={handleSortChange} />
+        <div className="equipment-main">
+          <div className="equipment-controls">
+            <div className="results-info">
+              Showing {equipment.length} results
+            </div>
+            <SortDropdown 
+              currentSort={sortBy} 
+              onSortChange={handleSortChange} 
+            />
+          </div>
           {loading ? (
-            <p>Loading products...</p>
+            <p>Loading equipment...</p>
           ) : error ? (
             <p>{error}</p>
-          ) : products.length === 0 ? (
-            <p>No products found in this category.</p>
+          ) : equipment.length === 0 ? (
+            <div className="no-equipment">
+              <h3>No equipment found</h3>
+              <p>No equipment found in this category.</p>
+            </div>
           ) : (
             <>
-              <div className="product-grid">
-                {products.map((product) => (
-                  <ProductCard key={product._id} product={product} />
+              <div className="equipment-grid">
+                {equipment.map((item) => (
+                  <EquipmentCard key={item._id} equipment={item} />
                 ))}
               </div>
               <Pagination 
-                pages={totalPages} 
-                page={currentPage} 
-                onPageChange={handlePageChange} 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
               />
             </>
           )}

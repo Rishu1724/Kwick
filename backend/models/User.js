@@ -33,10 +33,94 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  address: {
+    street: String,
+    city: String,
+    state: String,
+    country: String,
+    pincode: String,
+    coordinates: [Number] // [longitude, latitude]
+  },
   location: {
     city: String,
     state: String,
     pincode: String
+  },
+  verifiedDocuments: [{
+    type: String, // Types of documents verified: 'id', 'address', 'business_license'
+    enum: ['id', 'address', 'business_license', 'insurance']
+  }],
+  documentUrls: [{
+    documentType: String,
+    documentUrl: String
+  }],
+  rentalHistory: [{
+    equipmentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Equipment'
+    },
+    bookingId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Booking'
+    },
+    date: {
+      type: Date
+    },
+    rating: {
+      type: Number,
+      min: 1,
+      max: 5
+    }
+  }],
+  paymentMethods: [{
+    type: {
+      type: String,
+      enum: ['card', 'upi', 'net_banking', 'paypal', 'stripe']
+    },
+    provider: String,
+    lastFour: String,
+    expiry: String,
+    isDefault: {
+      type: Boolean,
+      default: false
+    }
+  }],
+  ratingsReceived: {
+    total: {
+      type: Number,
+      default: 0
+    },
+    count: {
+      type: Number,
+      default: 0
+    },
+    average: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 5
+    }
+  },
+  walletBalance: {
+    type: Number,
+    default: 0
+  },
+  loyaltyPoints: {
+    type: Number,
+    default: 0
+  },
+  subscriptionTier: {
+    type: String,
+    enum: ['free', 'premium', 'enterprise'],
+    default: 'free'
+  },
+  kycVerified: {
+    type: Boolean,
+    default: false
+  },
+  age: {
+    type: Number,
+    min: 13
   },
   avatar: {
     type: String

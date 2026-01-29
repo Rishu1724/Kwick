@@ -16,16 +16,15 @@ const EquipmentDetail = () => {
   useEffect(() => {
     const fetchEquipment = async () => {
       try {
-        // Use products API but transform to equipment format
-        const response = await api.get(`/api/products/${id}`);
+        const response = await api.get(`/api/equipment/${id}`);
         // Transform product data to equipment format
         const equipmentData = {
           ...response.data,
-          dailyRate: response.data.price,
-          hourlyRate: Math.round(response.data.price / 8),
-          weeklyRate: response.data.price * 6,
-          availability: 'available',
-          ownerId: response.data.sellerId
+          dailyRate: response.data.dailyRate || response.data.price,
+          hourlyRate: response.data.hourlyRate || Math.round((response.data.dailyRate || response.data.price) / 8),
+          weeklyRate: response.data.weeklyRate || (response.data.dailyRate || response.data.price) * 6,
+          availability: response.data.status,
+          ownerId: response.data.ownerId
         };
         setEquipment(equipmentData);
         setLoading(false);

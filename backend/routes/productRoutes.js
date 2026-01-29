@@ -1,33 +1,45 @@
 const express = require('express');
 const { protect } = require('../middlewares/auth');
 const {
-  createProduct,
-  getProducts,
-  getProductById,
-  updateProduct,
-  deleteProduct,
-  getProductsByCategory,
-} = require('../controllers/productController');
+  getEquipment,
+  getEquipmentById,
+  createEquipment,
+  updateEquipment,
+  deleteEquipment,
+  getEquipmentByCategory,
+  getEquipmentAvailability,
+  uploadEquipmentImages,
+  getMyEquipment
+} = require('../controllers/equipmentController');
 const { upload, uploadMultipleImages } = require('../middlewares/upload');
 
 const router = express.Router();
 
 router.route('/')
-  .post(protect, upload.array('images', 5), uploadMultipleImages, createProduct)
-  .get(getProducts);
+  .post(protect, upload.array('images', 5), uploadMultipleImages, createEquipment)
+  .get(getEquipment);
+
+router.route('/my')
+  .get(protect, getMyEquipment);
 
 router.route('/featured')
   .get((req, res, next) => {
     req.query.featured = 'true';
     next();
-  }, getProducts);
+  }, getEquipment);
 
 router.route('/:id')
-  .get(getProductById)
-  .put(protect, upload.array('images', 5), uploadMultipleImages, updateProduct)
-  .delete(protect, deleteProduct);
+  .get(getEquipmentById)
+  .put(protect, upload.array('images', 5), uploadMultipleImages, updateEquipment)
+  .delete(protect, deleteEquipment);
+
+router.route('/:id/availability')
+  .get(getEquipmentAvailability);
+
+router.route('/:id/images')
+  .post(protect, upload.array('images', 5), uploadMultipleImages, uploadEquipmentImages);
 
 router.route('/category/:category')
-  .get(getProductsByCategory);
+  .get(getEquipmentByCategory);
 
 module.exports = router;
