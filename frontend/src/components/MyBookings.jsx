@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import './MyBookings.css';
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -11,7 +12,7 @@ const MyBookings = () => {
     const fetchBookings = async () => {
       try {
         const response = await api.get('/api/bookings');
-        setBookings(response.data);
+        setBookings(response.data.data || []);
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch bookings');
@@ -29,10 +30,12 @@ const MyBookings = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'confirmed': return '#4CAF50';
+      case 'active': return '#4CAF50';
+      case 'confirmed': return '#2196F3';
       case 'pending': return '#FF9800';
-      case 'completed': return '#2196F3';
+      case 'completed': return '#3F51B5';
       case 'cancelled': return '#f44336';
+      case 'returned': return '#9C27B0';
       default: return '#9E9E9E';
     }
   };
@@ -66,6 +69,18 @@ const MyBookings = () => {
           onClick={() => setFilter('completed')}
         >
           Completed
+        </button>
+        <button 
+          className={filter === 'active' ? 'active' : ''}
+          onClick={() => setFilter('active')}
+        >
+          Active
+        </button>
+        <button 
+          className={filter === 'returned' ? 'active' : ''}
+          onClick={() => setFilter('returned')}
+        >
+          Returned
         </button>
       </div>
 

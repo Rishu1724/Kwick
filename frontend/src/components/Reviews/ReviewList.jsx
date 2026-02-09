@@ -17,8 +17,8 @@ const ReviewList = ({ productId, sellerId }) => {
   const fetchReviews = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/api/reviews/product/${productId}`);
-      setReviews(response.data);
+      const response = await api.get(`/api/reviews/equipment/${productId}`);
+      setReviews(response.data.data || []);
       setLoading(false);
     } catch (err) {
       setError('Failed to load reviews');

@@ -126,7 +126,17 @@ const equipmentSchema = new mongoose.Schema({
     performedBy: String
   }]
 }, {
-  timestamps: true
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
+
+// Virtual for getting reviews for this equipment
+equipmentSchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'productId',
+  justOne: false
 });
 
 module.exports = mongoose.model('Equipment', equipmentSchema);

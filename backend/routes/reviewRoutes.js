@@ -3,15 +3,15 @@ const router = express.Router();
 const { protect } = require('../middlewares/auth');
 const {
   createReview,
-  getProductReviews,
+  getEquipmentReviews,
   getSellerReviews,
   updateReview,
   deleteReview
 } = require('../controllers/reviewController');
 
 // Public routes
-router.route('/product/:productId')
-  .get(getProductReviews);
+router.route('/equipment/:productId')
+  .get(getEquipmentReviews);
 
 router.route('/seller/:sellerId')
   .get(getSellerReviews);

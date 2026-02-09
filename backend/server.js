@@ -27,7 +27,11 @@ app.use(cors({
       'http://localhost:5174', 
       'http://localhost:5175', 
       'http://localhost:5176',
-      'http://localhost:5007' // Added to support the original frontend config
+      'http://localhost:5007', // Added to support the original frontend config
+      'http://127.0.0.1:5173',
+      'http://127.0.0.1:5174',
+      'http://127.0.0.1:5175',
+      'http://127.0.0.1:5176'
     ];
     
     // Add production URL if it exists
@@ -38,12 +42,19 @@ app.use(cors({
     // Filter out any undefined/null values
     allowedOrigins = allowedOrigins.filter(Boolean);
     
+    // Allow all localhost origins for development
+    if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+      return callback(null, true);
+    }
+    
     // Check if the origin is in our allowed list
     const isValidOrigin = allowedOrigins.includes(origin);
     callback(null, isValidOrigin);
   },
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization']
 }));
 
 // Body parser middleware - increase limit for image uploads
@@ -53,7 +64,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/equipment', require('./routes/productRoutes')); // Using productRoutes for equipment
+app.use('/api/equipment', require('./routes/equipmentRoutes'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/favorites', require('./routes/favoriteRoutes'));
 app.use('/api/chats', require('./routes/chatRoutes'));

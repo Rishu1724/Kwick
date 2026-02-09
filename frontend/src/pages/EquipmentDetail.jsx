@@ -17,16 +17,7 @@ const EquipmentDetail = () => {
     const fetchEquipment = async () => {
       try {
         const response = await api.get(`/api/equipment/${id}`);
-        // Transform product data to equipment format
-        const equipmentData = {
-          ...response.data,
-          dailyRate: response.data.dailyRate || response.data.price,
-          hourlyRate: response.data.hourlyRate || Math.round((response.data.dailyRate || response.data.price) / 8),
-          weeklyRate: response.data.weeklyRate || (response.data.dailyRate || response.data.price) * 6,
-          availability: response.data.status,
-          ownerId: response.data.ownerId
-        };
-        setEquipment(equipmentData);
+        setEquipment(response.data.data);
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch equipment details');

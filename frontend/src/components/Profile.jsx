@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
+import './Profile.css';
 
 const Profile = () => {
   const { user, updateProfile } = useAuth();
@@ -202,6 +203,26 @@ const Profile = () => {
           <div className="profile-field">
             <strong>Location:</strong> {user.location ? `${user.location.city}, ${user.location.state} ${user.location.pincode}` : 'Not provided'}
           </div>
+          {user.ratingsReceived && (
+            <div className="profile-field">
+              <strong>Rating:</strong> {user.ratingsReceived.average ? user.ratingsReceived.average.toFixed(1) : 0}★ ({user.ratingsReceived.count} reviews)
+            </div>
+          )}
+          {user.walletBalance >= 0 && (
+            <div className="profile-field">
+              <strong>Wallet Balance:</strong> ₹{user.walletBalance}
+            </div>
+          )}
+          {user.loyaltyPoints >= 0 && (
+            <div className="profile-field">
+              <strong>Loyalty Points:</strong> {user.loyaltyPoints}
+            </div>
+          )}
+          {user.subscriptionTier && (
+            <div className="profile-field">
+              <strong>Membership:</strong> {user.subscriptionTier.charAt(0).toUpperCase() + user.subscriptionTier.slice(1)}
+            </div>
+          )}
           <button className="btn-primary" onClick={() => setIsEditing(true)}>
             Edit Profile
           </button>

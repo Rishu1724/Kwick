@@ -1,0 +1,152 @@
+.profile {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.profile h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  border-bottom: 2px solid #4CAF50;
+  padding-bottom: 10px;
+}
+
+.alert {
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+
+.alert-danger {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+
+.alert-success {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.avatar-preview {
+  margin-top: 10px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.form-actions button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.form-actions button[type="submit"]:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}
+
+.form-actions button[type="button"] {
+  background-color: #6c757d;
+  color: white;
+}
+
+.profile-view {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.avatar-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-field {
+  margin-bottom: 15px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profile-field strong {
+  display: inline-block;
+  width: 150px;
+  color: #333;
+}
+
+.btn-primary {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: #0b7dda;
+}
+
+@media (max-width: 768px) {
+  .profile {
+    padding: 15px;
+  }
+  
+  .profile h2 {
+    font-size: 20px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .profile-field strong {
+    display: block;
+    width: auto;
+    margin-bottom: 5px;
+  }
+}

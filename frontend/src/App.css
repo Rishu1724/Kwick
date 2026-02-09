@@ -384,6 +384,28 @@ main {
   border-radius: 2px;
 }
 
+.recent-equipment {
+  margin-bottom: 3rem;
+}
+
+.recent-equipment h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #333;
+  position: relative;
+}
+
+.recent-equipment h2::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
+  margin: 0.5rem auto;
+  border-radius: 2px;
+}
+
 /* Product Grid */
 .product-grid {
   display: grid;

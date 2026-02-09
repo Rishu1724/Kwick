@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 import ImageUpload from './ImageUpload';
+import './AddEquipmentForm.css';
 
 const AddEquipmentForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -78,8 +79,8 @@ const AddEquipmentForm = ({ onClose }) => {
         });
       }
 
-      // Use products API endpoint
-      const response = await api.post('/api/products', formDataToSend);
+      // Use equipment API endpoint
+      const response = await api.post('/api/equipment', formDataToSend);
       setSuccess('Equipment listed successfully!');
       
       // Reset form

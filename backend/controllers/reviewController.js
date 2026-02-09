@@ -1,5 +1,5 @@
 const Review = require('../models/Review');
-const Product = require('../models/Product');
+const Equipment = require('../models/Equipment');
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 
@@ -9,20 +9,20 @@ const asyncHandler = require('express-async-handler');
 const createReview = asyncHandler(async (req, res) => {
   const { productId, rating, comment } = req.body;
 
-  // Check if product exists
-  const product = await Product.findById(productId);
-  if (!product) {
+  // Check if equipment exists
+  const equipment = await Equipment.findById(productId);
+  if (!equipment) {
     res.status(404);
-    throw new Error('Product not found');
+    throw new Error('Equipment not found');
   }
 
-  // Check if user is the seller of the product
-  if (product.sellerId.toString() === req.user._id.toString()) {
+  // Check if user is the owner of the equipment
+  if (equipment.ownerId.toString() === req.user._id.toString()) {
     res.status(400);
-    throw new Error('You cannot review your own product');
+    throw new Error('You cannot review your own equipment');
   }
 
-  // Check if user already reviewed this product
+  // Check if user already reviewed this equipment
   const alreadyReviewed = await Review.findOne({
     buyerId: req.user._id,
     productId
@@ -30,12 +30,12 @@ const createReview = asyncHandler(async (req, res) => {
 
   if (alreadyReviewed) {
     res.status(400);
-    throw new Error('Product already reviewed');
+    throw new Error('Equipment already reviewed');
   }
 
   const review = new Review({
     productId,
-    sellerId: product.sellerId,
+    sellerId: equipment.ownerId,
     buyerId: req.user._id,
     rating: Number(rating),
     comment
@@ -50,10 +50,10 @@ const createReview = asyncHandler(async (req, res) => {
   res.status(201).json(createdReview);
 });
 
-// @desc    Get reviews for a product
-// @route   GET /api/reviews/product/:productId
+// @desc    Get reviews for equipment
+// @route   GET /api/reviews/equipment/:productId
 // @access  Public
-const getProductReviews = asyncHandler(async (req, res) => {
+const getEquipmentReviews = asyncHandler(async (req, res) => {
   const reviews = await Review.find({ productId: req.params.productId })
     .populate('buyerId', 'name email avatar')
     .sort({ createdAt: -1 });
@@ -67,7 +67,7 @@ const getProductReviews = asyncHandler(async (req, res) => {
 const getSellerReviews = asyncHandler(async (req, res) => {
   const reviews = await Review.find({ sellerId: req.params.sellerId })
     .populate('buyerId', 'name email avatar')
-    .populate('productId', 'title price images')
+    .populate('productId', 'title dailyRate images')
     .sort({ createdAt: -1 });
 
   res.json(reviews);
@@ -128,7 +128,7 @@ const deleteReview = asyncHandler(async (req, res) => {
 
 module.exports = {
   createReview,
-  getProductReviews,
+  getEquipmentReviews,
   getSellerReviews,
   updateReview,
   deleteReview

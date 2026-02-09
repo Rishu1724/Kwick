@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import FavoriteToggle from './FavoriteToggle';
+import './EquipmentCard.css';
 
 const EquipmentCard = ({ equipment }) => {
   // For now, we'll assume the equipment is not favorited
@@ -16,48 +17,51 @@ const EquipmentCard = ({ equipment }) => {
   const weeklyRate = equipment.weeklyRate || dailyRate * 6;
 
   return (
-    <div className="equipment-card-enhanced">
-      <div className="equipment-image-container-enhanced">
-        <img 
-          src={equipment.images?.[0] || 'https://via.placeholder.com/300'} 
-          alt={equipment.title} 
-        />
-        <FavoriteToggle 
-          productId={equipment._id} 
-          isFavorited={false} 
-          onToggle={handleFavoriteToggle} 
-        />
-        <div className="rental-badge">
-          {equipment.availability === 'available' ? 'Available' : 'Rented'}
-        </div>
-      </div>
-      <div className="equipment-info-enhanced">
-        <h3 className="equipment-title-enhanced">
-          <Link to={`/equipment/${equipment._id}`}>{equipment.title}</Link>
-        </h3>
-        <p className="sport-category">{equipment.category}</p>
-        <div className="pricing-info">
-          <div className="rate">
-            <span className="amount">₹{hourlyRate}</span>
-            <span className="period">/hour</span>
-          </div>
-          <div className="rate">
-            <span className="amount">₹{dailyRate}</span>
-            <span className="period">/day</span>
+    <Link to={`/equipment/${equipment._id}`} className="equipment-card-link">
+      <div className="equipment-card-enhanced">
+        <div className="equipment-image-container-enhanced">
+          <img 
+            src={equipment.images?.[0] || 'https://via.placeholder.com/300'} 
+            alt={equipment.title} 
+          />
+          <FavoriteToggle 
+            productId={equipment._id} 
+            isFavorited={false} 
+            onToggle={handleFavoriteToggle} 
+            onClick={(e) => e.stopPropagation()} // Prevent click propagation to parent link
+          />
+          <div className="rental-badge">
+            {equipment.availability === 'available' ? 'Available' : 'Rented'}
           </div>
         </div>
-        <p className="location-enhanced">
-          <i className="location-icon">📍</i>
-          {equipment.location?.city || 'Location not specified'}
-        </p>
-        <div className="equipment-meta">
-          <span className="condition-badge">{equipment.condition}</span>
-          <span className="rating">
-            ⭐ {equipment.averageRating > 0 ? equipment.averageRating.toFixed(1) : 'New'}
-          </span>
+        <div className="equipment-info-enhanced">
+          <h3 className="equipment-title-enhanced">
+            {equipment.title}
+          </h3>
+          <p className="sport-category">{equipment.category}</p>
+          <div className="pricing-info">
+            <div className="rate">
+              <span className="amount">₹{hourlyRate}</span>
+              <span className="period">/hour</span>
+            </div>
+            <div className="rate">
+              <span className="amount">₹{dailyRate}</span>
+              <span className="period">/day</span>
+            </div>
+          </div>
+          <p className="location-enhanced">
+            <i className="location-icon">📍</i>
+            {equipment.location?.city || 'Location not specified'}
+          </p>
+          <div className="equipment-meta">
+            <span className="condition-badge">{equipment.condition}</span>
+            <span className="rating">
+              ⭐ {equipment.averageRating > 0 ? equipment.averageRating.toFixed(1) : 'New'}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import EquipmentCard from './EquipmentCard';
+import './MyEquipment.css';
 
 const MyEquipment = () => {
   const { user } = useAuth();
@@ -13,18 +14,8 @@ const MyEquipment = () => {
     const fetchMyEquipment = async () => {
       try {
         setLoading(true);
-        // Fetch equipment owned by current user
-        const response = await api.get(`/api/products?sellerId=${user._id}`);
-        // Transform product data to equipment format
-        const equipmentData = response.data.products.map(product => ({
-          ...product,
-          dailyRate: product.price,
-          hourlyRate: Math.round(product.price / 8),
-          weeklyRate: product.price * 6,
-          availability: 'available',
-          ownerId: product.sellerId
-        }));
-        setEquipment(equipmentData);
+        const response = await api.get(`/api/equipment/my`);
+        setEquipment(response.data.data || []);
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch your equipment');

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import EquipmentCard from './EquipmentCard';
+import './Wishlist.css';
 
 const Wishlist = () => {
   const [wishlistItems, setWishlistItems] = useState([]);

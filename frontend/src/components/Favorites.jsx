@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import ProductCard from './ProductCard';
+import EquipmentCard from './EquipmentCard';
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
@@ -38,12 +38,12 @@ const Favorites = () => {
     <div className="favorites">
       <h2>My Favorites</h2>
       {favorites.length === 0 ? (
-        <p>You haven't favorited any products yet.</p>
+        <p>You haven't favorited any equipment yet.</p>
       ) : (
-        <div className="product-grid">
+        <div className="equipment-grid">
           {favorites.map((favorite) => (
             <div key={favorite.productId._id} className="favorite-item">
-              <ProductCard product={favorite.productId} />
+              <EquipmentCard equipment={favorite.productId} />
               <button 
                 className="remove-favorite" 
                 onClick={() => removeFavorite(favorite.productId._id)}

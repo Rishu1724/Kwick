@@ -68,6 +68,54 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate }) => {
     setShowPayment(true);
   };
 
+  const confirmBooking = async () => {
+    if (!user) {
+      alert('Please login to complete booking');
+      window.location.href = '/login';
+      return;
+    }
+    
+    try {
+      // Create booking
+      const bookingData = {
+        equipmentId,
+        startDate,
+        endDate,
+        bookingType,
+        totalAmount: totalCost,
+        securityDeposit: 0 // Will be calculated based on equipment
+      };
+      
+      const bookingResponse = await api.post('/api/bookings', bookingData);
+      
+      // Create payment intent
+      const paymentData = {
+        bookingId: bookingResponse.data.data._id,
+        amount: totalCost,
+        paymentMethod: document.querySelector('input[name="payment"]:checked')?.value || 'upi'
+      };
+      
+      const paymentResponse = await api.post('/api/payments/create-intent', paymentData);
+      
+      // For demo purposes, we'll simulate payment confirmation
+      // In a real app, this would redirect to payment gateway
+      alert(`Booking confirmed! Total paid: ₹${totalCost.toFixed(2)}
+
+Your booking ID: ${bookingResponse.data.data._id}
+
+Payment ID: ${paymentResponse.data.data?.paymentId || 'N/A'}`);
+      
+      // Reset form
+      setStartDate('');
+      setEndDate('');
+      setTotalCost(0);
+      setShowPayment(false);
+    } catch (error) {
+      console.error('Booking error:', error);
+      alert('Failed to create booking. Please try again.');
+    }
+  };
+
   return (
     <div className="booking-calendar">
       <h3>Booking Information</h3>
@@ -182,53 +230,5 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate }) => {
     </div>
   );
 };
-
-  const confirmBooking = async () => {
-    if (!user) {
-      alert('Please login to complete booking');
-      window.location.href = '/login';
-      return;
-    }
-    
-    try {
-      // Create booking
-      const bookingData = {
-        equipmentId,
-        startDate,
-        endDate,
-        bookingType,
-        totalAmount: totalCost,
-        securityDeposit: 0 // Will be calculated based on equipment
-      };
-      
-      const bookingResponse = await api.post('/api/bookings', bookingData);
-      
-      // Create payment intent
-      const paymentData = {
-        bookingId: bookingResponse.data.data._id,
-        amount: totalCost,
-        paymentMethod: document.querySelector('input[name="payment"]:checked').value
-      };
-      
-      const paymentResponse = await api.post('/api/payments/create-intent', paymentData);
-      
-      // For demo purposes, we'll simulate payment confirmation
-      // In a real app, this would redirect to payment gateway
-      alert(`Booking confirmed! Total paid: ₹${totalCost.toFixed(2)}
-
-Your booking ID: ${bookingResponse.data.data._id}
-
-Payment ID: ${paymentResponse.data.data.paymentId}`);
-      
-      // Reset form
-      setStartDate('');
-      setEndDate('');
-      setTotalCost(0);
-      setShowPayment(false);
-    } catch (error) {
-      console.error('Booking error:', error);
-      alert('Failed to create booking. Please try again.');
-    }
-  };
 
 export default BookingCalendar;

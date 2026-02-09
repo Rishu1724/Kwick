@@ -6,6 +6,8 @@ import Profile from "../components/Profile";
 import Wishlist from "../components/Wishlist";
 import MyBookings from "../components/MyBookings";
 import ConversationsPage from "./ConversationsPage";
+import EquipmentList from "./EquipmentList";
+import './RenterDashboardPage.css';
 
 const RenterDashboardPage = () => {
   const { user } = useAuth();
@@ -20,7 +22,7 @@ const RenterDashboardPage = () => {
     <div className="renter-dashboard">
       {/* Header */}
       <div className="dashboard-header">
-        <h1> equipRenter Dashboard</h1>
+        <h1>Equipment Renter Dashboard</h1>
         <p>Welcome, <strong>{user.name}</strong> 👋 | Renter Mode Active</p>
         <p className="dashboard-subtitle">Manage your rentals, bookings, and wishlists</p>
       </div>
@@ -32,6 +34,12 @@ const RenterDashboardPage = () => {
           onClick={() => setActiveTab('bookings')}
         >
           📅 My Rentals
+        </button>
+        <button 
+          className={`tab-button ${activeTab === 'equipment' ? 'active' : ''}`}
+          onClick={() => setActiveTab('equipment')}
+        >
+          🏸 Browse Equipment
         </button>
         <button 
           className={`tab-button ${activeTab === 'wishlist' ? 'active' : ''}`}
@@ -59,6 +67,13 @@ const RenterDashboardPage = () => {
           <div className="tab-section">
             <h2>📅 My Rental Bookings</h2>
             <MyBookings />
+          </div>
+        )}
+
+        {activeTab === 'equipment' && (
+          <div className="tab-section">
+            <h2>🏸 Browse Sports Equipment</h2>
+            <EquipmentList />
           </div>
         )}
 

@@ -11,17 +11,8 @@ const FeaturedEquipment = () => {
     const fetchFeaturedEquipment = async () => {
       try {
         setLoading(true);
-        // Use products API but transform to equipment format
-        const response = await api.get('/api/products?isFeatured=true&pageNumber=1');
-        // Transform product data to equipment format
-        const equipmentData = response.data.products.map(product => ({
-          ...product,
-          dailyRate: product.price,
-          hourlyRate: Math.round(product.price / 8),
-          weeklyRate: product.price * 6,
-          availability: 'available',
-          ownerId: product.sellerId
-        })) || [];
+        const response = await api.get('/api/equipment/featured');
+        const equipmentData = response.data.data || [];
         setEquipment(equipmentData);
         setLoading(false);
       } catch (err) {

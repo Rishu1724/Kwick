@@ -1,5 +1,5 @@
 const Report = require('../models/Report');
-const Product = require('../models/Product');
+const Equipment = require('../models/Equipment');
 const asyncHandler = require('express-async-handler');
 
 // @desc    Create a report
@@ -8,14 +8,14 @@ const asyncHandler = require('express-async-handler');
 const createReport = asyncHandler(async (req, res) => {
   const { productId, reason, description } = req.body;
 
-  // Check if product exists
-  const product = await Product.findById(productId);
-  if (!product) {
+  // Check if equipment exists
+  const equipment = await Equipment.findById(productId);
+  if (!equipment) {
     res.status(404);
-    throw new Error('Product not found');
+    throw new Error('Equipment not found');
   }
 
-  // Check if user already reported this product
+  // Check if user already reported this equipment
   const alreadyReported = await Report.findOne({
     reporterId: req.user._id,
     productId
@@ -23,7 +23,7 @@ const createReport = asyncHandler(async (req, res) => {
 
   if (alreadyReported) {
     res.status(400);
-    throw new Error('You have already reported this product');
+    throw new Error('You have already reported this equipment');
   }
 
   const report = new Report({
@@ -49,7 +49,7 @@ const getReports = asyncHandler(async (req, res) => {
   }
 
   const reports = await Report.find()
-    .populate('productId', 'title price images')
+    .populate('productId', 'title dailyRate images')
     .populate('reporterId', 'name email')
     .sort({ createdAt: -1 });
 

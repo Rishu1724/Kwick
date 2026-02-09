@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const reviewSchema = new mongoose.Schema({
   productId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
+    ref: 'Equipment',  // Changed from 'Product' to 'Equipment'
     required: true
   },
   sellerId: {
@@ -30,10 +30,10 @@ const reviewSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Prevent user from reviewing the same product multiple times
+// Prevent user from reviewing the same equipment multiple times
 reviewSchema.index({ buyerId: 1, productId: 1 }, { unique: true });
 
-// Calculate average rating for a product
+// Calculate average rating for equipment
 reviewSchema.statics.getAverageRating = async function(productId) {
   const obj = await this.aggregate([
     {
@@ -48,7 +48,7 @@ reviewSchema.statics.getAverageRating = async function(productId) {
   ]);
 
   try {
-    await this.model('Product').findByIdAndUpdate(productId, {
+    await this.model('Equipment').findByIdAndUpdate(productId, {  // Changed from 'Product' to 'Equipment'
       averageRating: obj[0] ? obj[0].averageRating : 0
     });
   } catch (err) {

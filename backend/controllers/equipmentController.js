@@ -68,7 +68,7 @@ const getEquipment = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    count: equipment.length,
+    count: total,
     pagination,
     data: equipment
   });
@@ -84,7 +84,7 @@ const getEquipmentById = asyncHandler(async (req, res) => {
       path: 'reviews',
       select: 'rating comment createdAt',
       populate: {
-        path: 'user',
+        path: 'buyerId',
         select: 'name'
       }
     });
@@ -269,7 +269,7 @@ const uploadEquipmentImages = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get user's equipment
-// @route   GET /api/equipment/user/my
+// @route   GET /api/equipment/my
 // @access  Private
 const getMyEquipment = asyncHandler(async (req, res) => {
   const equipment = await Equipment.find({ ownerId: req.user._id })

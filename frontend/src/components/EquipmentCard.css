@@ -1,0 +1,160 @@
+.equipment-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.equipment-card-enhanced {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.equipment-card-enhanced:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.equipment-image-container-enhanced {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.equipment-image-container-enhanced img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.rental-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.equipment-info-enhanced {
+  padding: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.equipment-title-enhanced {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.equipment-title-enhanced a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.equipment-title-enhanced a:hover {
+  color: #4CAF50;
+}
+
+.sport-category {
+  color: #666;
+  font-size: 14px;
+  margin: 0 0 10px 0;
+  font-style: italic;
+}
+
+.pricing-info {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0;
+}
+
+.rate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.amount {
+  font-weight: bold;
+  color: #4CAF50;
+  font-size: 18px;
+}
+
+.period {
+  font-size: 12px;
+  color: #666;
+}
+
+.location-enhanced {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #666;
+  font-size: 14px;
+  margin: 8px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.location-icon {
+  font-size: 16px;
+}
+
+.equipment-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.condition-badge {
+  background-color: #2196F3;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.rating {
+  color: #FF9800;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .equipment-card-enhanced {
+    height: auto;
+  }
+  
+  .equipment-image-container-enhanced {
+    height: 180px;
+  }
+  
+  .pricing-info {
+    gap: 10px;
+  }
+  
+  .amount {
+    font-size: 16px;
+  }
+}

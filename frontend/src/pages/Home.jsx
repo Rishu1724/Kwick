@@ -1,6 +1,7 @@
 import React from 'react';
 import Categories from '../components/Categories';
 import FeaturedEquipment from '../components/FeaturedEquipment';
+import RecentEquipment from '../components/RecentEquipment';
 
 const Home = () => {
   return (
@@ -17,6 +18,8 @@ const Home = () => {
       <Categories />
       
       <FeaturedEquipment />
+      
+      <RecentEquipment />
     </div>
   );
 };

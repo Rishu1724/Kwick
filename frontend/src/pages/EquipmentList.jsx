@@ -5,6 +5,7 @@ import EquipmentCard from '../components/EquipmentCard';
 import FilterSidebar from '../components/FilterSidebar';
 import SortDropdown from '../components/SortDropdown';
 import Pagination from '../components/Pagination';
+import './EquipmentList.css';
 
 const EquipmentList = () => {
   const [equipment, setEquipment] = useState([]);
@@ -45,17 +46,8 @@ const EquipmentList = () => {
         });
         
         const response = await api.get(`/api/equipment?${queryParams}`);
-        // Transform product data to equipment format
-        const equipmentData = response.data.data.map(item => ({
-          ...item,
-          dailyRate: item.dailyRate || item.price,
-          hourlyRate: item.hourlyRate || Math.round((item.dailyRate || item.price) / 8),
-          weeklyRate: item.weeklyRate || (item.dailyRate || item.price) * 6,
-          availability: item.status,
-          ownerId: item.ownerId
-        })) || [];
-        setEquipment(equipmentData);
-        setTotalPages(Math.ceil(response.data.count / 20)); // Assuming default limit of 20 per page
+        setEquipment(response.data.data || []);
+        setTotalPages(response.data.pagination?.next || response.data.pagination?.previous ? Math.ceil(response.data.count / 20) : 1);
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch equipment');
