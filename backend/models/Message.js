@@ -18,7 +18,7 @@ const messageSchema = new mongoose.Schema({
   },
   productId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product'
+    ref: 'Equipment'
   },
   message: {
     type: String,

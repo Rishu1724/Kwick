@@ -11,10 +11,6 @@ const ChatWindow = ({ productId, sellerId, onClose }) => {
   const { user } = useAuth();
   const messagesEndRef = useRef(null);
 
-  // Generate conversation ID
-  const userIds = [user._id, sellerId].sort();
-  const conversationId = userIds.join('-');
-
   useEffect(() => {
     fetchMessages();
   }, [productId, sellerId]);
@@ -31,7 +27,7 @@ const ChatWindow = ({ productId, sellerId, onClose }) => {
     try {
       setLoading(true);
       
-      // Generate conversation ID
+      // Generate conversation ID by sorting user IDs and joining them
       const userIds = [user._id, sellerId].sort();
       const conversationId = userIds.join('-');
       

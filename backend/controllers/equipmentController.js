@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler');
+const mongoose = require('mongoose');
 const Equipment = require('../models/Equipment');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
@@ -78,29 +79,54 @@ const getEquipment = asyncHandler(async (req, res) => {
 // @route   GET /api/equipment/:id
 // @access  Public
 const getEquipmentById = asyncHandler(async (req, res) => {
-  const equipment = await Equipment.findById(req.params.id)
-    .populate('ownerId', 'name email phone location averageRating')
-    .populate({
-      path: 'reviews',
-      select: 'rating comment createdAt',
-      populate: {
-        path: 'buyerId',
-        select: 'name'
-      }
+  // Validate the ID format
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).json({ 
+      success: false,
+      message: 'Invalid equipment ID format' 
     });
-
-  if (!equipment) {
-    return res.status(404).json({ message: 'Equipment not found' });
   }
 
-  // Increment view count
-  equipment.views += 1;
-  await equipment.save();
+  try {
+    const equipment = await Equipment.findById(req.params.id)
+      .populate('ownerId', 'name email phone location averageRating');
 
-  res.status(200).json({
-    success: true,
-    data: equipment
-  });
+    if (!equipment) {
+      return res.status(404).json({ 
+        success: false,
+        message: 'Equipment not found' 
+      });
+    }
+
+    // Get reviews for this equipment separately
+    const Review = require('../models/Review');
+    const reviews = await Review.find({ productId: req.params.id })
+      .populate('buyerId', 'name')
+      .populate('sellerId', 'name')
+      .sort({ createdAt: -1 });
+
+    // Increment view count safely
+    equipment.views = (equipment.views || 0) + 1;
+    await equipment.save({ validateBeforeSave: false }); // Skip validation to avoid conflicts
+
+    // Combine equipment and reviews in response
+    const responseData = {
+      ...equipment.toObject(),
+      reviews: reviews
+    };
+
+    res.status(200).json({
+      success: true,
+      data: responseData
+    });
+  } catch (error) {
+    console.error('Error in getEquipmentById:', error);
+    res.status(500).json({ 
+      success: false,
+      message: 'Server error occurred while fetching equipment details',
+      error: error.message 
+    });
+  }
 });
 
 // @desc    Create new equipment

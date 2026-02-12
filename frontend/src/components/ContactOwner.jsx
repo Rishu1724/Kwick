@@ -112,8 +112,8 @@ const ContactOwner = ({ ownerId, equipmentId }) => {
       
       {isChatOpen && (
         <ChatWindow 
-          equipmentId={equipmentId} 
-          ownerId={ownerId} 
+          productId={equipmentId} 
+          sellerId={ownerId} 
           onClose={handleCloseChat} 
         />
       )}

@@ -35,18 +35,26 @@ const PriceNegotiation = ({ productId, currentPrice }) => {
     setSuccess(false);
 
     try {
-      // In a real app, you would send this offer to the backend
-      // For now, we'll just simulate the API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Send the offer to the backend API
+      const response = await api.post('/api/negotiations', {
+        productId,
+        offerPrice: parseFloat(offerPrice),
+        message,
+        buyerId: user._id
+      });
       
-      setSuccess(true);
-      
-      // Close modal after 2 seconds
-      setTimeout(() => {
-        handleCloseModal();
-      }, 2000);
+      if (response.data.success) {
+        setSuccess(true);
+        
+        // Close modal after 2 seconds
+        setTimeout(() => {
+          handleCloseModal();
+        }, 2000);
+      } else {
+        setError(response.data.message || 'Failed to submit offer');
+      }
     } catch (err) {
-      setError('Failed to submit offer. Please try again.');
+      setError(err.response?.data?.message || 'Failed to submit offer. Please try again.');
     }
     
     setLoading(false);
