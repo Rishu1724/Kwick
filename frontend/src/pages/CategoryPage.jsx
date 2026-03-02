@@ -33,15 +33,26 @@ const CategoryPage = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const queryParams = new URLSearchParams({
-          ...filters,
-          sortBy,
-          pageNumber: currentPage
-        });
-        
-        const response = await api.get(`/api/equipment?${queryParams}`);
+        const queryParams = new URLSearchParams();
+
+        const limit = 20;
+        queryParams.append('page', String(currentPage));
+        queryParams.append('limit', String(limit));
+
+        if (filters.category) queryParams.append('category', filters.category);
+        if (filters.condition) queryParams.append('condition', filters.condition);
+        if (filters.location) queryParams.append('location', filters.location);
+        if (filters.minPrice) queryParams.append('dailyRate[gte]', filters.minPrice);
+        if (filters.maxPrice) queryParams.append('dailyRate[lte]', filters.maxPrice);
+
+        if (sortBy === 'price-asc') queryParams.append('sort', 'dailyRate');
+        else if (sortBy === 'price-desc') queryParams.append('sort', '-dailyRate');
+        else if (sortBy === 'popularity') queryParams.append('sort', '-views');
+        else queryParams.append('sort', '-createdAt');
+
+        const response = await api.get(`/api/equipment?${queryParams.toString()}`);
         setEquipment(response.data.data || []);
-        setTotalPages(Math.ceil(response.data.count / 20));
+        setTotalPages(Math.max(1, Math.ceil((response.data.count || 0) / limit)));
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch equipment');

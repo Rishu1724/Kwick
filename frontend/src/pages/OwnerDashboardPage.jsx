@@ -8,31 +8,50 @@ import BookingRequests from "../components/BookingRequests";
 import OwnerAnalytics from "../components/OwnerAnalytics";
 import ConversationsPage from "./ConversationsPage";
 import EquipmentList from "./EquipmentList";
-import './OwnerDashboardPage.css';
+import "./OwnerDashboardPage.css";
 
 const OwnerDashboardPage = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
   const [showAddForm, setShowAddForm] = useState(false);
 
-  // Protect route
+  // Protect Route
   if (!user) {
     return <Navigate to="/login" />;
   }
 
+  // Handle modal close on background click
+  const handleOverlayClick = (e) => {
+    if (e.target.classList.contains("modal-overlay")) {
+      setShowAddForm(false);
+    }
+  };
+
+  // Tab configuration (cleaner structure)
+  const tabs = [
+    { id: "overview", label: "Overview", icon: "📊" },
+    { id: "browse", label: "Browse", icon: "🏸" },
+    { id: "equipment", label: "My Equipment", icon: "📦" },
+    { id: "requests", label: "Bookings", icon: "📋" },
+    { id: "analytics", label: "Earnings", icon: "💰" },
+    { id: "messages", label: "Messages", icon: "💬" },
+  ];
+
   return (
     <div className="owner-dashboard">
-      {/* Header Section */}
+      {/* ================= HEADER ================= */}
       <div className="dashboard-header">
         <div className="header-content">
           <div className="welcome-section">
             <h1 className="dashboard-title">Equipment Owner Dashboard</h1>
             <p className="welcome-text">
-              Welcome back, <span className="user-name">{user.name}</span>
+              Welcome back,{" "}
+              <span className="user-name">{user?.name}</span>
             </p>
             <span className="owner-badge">Owner Mode</span>
           </div>
-          <button 
+
+          <button
             className="btn-add-equipment"
             onClick={() => setShowAddForm(true)}
           >
@@ -42,112 +61,94 @@ const OwnerDashboardPage = () => {
         </div>
       </div>
 
-      {/* Navigation Tabs */}
+      {/* ================= NAVIGATION ================= */}
       <div className="dashboard-navigation">
         <nav className="tab-nav">
-          <button 
-            className={`nav-tab ${activeTab === 'overview' ? 'active' : ''}`}
-            onClick={() => setActiveTab('overview')}
-          >
-            <span className="tab-icon">📊</span>
-            <span className="tab-label">Overview</span>
-          </button>
-          <button 
-            className={`nav-tab ${activeTab === 'browse' ? 'active' : ''}`}
-            onClick={() => setActiveTab('browse')}
-          >
-            <span className="tab-icon">🏸</span>
-            <span className="tab-label">Browse</span>
-          </button>
-          <button 
-            className={`nav-tab ${activeTab === 'equipment' ? 'active' : ''}`}
-            onClick={() => setActiveTab('equipment')}
-          >
-            <span className="tab-icon">📦</span>
-            <span className="tab-label">My Equipment</span>
-          </button>
-          <button 
-            className={`nav-tab ${activeTab === 'requests' ? 'active' : ''}`}
-            onClick={() => setActiveTab('requests')}
-          >
-            <span className="tab-icon">📋</span>
-            <span className="tab-label">Bookings</span>
-          </button>
-          <button 
-            className={`nav-tab ${activeTab === 'analytics' ? 'active' : ''}`}
-            onClick={() => setActiveTab('analytics')}
-          >
-            <span className="tab-icon">💰</span>
-            <span className="tab-label">Earnings</span>
-          </button>
-          <button 
-            className={`nav-tab ${activeTab === 'messages' ? 'active' : ''}`}
-            onClick={() => setActiveTab('messages')}
-          >
-            <span className="tab-icon">💬</span>
-            <span className="tab-label">Messages</span>
-          </button>
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              className={`nav-tab ${
+                activeTab === tab.id ? "active" : ""
+              }`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              <span className="tab-icon">{tab.icon}</span>
+              <span className="tab-label">{tab.label}</span>
+            </button>
+          ))}
         </nav>
       </div>
 
-      {/* Content Area */}
+      {/* ================= MAIN CONTENT ================= */}
       <div className="dashboard-main">
         <div className="content-container">
-          {activeTab === 'overview' && (
+          {activeTab === "overview" && (
             <div className="content-section">
               <div className="section-header">
                 <h2 className="section-title">Dashboard Overview</h2>
-                <p className="section-subtitle">Track your equipment performance and earnings</p>
+                <p className="section-subtitle">
+                  Track your equipment performance and earnings
+                </p>
               </div>
               <OwnerAnalytics overview={true} />
             </div>
           )}
 
-          {activeTab === 'browse' && (
+          {activeTab === "browse" && (
             <div className="content-section">
               <div className="section-header">
                 <h2 className="section-title">Browse Equipment</h2>
-                <p className="section-subtitle">Discover sports equipment for rent</p>
+                <p className="section-subtitle">
+                  Discover sports equipment for rent
+                </p>
               </div>
               <EquipmentList />
             </div>
           )}
 
-          {activeTab === 'equipment' && (
+          {activeTab === "equipment" && (
             <div className="content-section">
               <div className="section-header">
                 <h2 className="section-title">Equipment Inventory</h2>
-                <p className="section-subtitle">Manage your listed equipment</p>
+                <p className="section-subtitle">
+                  Manage your listed equipment
+                </p>
               </div>
               <MyEquipment />
             </div>
           )}
 
-          {activeTab === 'requests' && (
+          {activeTab === "requests" && (
             <div className="content-section">
               <div className="section-header">
                 <h2 className="section-title">Booking Requests</h2>
-                <p className="section-subtitle">Review and manage booking requests</p>
+                <p className="section-subtitle">
+                  Review and manage booking requests
+                </p>
               </div>
               <BookingRequests />
             </div>
           )}
 
-          {activeTab === 'analytics' && (
+          {activeTab === "analytics" && (
             <div className="content-section">
               <div className="section-header">
                 <h2 className="section-title">Earnings Analytics</h2>
-                <p className="section-subtitle">View your revenue and performance metrics</p>
+                <p className="section-subtitle">
+                  View your revenue and performance metrics
+                </p>
               </div>
               <OwnerAnalytics />
             </div>
           )}
 
-          {activeTab === 'messages' && (
+          {activeTab === "messages" && (
             <div className="content-section full-height">
               <div className="section-header">
                 <h2 className="section-title">Messages</h2>
-                <p className="section-subtitle">Communicate with renters</p>
+                <p className="section-subtitle">
+                  Communicate with renters
+                </p>
               </div>
               <div className="messages-wrapper">
                 <ConversationsPage />
@@ -156,11 +157,16 @@ const OwnerDashboardPage = () => {
           )}
         </div>
       </div>
-      
-      {/* Add Equipment Form Modal - shown regardless of active tab */}
+
+      {/* ================= ADD EQUIPMENT MODAL ================= */}
       {showAddForm && (
-        <div className="modal-overlay">
-          <AddEquipmentForm onClose={() => setShowAddForm(false)} />
+        <div
+          className="modal-overlay"
+          onClick={handleOverlayClick}
+        >
+          <AddEquipmentForm
+            onClose={() => setShowAddForm(false)}
+          />
         </div>
       )}
     </div>

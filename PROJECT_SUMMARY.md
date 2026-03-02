@@ -23,7 +23,7 @@ This document summarizes the implementation status of the OLX Clone project, a c
 
 ### 3. Authentication & User Management
 - ✅ User registration with role selection
-- ✅ User login/logout
+- ✅ User /logout
 - ✅ Password hashing with bcrypt
 - ✅ Protected routes with JWT middleware
 - ✅ Profile management

@@ -63,18 +63,18 @@ const AdvancedSearch = ({ onSearch }) => {
             onChange={handleInputChange}
           >
             <option value="">All Categories</option>
-            <option value="electronics">Electronics</option>
-            <option value="furniture">Furniture</option>
-            <option value="clothing">Clothing</option>
-            <option value="vehicles">Vehicles</option>
-            <option value="books">Books</option>
-            <option value="other">Other</option>
+            <option value="Badminton">Badminton</option>
+            <option value="Cricket">Cricket</option>
+            <option value="Tennis">Tennis</option>
+            <option value="Football">Football</option>
+            <option value="Gym">Gym</option>
+            <option value="Cycling">Cycling</option>
           </select>
         </div>
 
         <div className="price-range">
           <div className="form-group">
-            <label htmlFor="minPrice">Min Price:</label>
+            <label htmlFor="minPrice">Min Daily Rate (₹):</label>
             <input
               type="number"
               id="minPrice"
@@ -86,7 +86,7 @@ const AdvancedSearch = ({ onSearch }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="maxPrice">Max Price:</label>
+            <label htmlFor="maxPrice">Max Daily Rate (₹):</label>
             <input
               type="number"
               id="maxPrice"
@@ -123,7 +123,7 @@ const AdvancedSearch = ({ onSearch }) => {
             name="location"
             value={searchParams.location}
             onChange={handleInputChange}
-            placeholder="City or zip code"
+            placeholder="City / state / pincode"
           />
         </div>
 

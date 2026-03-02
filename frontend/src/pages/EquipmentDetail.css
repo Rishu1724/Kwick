@@ -1,0 +1,102 @@
+.equipment-detail-page {
+  padding: 20px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.detail-container {
+  display: flex;
+  gap: 25px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.left-section {
+  flex: 2;
+}
+
+.right-section {
+  flex: 1;
+}
+
+.equipment-gallery {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.equipment-image {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  object-fit: cover;
+}
+
+.description-card,
+.info-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.pricing-box {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+.specs p {
+  margin: 6px 0;
+}
+
+.booking-card {
+  margin-top: 20px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.review-section {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.status-message {
+  padding: 50px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.status-message.error {
+  color: red;
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .detail-container {
+    flex-direction: column;
+  }
+
+  .pricing-box {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+}

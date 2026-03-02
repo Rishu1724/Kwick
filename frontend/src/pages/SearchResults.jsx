@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import api from '../services/api';
-import ProductCard from '../components/ProductCard';
+import EquipmentCard from '../components/EquipmentCard';
 import AdvancedSearch from '../components/AdvancedSearch';
 
 const SearchResults = () => {
-  const [products, setProducts] = useState([]);
+  const [equipment, setEquipment] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchParams, setSearchParams] = useState({});
@@ -42,8 +42,26 @@ const SearchResults = () => {
         }
       });
       
-      const response = await api.get(`/api/products?${apiParams}`);
-      setProducts(response.data.products || []);
+      // Map the legacy "products" search fields to equipment query params.
+      // Backend supports keyword search via title regex by using query param `title`.
+      // Also supports Mongo operators via bracket notation.
+      const mapped = new URLSearchParams();
+
+      if (params.keyword) mapped.append('keyword', params.keyword);
+      if (params.category) mapped.append('category', params.category);
+      if (params.condition) mapped.append('condition', params.condition);
+      if (params.location) mapped.append('location', params.location);
+      // price range maps to dailyRate range
+      if (params.minPrice) mapped.append('dailyRate[gte]', params.minPrice);
+      if (params.maxPrice) mapped.append('dailyRate[lte]', params.maxPrice);
+
+      // sortBy mapping
+      if (params.sortBy === 'price-asc') mapped.append('sort', 'dailyRate');
+      else if (params.sortBy === 'price-desc') mapped.append('sort', '-dailyRate');
+      else mapped.append('sort', '-createdAt');
+
+      const response = await api.get(`/api/equipment?${mapped.toString()}`);
+      setEquipment(response.data.data || []);
       setLoading(false);
     } catch (err) {
       setError('Failed to fetch search results');
@@ -65,12 +83,12 @@ const SearchResults = () => {
       
       <AdvancedSearch onSearch={handleAdvancedSearch} />
       
-      {products.length === 0 ? (
-        <p>No products found matching your search.</p>
+      {equipment.length === 0 ? (
+        <p>No equipment found matching your search.</p>
       ) : (
         <div className="product-grid">
-          {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
+          {equipment.map((item) => (
+            <EquipmentCard key={item._id} equipment={item} />
           ))}
         </div>
       )}

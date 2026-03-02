@@ -1,103 +1,87 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
 import Profile from "../components/Profile";
 import Wishlist from "../components/Wishlist";
 import MyBookings from "../components/MyBookings";
 import ConversationsPage from "./ConversationsPage";
 import EquipmentList from "./EquipmentList";
-import './RenterDashboardPage.css';
+import "./RenterDashboardPage.css";
+
+const TABS = [
+  { id: "bookings",   label: "My Rentals",       icon: "📅" },
+  { id: "equipment",  label: "Browse Equipment",  icon: "🏸" },
+  { id: "wishlist",   label: "Wish List",          icon: "❤️" },
+  { id: "messages",   label: "Messages",           icon: "💬" },
+  { id: "profile",    label: "My Profile",         icon: "👤" },
+];
 
 const RenterDashboardPage = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("bookings");
 
-  // Protect route
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
+  if (!user) return <Navigate to="/login" />;
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "bookings":   return <MyBookings />;
+      case "equipment":  return <EquipmentList />;
+      case "wishlist":   return <Wishlist />;
+      case "messages":   return <ConversationsPage />;
+      case "profile":    return <Profile />;
+      default:           return null;
+    }
+  };
+
+  const activeTabData = TABS.find((t) => t.id === activeTab);
 
   return (
-    <div className="renter-dashboard">
-      {/* Header */}
-      <div className="dashboard-header">
-        <h1>Equipment Renter Dashboard</h1>
-        <p>Welcome, <strong>{user.name}</strong> 👋 | Renter Mode Active</p>
-        <p className="dashboard-subtitle">Manage your rentals, bookings, and wishlists</p>
-      </div>
+    <div className="rd-root">
+      {/* Sidebar */}
+      <aside className="rd-sidebar">
+        <div className="rd-brand">
+          <span className="rd-brand-icon">🏸</span>
+          <span className="rd-brand-name">RentSport</span>
+        </div>
 
-      {/* Tab Navigation */}
-      <div className="dashboard-tabs">
-        <button 
-          className={`tab-button ${activeTab === 'bookings' ? 'active' : ''}`}
-          onClick={() => setActiveTab('bookings')}
-        >
-          📅 My Rentals
-        </button>
-        <button 
-          className={`tab-button ${activeTab === 'equipment' ? 'active' : ''}`}
-          onClick={() => setActiveTab('equipment')}
-        >
-          🏸 Browse Equipment
-        </button>
-        <button 
-          className={`tab-button ${activeTab === 'wishlist' ? 'active' : ''}`}
-          onClick={() => setActiveTab('wishlist')}
-        >
-          ❤️ Wish List
-        </button>
-        <button 
-          className={`tab-button ${activeTab === 'profile' ? 'active' : ''}`}
-          onClick={() => setActiveTab('profile')}
-        >
-          👤 My Profile
-        </button>
-        <button 
-          className={`tab-button ${activeTab === 'messages' ? 'active' : ''}`}
-          onClick={() => setActiveTab('messages')}
-        >
-          💬 Messages
-        </button>
-      </div>
-
-      {/* Tab Content */}
-      <div className="dashboard-content">
-        {activeTab === 'bookings' && (
-          <div className="tab-section">
-            <h2>📅 My Rental Bookings</h2>
-            <MyBookings />
+        <div className="rd-user-card">
+          <div className="rd-avatar">{user.name?.charAt(0).toUpperCase()}</div>
+          <div>
+            <p className="rd-user-name">{user.name}</p>
+            <p className="rd-user-role">Renter</p>
           </div>
-        )}
+        </div>
 
-        {activeTab === 'equipment' && (
-          <div className="tab-section">
-            <h2>🏸 Browse Sports Equipment</h2>
-            <EquipmentList />
-          </div>
-        )}
+        <nav className="rd-nav">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              className={`rd-nav-item ${activeTab === tab.id ? "active" : ""}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              <span className="rd-nav-icon">{tab.icon}</span>
+              <span className="rd-nav-label">{tab.label}</span>
+              {activeTab === tab.id && <span className="rd-nav-indicator" />}
+            </button>
+          ))}
+        </nav>
+      </aside>
 
-        {activeTab === 'wishlist' && (
-          <div className="tab-section">
-            <h2>❤️ My Wish List</h2>
-            <Wishlist />
+      {/* Main Content */}
+      <main className="rd-main">
+        <header className="rd-topbar">
+          <div>
+            <h1 className="rd-page-title">
+              {activeTabData.icon} {activeTabData.label}
+            </h1>
+            <p className="rd-page-sub">Welcome back, <strong>{user.name}</strong></p>
           </div>
-        )}
+        </header>
 
-        {activeTab === 'profile' && (
-          <div className="tab-section">
-            <h2>👤 My Profile</h2>
-            <Profile />
-          </div>
-        )}
-
-        {activeTab === 'messages' && (
-          <div className="tab-section messages-section">
-            <h2>💬 My Messages</h2>
-            <ConversationsPage />
-          </div>
-        )}
-      </div>
+        <div className="rd-content">
+          {renderContent()}
+        </div>
+      </main>
     </div>
   );
 };

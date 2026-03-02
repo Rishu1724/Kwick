@@ -1,6 +1,7 @@
 import React from 'react';
 
-const SortDropdown = ({ sortBy, onSortChange }) => {
+const SortDropdown = ({ currentSort, sortBy, onSortChange }) => {
+  const selected = currentSort ?? sortBy ?? 'newest';
   const sortOptions = [
     { value: 'newest', label: 'Newest First' },
     { value: 'price-asc', label: 'Price: Low to High' },
@@ -11,7 +12,7 @@ const SortDropdown = ({ sortBy, onSortChange }) => {
   return (
     <div className="sort-dropdown">
       <label>Sort by:</label>
-      <select value={sortBy} onChange={(e) => onSortChange(e.target.value)}>
+      <select value={selected} onChange={(e) => onSortChange(e.target.value)}>
         {sortOptions.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

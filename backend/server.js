@@ -72,6 +72,7 @@ app.use('/api/reviews', require('./routes/reviewRoutes'));
 app.use('/api/reports', require('./routes/reportRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
 app.use('/api/payments', require('./routes/paymentRoutes'));
+app.use('/api/negotiations', require('./routes/negotiationRoutes'));
 
 app.get('/', (req, res) => {
   res.send('API is running...');

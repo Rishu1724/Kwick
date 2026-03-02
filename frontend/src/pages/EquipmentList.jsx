@@ -29,7 +29,7 @@ const EquipmentList = () => {
       maxPrice: '',
       condition: '',
       location: '',
-      availability: 'available'
+      status: 'available'
     };
     
     setFilters(initialFilters);
@@ -39,15 +39,34 @@ const EquipmentList = () => {
     const fetchEquipment = async () => {
       try {
         setLoading(true);
-        const queryParams = new URLSearchParams({
-          ...filters,
-          sortBy,
-          pageNumber: currentPage
-        });
-        
-        const response = await api.get(`/api/equipment?${queryParams}`);
+        const queryParams = new URLSearchParams();
+
+        // Pagination (backend expects `page` and `limit`)
+        const limit = 20;
+        queryParams.append('page', String(currentPage));
+        queryParams.append('limit', String(limit));
+
+        // Filters (map legacy fields to equipment fields)
+        if (filters.category) queryParams.append('category', filters.category);
+        if (filters.condition) queryParams.append('condition', filters.condition);
+        if (filters.status) queryParams.append('status', filters.status);
+
+        // Location: try to filter by location.city (backend supports regex)
+        if (filters.location) queryParams.append('location', filters.location);
+
+        // Price range → dailyRate range
+        if (filters.minPrice) queryParams.append('dailyRate[gte]', filters.minPrice);
+        if (filters.maxPrice) queryParams.append('dailyRate[lte]', filters.maxPrice);
+
+        // Sorting (backend expects `sort`)
+        if (sortBy === 'price-asc') queryParams.append('sort', 'dailyRate');
+        else if (sortBy === 'price-desc') queryParams.append('sort', '-dailyRate');
+        else if (sortBy === 'popularity') queryParams.append('sort', '-views');
+        else queryParams.append('sort', '-createdAt');
+
+        const response = await api.get(`/api/equipment?${queryParams.toString()}`);
         setEquipment(response.data.data || []);
-        setTotalPages(response.data.pagination?.next || response.data.pagination?.previous ? Math.ceil(response.data.count / 20) : 1);
+        setTotalPages(Math.max(1, Math.ceil((response.data.count || 0) / limit)));
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch equipment');

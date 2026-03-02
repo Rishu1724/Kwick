@@ -12,6 +12,31 @@ const getEquipment = asyncHandler(async (req, res) => {
   // Build query object for filtering
   const queryObj = { ...req.query };
 
+  // Keyword search (title/description)
+  const keyword = (req.query.keyword || req.query.title || '').trim();
+  if (keyword) {
+    delete queryObj.keyword;
+    delete queryObj.title;
+    queryObj.$or = [
+      { title: { $regex: keyword, $options: 'i' } },
+      { description: { $regex: keyword, $options: 'i' } }
+    ];
+  }
+
+  // Location search (city/state/pincode)
+  const location = (req.query.location || '').trim();
+  if (location) {
+    delete queryObj.location;
+    queryObj.$and = queryObj.$and || [];
+    queryObj.$and.push({
+      $or: [
+        { 'location.city': { $regex: location, $options: 'i' } },
+        { 'location.state': { $regex: location, $options: 'i' } },
+        { 'location.pincode': { $regex: location, $options: 'i' } }
+      ]
+    });
+  }
+
   // Fields to exclude
   const excludeFields = ['page', 'sort', 'limit', 'fields', 'featured'];
   excludeFields.forEach(field => delete queryObj[field]);

@@ -31,7 +31,7 @@ const EquipmentCard = ({ equipment }) => {
             onClick={(e) => e.stopPropagation()} // Prevent click propagation to parent link
           />
           <div className="rental-badge">
-            {equipment.availability === 'available' ? 'Available' : 'Rented'}
+            {equipment.status === 'available' ? 'Available' : 'Rented'}
           </div>
         </div>
         <div className="equipment-info-enhanced">
