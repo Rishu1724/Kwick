@@ -13,22 +13,26 @@
 }
 
 .bookings-filter button {
-  padding: 8px 16px;
-  border: 1px solid #ddd;
-  background-color: #f8f9fa;
-  border-radius: 4px;
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  border: 1px solid #eee;
+  background-color: #fff;
+  border-radius: 999px;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-weight: 600;
+  color: #444;
 }
 
 .bookings-filter button:hover {
-  background-color: #e9ecef;
+  border-color: rgba(255, 107, 0, 0.35);
+  background-color: rgba(255, 107, 0, 0.06);
 }
 
 .bookings-filter button.active {
-  background-color: #4CAF50;
-  color: white;
-  border-color: #4CAF50;
+  background-color: #ff6b00;
+  color: #fff;
+  border-color: #ff6b00;
 }
 
 .bookings-list {
@@ -38,11 +42,11 @@
 }
 
 .booking-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 16px;
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
 }
 
 .booking-header {
@@ -56,7 +60,7 @@
 
 .booking-header h3 {
   margin: 0;
-  color: #333;
+  color: #111;
   font-size: 18px;
 }
 
@@ -88,35 +92,36 @@
   justify-content: flex-end;
 }
 
-.btn-primary {
-  background-color: #2196F3;
-  color: white;
+.my-bookings .btn-primary {
+  background-color: #ff6b00;
+  color: #fff;
   border: none;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
 }
 
-.btn-primary:hover {
-  background-color: #0b7dda;
+.my-bookings .btn-primary:hover {
+  background-color: #ff7d1f;
 }
 
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
-  border: none;
+.my-bookings .btn-secondary {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #eee;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
 }
 
-.btn-secondary:hover {
-  background-color: #5a6268;
+.my-bookings .btn-secondary:hover {
+  border-color: rgba(255, 107, 0, 0.35);
+  background: rgba(255, 107, 0, 0.06);
 }
 
-.error {
+.my-bookings .error {
   color: #f44336;
   padding: 10px;
   background-color: #ffebee;
@@ -130,7 +135,9 @@
   }
   
   .bookings-filter {
-    flex-direction: column;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
   }
   
   .booking-header {
@@ -143,7 +150,7 @@
     flex-direction: column;
   }
   
-  .btn-primary, .btn-secondary {
+  .my-bookings .btn-primary, .my-bookings .btn-secondary {
     width: 100%;
   }
 }

@@ -55,7 +55,7 @@ const uploadMultipleImages = async (req, res, next) => {
 
   try {
     const uploadPromises = req.files.map(file => 
-      uploadImageToCloudinary(file.buffer, 'products')
+      uploadImageToCloudinary(file.buffer, 'equipment')
     );
     
     const results = await Promise.all(uploadPromises);

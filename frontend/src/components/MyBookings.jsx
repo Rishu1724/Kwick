@@ -11,7 +11,7 @@ const MyBookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await api.get('/api/bookings');
+        const response = await api.get('/api/bookings', { params: { role: 'renter' } });
         setBookings(response.data.data || []);
         setLoading(false);
       } catch (err) {

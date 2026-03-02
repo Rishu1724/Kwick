@@ -1,15 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import api from '../services/api';
 
-const AdvancedSearch = ({ onSearch }) => {
-  const [searchParams, setSearchParams] = useState({
-    keyword: '',
-    category: '',
-    minPrice: '',
-    maxPrice: '',
-    condition: '',
-    location: '',
-    sortBy: 'newest'
-  });
+const defaultParams = {
+  keyword: '',
+  category: '',
+  minPrice: '',
+  maxPrice: '',
+  condition: '',
+  location: '',
+  sortBy: 'newest'
+};
+
+const fallbackCategories = ['Badminton', 'Cricket', 'Tennis', 'Football', 'Gym', 'Cycling'];
+
+const AdvancedSearch = ({ onSearch, variant = 'panel', initialParams }) => {
+  const [categories, setCategories] = useState([]);
+  const [searchParams, setSearchParams] = useState(defaultParams);
+
+  const containerClassName = useMemo(() => {
+    if (variant === 'sidebar') return 'filter-sidebar advanced-search';
+    return 'advanced-search';
+  }, [variant]);
+
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      try {
+        const res = await api.get('/api/categories');
+        if (!isMounted) return;
+        const list = Array.isArray(res.data) ? res.data : [];
+        setCategories(list.map((c) => c?.name).filter(Boolean));
+      } catch {
+        if (!isMounted) return;
+        setCategories([]);
+      }
+    })();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!initialParams) return;
+    setSearchParams((prev) => ({ ...prev, ...initialParams }));
+  }, [initialParams]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,22 +59,14 @@ const AdvancedSearch = ({ onSearch }) => {
   };
 
   const handleReset = () => {
-    const resetParams = {
-      keyword: '',
-      category: '',
-      minPrice: '',
-      maxPrice: '',
-      condition: '',
-      location: '',
-      sortBy: 'newest'
-    };
+    const resetParams = { ...defaultParams };
     setSearchParams(resetParams);
     onSearch(resetParams);
   };
 
   return (
-    <div className="advanced-search">
-      <h3>Advanced Search</h3>
+    <div className={containerClassName}>
+      <h3>{variant === 'sidebar' ? 'Search Filters' : 'Advanced Search'}</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="keyword">Keyword:</label>
@@ -63,12 +89,11 @@ const AdvancedSearch = ({ onSearch }) => {
             onChange={handleInputChange}
           >
             <option value="">All Categories</option>
-            <option value="Badminton">Badminton</option>
-            <option value="Cricket">Cricket</option>
-            <option value="Tennis">Tennis</option>
-            <option value="Football">Football</option>
-            <option value="Gym">Gym</option>
-            <option value="Cycling">Cycling</option>
+            {(categories.length > 0 ? categories : fallbackCategories).map((name) => (
+              <option key={name} value={name}>
+                {name}
+              </option>
+            ))}
           </select>
         </div>
 

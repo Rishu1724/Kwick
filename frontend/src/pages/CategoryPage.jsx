@@ -81,7 +81,10 @@ const CategoryPage = () => {
 
   return (
     <div className="category-page">
-      <h1>{category} Equipment</h1>
+      <div className="page-header">
+        <h1>{category} Equipment</h1>
+        <p>Browse listings in this category</p>
+      </div>
       
       <div className="equipment-content">
         <FilterSidebar 
@@ -100,9 +103,14 @@ const CategoryPage = () => {
             />
           </div>
           {loading ? (
-            <p>Loading equipment...</p>
+            <div className="loading">
+              <div className="spinner" />
+              <p>Loading equipment...</p>
+            </div>
           ) : error ? (
-            <p>{error}</p>
+            <div className="alert alert-danger">
+              <div className="alert-message">{error}</div>
+            </div>
           ) : equipment.length === 0 ? (
             <div className="no-equipment">
               <h3>No equipment found</h3>

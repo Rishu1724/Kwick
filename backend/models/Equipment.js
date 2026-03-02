@@ -88,6 +88,10 @@ const equipmentSchema = new mongoose.Schema({
   images: [{
     type: String
   }],
+  // Cloudinary public IDs for uploaded images (kept separate so `images` can stay as string URLs)
+  imagePublicIds: [{
+    type: String
+  }],
   location: {
     city: String,
     state: String,

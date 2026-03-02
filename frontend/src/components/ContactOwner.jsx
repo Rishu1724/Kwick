@@ -64,7 +64,7 @@ const ContactOwner = ({ ownerId, equipmentId }) => {
   return (
     <>
       <button className="btn-contact" onClick={handleContactOwner}>
-        Contact Owner
+        Chat with Owner
       </button>
       
       <Modal 

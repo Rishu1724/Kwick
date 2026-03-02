@@ -122,10 +122,44 @@ main {
   color: #ff6b00;
 }
 
+.nav-links a.active {
+  background-color: rgba(255, 107, 0, 0.12);
+  color: #ff6b00;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
   gap: 0.6rem;
+}
+
+.nav-role-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 0.7rem;
+  border-radius: 999px;
+  border: 1px solid #eee;
+  background: #fff;
+  color: #444;
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.nav-role-badge.owner,
+.nav-role-badge.renter,
+.nav-role-badge.both {
+  border-color: rgba(255, 107, 0, 0.30);
+  background: rgba(255, 107, 0, 0.08);
+  color: #ff6b00;
+}
+
+.nav-role-badge.admin {
+  border-color: rgba(33, 150, 243, 0.28);
+  background: rgba(33, 150, 243, 0.08);
+  color: #2196f3;
 }
 
 .nav-icon-btn {
@@ -261,6 +295,7 @@ main {
 .home-hero-content {
   max-width: 560px;
   color: #fff;
+  text-align: left;
 }
 
 .home-hero-title {
@@ -277,7 +312,7 @@ main {
 .home-hero-subtitle {
   color: rgba(255, 255, 255, 0.80);
   font-size: 1.05rem;
-  margin-bottom: 1.4rem;
+  margin: 0 0 1.4rem;
   max-width: 520px;
 }
 
@@ -308,6 +343,12 @@ main {
   border: none;
   outline: none;
   font-size: 1rem;
+  background: transparent;
+  color: #111;
+}
+
+.home-hero-search input::placeholder {
+  color: #9aa0a6;
 }
 
 .home-hero-search button {
@@ -318,10 +359,15 @@ main {
   border-radius: 12px;
   font-weight: 700;
   cursor: pointer;
+  width: auto;
+  box-shadow: none;
+  transform: none;
 }
 
 .home-hero-search button:hover {
   background: #ff7d1f;
+  transform: none;
+  box-shadow: none;
 }
 
 .home-hero-popular {
@@ -345,11 +391,23 @@ main {
   border-radius: 999px;
   cursor: pointer;
   font-weight: 600;
+  width: auto;
+  box-shadow: none;
+  transform: none;
+  font-size: 0.92rem;
+  line-height: 1;
 }
 
 .home-chip:hover {
   border-color: rgba(255, 107, 0, 0.6);
   color: #fff;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Prevent global button styles from breaking Home layout */
+.home-page button {
+  width: auto;
 }
 
 .home-stats {
@@ -368,6 +426,10 @@ main {
 
 .home-stat {
   text-align: center;
+  padding: 0.75rem 0.5rem;
+  border-radius: 14px;
+  border: 1px solid #f2f2f2;
+  background: #fff;
 }
 
 .home-stat-value {
@@ -414,11 +476,12 @@ main {
   font-size: 1.7rem;
   font-weight: 800;
   color: #111;
+  margin: 0;
 }
 
 .home-section-header p {
   color: #6b7280;
-  margin-top: 0.25rem;
+  margin: 0.25rem 0 0;
 }
 
 .home-view-all {
@@ -476,6 +539,18 @@ main {
   object-fit: contain;
 }
 
+.home-category-icon.photo {
+  padding: 0;
+  background: rgba(255, 107, 0, 0.10);
+}
+
+.home-category-icon.photo img {
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
 .home-category-name {
   font-weight: 800;
 }
@@ -498,6 +573,14 @@ main {
   border-radius: 16px;
   border: 1px solid #eee;
   background: #fff;
+}
+
+.home-step h3 {
+  margin: 0 0 0.4rem;
+}
+
+.home-step p {
+  margin: 0;
 }
 
 .home-step-icon {
@@ -577,6 +660,22 @@ main {
   }
   .home-hero-title {
     font-size: 2.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .home-view-all {
+    align-self: flex-start;
+  }
+
+  .home-hero-search {
+    width: 100%;
   }
 }
 
@@ -3266,33 +3365,48 @@ SPORTS EQUIPMENT RENTAL PLATFORM STYLES
   padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
+  width: 100%;
+  background: #f8f9fa;
+  border-radius: 16px;
 }
 
-.page-header {
+.equipment-list-page .page-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  background: #fff;
+  padding: 1.8rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  border: 1px solid #eee;
 }
 
-.page-header h1 {
-  font-size: 2.5rem;
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
+.equipment-list-page .page-header h1 {
+  font-size: 2.2rem;
+  color: #333;
+  margin-bottom: 0.4rem;
 }
 
-.page-header p {
-  font-size: 1.2rem;
+.equipment-list-page .page-header p {
+  font-size: 1.1rem;
   color: #666;
+  margin: 0;
 }
 
 .equipment-content {
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 2rem;
+  align-items: start;
 }
 
 .equipment-main {
   display: flex;
   flex-direction: column;
+  background: #fff;
+  padding: 1.8rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  border: 1px solid #eee;
 }
 
 .equipment-controls {
@@ -3300,22 +3414,26 @@ SPORTS EQUIPMENT RENTAL PLATFORM STYLES
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .results-info {
-  font-weight: 500;
+  font-weight: 600;
   color: #333;
+}
+
+.equipment-controls .sort-dropdown {
+  margin-bottom: 0;
 }
 
 .equipment-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.8rem;
 }
 
 .no-equipment {

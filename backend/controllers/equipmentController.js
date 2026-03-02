@@ -5,6 +5,24 @@ const User = require('../models/User');
 const Booking = require('../models/Booking');
 const { body, validationResult } = require('express-validator');
 
+const normalizeEquipmentPayload = (rawBody = {}) => {
+  const payload = { ...rawBody };
+
+  // Convert bracket-notation fields from multipart forms into nested objects.
+  // Example: location[city] -> payload.location.city
+  const location = { ...(payload.location && typeof payload.location === 'object' ? payload.location : {}) };
+  Object.keys(payload).forEach((key) => {
+    const match = key.match(/^location\[(.+)\]$/);
+    if (!match) return;
+    const field = match[1];
+    location[field] = payload[key];
+    delete payload[key];
+  });
+  if (Object.keys(location).length > 0) payload.location = location;
+
+  return payload;
+};
+
 // @desc    Get all equipment
 // @route   GET /api/equipment
 // @access  Public
@@ -163,11 +181,27 @@ const createEquipment = asyncHandler(async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
+  const payload = normalizeEquipmentPayload(req.body);
+
+  // Enforce that `images`/`imagePublicIds` are only set via Cloudinary uploads.
+  delete payload.images;
+  delete payload.imagePublicIds;
+
   // Add owner to equipment object
-  req.body.ownerId = req.user._id;
+  payload.ownerId = req.user._id;
+
+  // Persist Cloudinary uploads (from uploadMultipleImages middleware)
+  if (Array.isArray(req.cloudinaryResults) && req.cloudinaryResults.length > 0) {
+    payload.images = req.cloudinaryResults
+      .map((r) => r?.secure_url)
+      .filter(Boolean);
+    payload.imagePublicIds = req.cloudinaryResults
+      .map((r) => r?.public_id)
+      .filter(Boolean);
+  }
 
   // Create equipment
-  const equipment = await Equipment.create(req.body);
+  const equipment = await Equipment.create(payload);
 
   res.status(201).json({
     success: true,
@@ -190,10 +224,28 @@ const updateEquipment = asyncHandler(async (req, res) => {
     return res.status(401).json({ message: 'Not authorized to update this equipment' });
   }
 
-  equipment = await Equipment.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true
+  const payload = normalizeEquipmentPayload(req.body);
+
+  // Do not allow changing ownership or directly setting images via body.
+  delete payload.ownerId;
+  delete payload.images;
+  delete payload.imagePublicIds;
+
+  // Append newly uploaded images, if any
+  if (Array.isArray(req.cloudinaryResults) && req.cloudinaryResults.length > 0) {
+    const urls = req.cloudinaryResults.map((r) => r?.secure_url).filter(Boolean);
+    const publicIds = req.cloudinaryResults.map((r) => r?.public_id).filter(Boolean);
+    equipment.images = [...(equipment.images || []), ...urls];
+    equipment.imagePublicIds = [...(equipment.imagePublicIds || []), ...publicIds];
+  }
+
+  // Apply other field updates
+  Object.keys(payload).forEach((key) => {
+    if (key === 'images' || key === 'imagePublicIds') return;
+    equipment[key] = payload[key];
   });
+
+  await equipment.save();
 
   res.status(200).json({
     success: true,
@@ -304,13 +356,15 @@ const uploadEquipmentImages = asyncHandler(async (req, res) => {
     return res.status(401).json({ message: 'Not authorized to upload images for this equipment' });
   }
 
-  if (!req.files || req.files.length === 0) {
+  if (!Array.isArray(req.cloudinaryResults) || req.cloudinaryResults.length === 0) {
     return res.status(400).json({ message: 'No files uploaded' });
   }
 
-  // Add image URLs to equipment
-  const imageUrls = req.files.map(file => file.path || file.location); // Using Cloudinary path
-  equipment.images = [...equipment.images, ...imageUrls];
+  const urls = req.cloudinaryResults.map((r) => r?.secure_url).filter(Boolean);
+  const publicIds = req.cloudinaryResults.map((r) => r?.public_id).filter(Boolean);
+
+  equipment.images = [...(equipment.images || []), ...urls];
+  equipment.imagePublicIds = [...(equipment.imagePublicIds || []), ...publicIds];
   await equipment.save();
 
   res.status(200).json({

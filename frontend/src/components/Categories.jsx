@@ -7,6 +7,23 @@ const Categories = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const localCategoryImages = useMemo(() => {
+    // Any image dropped into `src/assets/categories/` can override emoji icons.
+    // Example filenames: `badminton.png`, `cricket.jpg`.
+    const modules = import.meta.glob('../assets/categories/*.{png,jpg,jpeg,webp,svg}', {
+      eager: true,
+      import: 'default'
+    });
+
+    const byBaseName = {};
+    Object.entries(modules).forEach(([path, src]) => {
+      const file = path.split('/').pop() || '';
+      const base = file.replace(/\.[^.]+$/, '').toLowerCase();
+      if (base) byBaseName[base] = src;
+    });
+    return byBaseName;
+  }, []);
+
   const fallbackIcons = useMemo(
     () => ({
       Badminton: '🏸',
@@ -53,7 +70,11 @@ const Categories = () => {
 
       <div className="home-category-row">
         {categories.map((category) => {
-          const icon = category.icon || fallbackIcons[category.name] || '🏅';
+          const localIcon = localCategoryImages[String(category.name || '').toLowerCase()];
+          const icon = category.icon || localIcon || fallbackIcons[category.name] || '🏅';
+          const isImageSrc =
+            typeof icon === 'string' &&
+            (icon.startsWith('http') || icon.startsWith('/') || icon.startsWith('data:') || icon.startsWith('blob:'));
           const itemCount = Array.isArray(category.subCategories)
             ? `${category.subCategories.length} types`
             : '';
@@ -65,8 +86,8 @@ const Categories = () => {
               className="home-category-tile"
               aria-label={`Browse ${category.name}`}
             >
-              <div className="home-category-icon">
-                {typeof icon === 'string' && icon.startsWith('http') ? (
+              <div className={`home-category-icon ${isImageSrc ? 'photo' : ''}`.trim()}>
+                {isImageSrc ? (
                   <img src={icon} alt="" />
                 ) : (
                   <span>{icon}</span>

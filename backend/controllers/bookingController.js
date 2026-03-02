@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const Booking = require('../models/Booking');
 const Equipment = require('../models/Equipment');
 const User = require('../models/User');
+const mongoose = require('mongoose');
 const { body, validationResult } = require('express-validator');
 
 // @desc    Create a new booking
@@ -25,6 +26,25 @@ const createBooking = asyncHandler(async (req, res) => {
     deliveryOption,
     deliveryAddress
   } = req.body;
+
+  // Guard rails: prevent 500s on bad client payloads.
+  if (!equipmentId || !mongoose.Types.ObjectId.isValid(equipmentId)) {
+    return res.status(400).json({ message: 'Invalid equipmentId' });
+  }
+  if (!startDate || !endDate) {
+    return res.status(400).json({ message: 'startDate and endDate are required' });
+  }
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
+    return res.status(400).json({ message: 'Invalid startDate or endDate' });
+  }
+  if (end < start) {
+    return res.status(400).json({ message: 'endDate must be on or after startDate' });
+  }
+  if (totalAmount === undefined || totalAmount === null || Number.isNaN(Number(totalAmount))) {
+    return res.status(400).json({ message: 'totalAmount is required' });
+  }
 
   // Validate equipment exists and is available
   const equipment = await Equipment.findById(equipmentId);
@@ -56,10 +76,10 @@ const createBooking = asyncHandler(async (req, res) => {
     equipmentId,
     renterId: req.user._id,
     ownerId: equipment.ownerId,
-    startDate: new Date(startDate),
-    endDate: new Date(endDate),
+    startDate: start,
+    endDate: end,
     bookingType,
-    totalAmount,
+    totalAmount: Number(totalAmount),
     securityDeposit,
     cancellationPolicy,
     specialRequests,

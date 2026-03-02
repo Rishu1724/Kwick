@@ -14,6 +14,7 @@ const EquipmentDetail = () => {
   const [equipment, setEquipment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchEquipment = async () => {
@@ -30,6 +31,10 @@ const EquipmentDetail = () => {
     fetchEquipment();
   }, [id]);
 
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [equipment?._id]);
+
   if (loading)
     return <div className="status-message">Loading equipment details...</div>;
 
@@ -41,6 +46,8 @@ const EquipmentDetail = () => {
   const dailyRate = equipment.dailyRate || equipment.price;
   const hourlyRate = equipment.hourlyRate || Math.round(dailyRate / 8);
   const weeklyRate = equipment.weeklyRate || dailyRate * 6;
+  const images = Array.isArray(equipment.images) ? equipment.images.filter(Boolean) : [];
+  const activeImageSrc = images[activeImageIndex] || images[0] || 'https://via.placeholder.com/1200x800';
 
   return (
     <div className="equipment-detail-page">
@@ -53,10 +60,26 @@ const EquipmentDetail = () => {
           <div className="detail-left">
             <div className="detail-image-wrap">
               <img
-                src={equipment.images?.[0] || 'https://via.placeholder.com/1200x800'}
+                src={activeImageSrc}
                 alt={equipment.title}
               />
             </div>
+
+            {images.length > 1 && (
+              <div className="detail-thumbs">
+                {images.map((src, idx) => (
+                  <button
+                    key={`${src}-${idx}`}
+                    type="button"
+                    className={`detail-thumb ${idx === activeImageIndex ? 'active' : ''}`}
+                    onClick={() => setActiveImageIndex(idx)}
+                    aria-label={`View photo ${idx + 1}`}
+                  >
+                    <img src={src} alt="" />
+                  </button>
+                ))}
+              </div>
+            )}
 
             <div className="detail-info-card">
               <h2>Description</h2>

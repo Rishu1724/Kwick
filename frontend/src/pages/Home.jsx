@@ -2,15 +2,53 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Categories from '../components/Categories';
 import FeaturedEquipment from '../components/FeaturedEquipment';
+import api from '../services/api';
 
 const Home = () => {
   const [q, setQ] = useState('');
+  const [stats, setStats] = useState(null);
+  const [popular, setPopular] = useState([]);
   const navigate = useNavigate();
 
   const onHeroSearch = (e) => {
     e.preventDefault();
     if (!q.trim()) return;
     navigate(`/search?q=${encodeURIComponent(q.trim())}`);
+  };
+
+  React.useEffect(() => {
+    let cancelled = false;
+
+    const load = async () => {
+      try {
+        const [statsRes, categoriesRes] = await Promise.all([
+          api.get('/api/stats/home'),
+          api.get('/api/categories')
+        ]);
+        if (!cancelled) {
+          setStats(statsRes.data?.data || null);
+          const categories = Array.isArray(categoriesRes.data) ? categoriesRes.data : [];
+          setPopular(categories.slice(0, 3).map((c) => String(c?.name || '')).filter(Boolean));
+        }
+      } catch {
+        if (!cancelled) {
+          setStats(null);
+          setPopular([]);
+        }
+      }
+    };
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const formatStat = (value) => {
+    if (value === null || value === undefined) return '—';
+    const n = Number(value);
+    if (Number.isNaN(n)) return '—';
+    return n.toLocaleString();
   };
 
   return (
@@ -44,9 +82,16 @@ const Home = () => {
 
             <div className="home-hero-popular">
               <span className="home-hero-popular-label">Popular:</span>
-              <button type="button" className="home-chip" onClick={() => navigate('/search?q=Badminton')}>Badminton</button>
-              <button type="button" className="home-chip" onClick={() => navigate('/search?q=Cricket')}>Cricket</button>
-              <button type="button" className="home-chip" onClick={() => navigate('/search?q=Cycling')}>Cycling</button>
+              {popular.map((name) => (
+                <button
+                  key={name}
+                  type="button"
+                  className="home-chip"
+                  onClick={() => navigate(`/search?q=${encodeURIComponent(name)}`)}
+                >
+                  {name}
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -55,19 +100,19 @@ const Home = () => {
       <section className="home-stats">
         <div className="home-stats-container">
           <div className="home-stat">
-            <div className="home-stat-value">2,500+</div>
+            <div className="home-stat-value">{formatStat(stats?.activeListings)}</div>
             <div className="home-stat-label">Active Listings</div>
           </div>
           <div className="home-stat">
-            <div className="home-stat-value">10,000+</div>
+            <div className="home-stat-value">{formatStat(stats?.happyRenters)}</div>
             <div className="home-stat-label">Happy Renters</div>
           </div>
           <div className="home-stat">
-            <div className="home-stat-value">50+</div>
+            <div className="home-stat-value">{formatStat(stats?.citiesCovered)}</div>
             <div className="home-stat-label">Cities Covered</div>
           </div>
           <div className="home-stat">
-            <div className="home-stat-value">1,200+</div>
+            <div className="home-stat-value">{formatStat(stats?.equipmentOwners)}</div>
             <div className="home-stat-label">Equipment Owners</div>
           </div>
         </div>

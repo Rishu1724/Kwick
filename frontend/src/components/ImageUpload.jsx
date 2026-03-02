@@ -13,11 +13,15 @@ const ImageUpload = ({ onImageUpload, maxImages = 5, useFormData = false }) => {
     }
 
     if (useFormData) {
-      // If using form data, just store the files temporarily
-      const newImagePreviews = files.map(file => URL.createObjectURL(file));
-      const updatedImages = [...images, ...newImagePreviews];
+      // In FormData mode we do NOT upload here — we keep File objects and show previews.
+      const newItems = files.map((file) => ({
+        file,
+        previewUrl: URL.createObjectURL(file)
+      }));
+
+      const updatedImages = [...images, ...newItems];
       setImages(updatedImages);
-      onImageUpload(files); // Send the actual file objects
+      onImageUpload(updatedImages.map((i) => i.file));
       return;
     }
 
@@ -53,16 +57,20 @@ const ImageUpload = ({ onImageUpload, maxImages = 5, useFormData = false }) => {
   };
 
   const removeImage = (index) => {
+    const removed = images[index];
     const updatedImages = images.filter((_, i) => i !== index);
     setImages(updatedImages);
-    
+
     // Revoke object URLs to free memory
-    if (typeof images[index] === 'string' && images[index].startsWith('blob:')) {
-      URL.revokeObjectURL(images[index]);
+    if (useFormData && removed && typeof removed === 'object' && removed.previewUrl) {
+      URL.revokeObjectURL(removed.previewUrl);
     }
-    
-    // Call onImageUpload with updated images or files depending on mode
-    onImageUpload(updatedImages);
+    if (!useFormData && typeof removed === 'string' && removed.startsWith('blob:')) {
+      URL.revokeObjectURL(removed);
+    }
+
+    // Parent expects File[] in FormData mode, else string[] URLs
+    onImageUpload(useFormData ? updatedImages.map((i) => i.file) : updatedImages);
   };
 
   return (
@@ -70,7 +78,7 @@ const ImageUpload = ({ onImageUpload, maxImages = 5, useFormData = false }) => {
       <div className="image-preview">
         {images.map((image, index) => (
           <div key={index} className="image-container">
-            <img src={image} alt={`Preview ${index + 1}`} />
+            <img src={useFormData ? image.previewUrl : image} alt={`Preview ${index + 1}`} />
             <button 
               className="remove-image" 
               onClick={() => removeImage(index)}

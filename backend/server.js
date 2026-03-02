@@ -65,6 +65,7 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/equipment', require('./routes/equipmentRoutes'));
+app.use('/api/stats', require('./routes/statsRoutes'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/favorites', require('./routes/favoriteRoutes'));
 app.use('/api/chats', require('./routes/chatRoutes'));

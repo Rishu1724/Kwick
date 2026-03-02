@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const getRoleBadge = () => {
+    const role = user?.role;
+    if (!role) return null;
+    if (role === 'admin') return { label: 'Admin', className: 'admin' };
+    if (role === 'both') return { label: 'Owner • Renter', className: 'both' };
+    if (role === 'owner') return { label: 'Owner', className: 'owner' };
+    return { label: 'Renter', className: 'renter' };
+  };
 
   const handleLogout = () => {
     logout();
@@ -32,9 +41,9 @@ const Navbar = () => {
       </div>
 
       <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
-        <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-        <Link to="/equipment" onClick={() => setMenuOpen(false)}>Browse Equipment</Link>
-        <Link to="/equipment" onClick={() => setMenuOpen(false)}>Categories</Link>
+        <NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink>
+        <NavLink to="/equipment" onClick={() => setMenuOpen(false)}>Browse Equipment</NavLink>
+        <NavLink to="/equipment" onClick={() => setMenuOpen(false)}>Categories</NavLink>
       </div>
 
       <div className="nav-actions">
@@ -44,6 +53,14 @@ const Navbar = () => {
 
         {user ? (
           <>
+            {(() => {
+              const badge = getRoleBadge();
+              return badge ? (
+                <span className={`nav-role-badge ${badge.className}`.trim()} aria-label={`Logged in as ${badge.label}`}>
+                  {badge.label}
+                </span>
+              ) : null;
+            })()}
             {user.role === 'admin' ? (
               <Link className="nav-auth-btn" to="/admin" onClick={() => setMenuOpen(false)}>Admin</Link>
             ) : (

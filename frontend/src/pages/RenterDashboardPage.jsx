@@ -40,8 +40,8 @@ const RenterDashboardPage = () => {
       {/* Sidebar */}
       <aside className="rd-sidebar">
         <div className="rd-brand">
-          <span className="rd-brand-icon">🏸</span>
-          <span className="rd-brand-name">RentSport</span>
+          <span className="rd-brand-icon">K</span>
+          <span className="rd-brand-name">Kwick</span>
         </div>
 
         <div className="rd-user-card">

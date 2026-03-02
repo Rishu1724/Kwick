@@ -74,24 +74,58 @@ const SearchResults = () => {
     fetchSearchResults(params);
   };
 
-  if (loading) return <p>Searching...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) {
+    return (
+      <div className="loading">
+        <div className="spinner" />
+        <p>Searching...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="search-results equipment-list-page">
+        <div className="alert alert-danger">
+          <div className="alert-message">{error}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="search-results">
-      <h1>Search Results for "{searchTerm}"</h1>
-      
-      <AdvancedSearch onSearch={handleAdvancedSearch} />
-      
-      {equipment.length === 0 ? (
-        <p>No equipment found matching your search.</p>
-      ) : (
-        <div className="product-grid">
-          {equipment.map((item) => (
-            <EquipmentCard key={item._id} equipment={item} />
-          ))}
+    <div className="search-results equipment-list-page">
+      <div className="page-header">
+        <h1>Search Results</h1>
+        <p>{searchTerm ? `Results for "${searchTerm}"` : 'Browse all available equipment'}</p>
+      </div>
+
+      <div className="equipment-content">
+        <AdvancedSearch
+          variant="sidebar"
+          initialParams={searchParams}
+          onSearch={handleAdvancedSearch}
+        />
+
+        <div className="equipment-main">
+          <div className="equipment-controls">
+            <div className="results-info">Showing {equipment.length} results</div>
+          </div>
+
+          {equipment.length === 0 ? (
+            <div className="no-equipment">
+              <h3>No equipment found</h3>
+              <p>Try adjusting your filters or search criteria</p>
+            </div>
+          ) : (
+            <div className="equipment-grid">
+              {equipment.map((item) => (
+                <EquipmentCard key={item._id} equipment={item} />
+              ))}
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
