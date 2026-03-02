@@ -69,7 +69,7 @@ const ChatWindow = ({ productId, sellerId, onClose }) => {
   return (
     <div className="chat-window">
       <div className="chat-header">
-        <h3>Chat with Seller</h3>
+        <h3>Chat</h3>
         <button className="close-btn" onClick={onClose}>×</button>
       </div>
       

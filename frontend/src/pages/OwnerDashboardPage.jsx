@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Profile from "../components/Profile";
 import AddEquipmentForm from "../components/AddEquipmentForm";
@@ -14,6 +14,25 @@ const OwnerDashboardPage = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
   const [showAddForm, setShowAddForm] = useState(false);
+  const location = useLocation();
+
+  // Tab configuration (cleaner structure)
+  const tabs = [
+    { id: "overview", label: "Overview", icon: "📊" },
+    { id: "browse", label: "Browse", icon: "🏸" },
+    { id: "equipment", label: "My Equipment", icon: "📦" },
+    { id: "requests", label: "Bookings", icon: "📋" },
+    { id: "analytics", label: "Earnings", icon: "💰" },
+    { id: "messages", label: "Messages", icon: "💬" },
+  ];
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get('tab');
+    if (tab && tabs.some((t) => t.id === tab)) {
+      setActiveTab(tab);
+    }
+  }, [location.search]);
 
   // Protect Route
   if (!user) {
@@ -26,16 +45,6 @@ const OwnerDashboardPage = () => {
       setShowAddForm(false);
     }
   };
-
-  // Tab configuration (cleaner structure)
-  const tabs = [
-    { id: "overview", label: "Overview", icon: "📊" },
-    { id: "browse", label: "Browse", icon: "🏸" },
-    { id: "equipment", label: "My Equipment", icon: "📦" },
-    { id: "requests", label: "Bookings", icon: "📋" },
-    { id: "analytics", label: "Earnings", icon: "💰" },
-    { id: "messages", label: "Messages", icon: "💬" },
-  ];
 
   return (
     <div className="owner-dashboard">

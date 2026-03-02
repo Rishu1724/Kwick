@@ -7,6 +7,14 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const getMessagesLink = () => {
+    if (!user) return '/login';
+    if (user.role === 'admin') return '/admin';
+    if (user.role === 'owner') return '/owner/dashboard?tab=messages';
+    if (user.role === 'both') return '/owner/dashboard?tab=messages';
+    return '/renter/dashboard?tab=messages';
+  };
+
   const getRoleBadge = () => {
     const role = user?.role;
     if (!role) return null;
@@ -49,7 +57,7 @@ const Navbar = () => {
       <div className="nav-actions">
         <Link className="nav-icon-btn" to="/equipment" aria-label="Search" onClick={() => setMenuOpen(false)}>⌕</Link>
         <Link className="nav-icon-btn" to={user ? '/renter/dashboard' : '/login'} aria-label="Favorites" onClick={() => setMenuOpen(false)}>♡</Link>
-        <Link className="nav-icon-btn" to={user ? '/renter/dashboard' : '/login'} aria-label="Messages" onClick={() => setMenuOpen(false)}>💬</Link>
+        <Link className="nav-icon-btn" to={getMessagesLink()} aria-label="Messages" onClick={() => setMenuOpen(false)}>💬</Link>
 
         {user ? (
           <>

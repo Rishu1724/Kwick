@@ -168,6 +168,18 @@ const updateBooking = asyncHandler(async (req, res) => {
     return res.status(401).json({ message: 'Not authorized to update this booking' });
   }
 
+  const previousStatus = booking.status;
+  const nextStatus = req.body?.status;
+
+  // Status lifecycle is owner-controlled.
+  // Renters must not be able to self-confirm (or otherwise change status) via PUT.
+  if (nextStatus && req.user.role !== 'admin') {
+    const isOwner = booking.ownerId.toString() === req.user._id.toString();
+    if (!isOwner) {
+      return res.status(403).json({ message: 'Only the owner can update booking status' });
+    }
+  }
+
   const updatedBooking = await Booking.findByIdAndUpdate(
     req.params.id,
     req.body,
@@ -176,6 +188,18 @@ const updateBooking = asyncHandler(async (req, res) => {
       runValidators: true
     }
   );
+
+  // Keep equipment availability in sync when status changes.
+  if (nextStatus && nextStatus !== previousStatus) {
+    const makeAvailableStatuses = new Set(['cancelled', 'returned', 'completed']);
+    const makeRentedStatuses = new Set(['pending', 'confirmed', 'active']);
+
+    if (makeAvailableStatuses.has(nextStatus)) {
+      await Equipment.findByIdAndUpdate(updatedBooking.equipmentId, { status: 'available' });
+    } else if (makeRentedStatuses.has(nextStatus)) {
+      await Equipment.findByIdAndUpdate(updatedBooking.equipmentId, { status: 'rented' });
+    }
+  }
 
   res.status(200).json({
     success: true,

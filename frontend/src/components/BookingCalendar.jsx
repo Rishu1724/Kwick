@@ -9,6 +9,15 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate, variant 
   const [bookingType, setBookingType] = useState('daily');
   const [totalCost, setTotalCost] = useState(0);
   const [showPayment, setShowPayment] = useState(false);
+  const [deliveryOption, setDeliveryOption] = useState('self_pickup');
+  const [deliveryAddress, setDeliveryAddress] = useState({
+    street: '',
+    city: '',
+    state: '',
+    pincode: '',
+    coordinates: null,
+  });
+  const [locLoading, setLocLoading] = useState(false);
 
   const isCompact = useMemo(() => variant === 'compact', [variant]);
 
@@ -70,6 +79,35 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate, variant 
     setShowPayment(true);
   };
 
+  const captureLiveLocation = async () => {
+    if (!('geolocation' in navigator)) {
+      alert('Geolocation is not supported by this browser');
+      return;
+    }
+
+    try {
+      setLocLoading(true);
+      const position = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 0,
+        });
+      });
+
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+      setDeliveryAddress((prev) => ({
+        ...prev,
+        coordinates: { lat, lng },
+      }));
+    } catch (e) {
+      alert('Could not get your location. Please allow location access and try again.');
+    } finally {
+      setLocLoading(false);
+    }
+  };
+
   const confirmBooking = async () => {
     if (!user) {
       alert('Please login to complete booking');
@@ -79,13 +117,22 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate, variant 
     
     try {
       // Create booking
+      const coords = deliveryAddress.coordinates;
       const bookingData = {
         equipmentId,
         startDate,
         endDate,
         bookingType,
         totalAmount: totalCost,
-        securityDeposit: 0 // Will be calculated based on equipment
+        securityDeposit: 0, // Will be calculated based on equipment
+        deliveryOption,
+        deliveryAddress: {
+          street: deliveryAddress.street,
+          city: deliveryAddress.city,
+          state: deliveryAddress.state,
+          pincode: deliveryAddress.pincode,
+          coordinates: coords ? [coords.lng, coords.lat] : undefined,
+        },
       };
       
       const bookingResponse = await api.post('/api/bookings', bookingData);
@@ -101,17 +148,18 @@ const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate, variant 
       
       // For demo purposes, we'll simulate payment confirmation
       // In a real app, this would redirect to payment gateway
-      alert(`Booking confirmed! Total paid: ₹${totalCost.toFixed(2)}
+      alert(`Payment captured. Your booking request has been created and is waiting for owner confirmation.
 
-Your booking ID: ${bookingResponse.data.data._id}
-
-Payment ID: ${paymentResponse.data.data?.paymentId || 'N/A'}`);
+    Booking ID: ${bookingResponse.data.data._id}
+    Payment ID: ${paymentResponse.data.data?.paymentId || 'N/A'}`);
       
       // Reset form
       setStartDate('');
       setEndDate('');
       setTotalCost(0);
       setShowPayment(false);
+      setDeliveryOption('self_pickup');
+      setDeliveryAddress({ street: '', city: '', state: '', pincode: '', coordinates: null });
     } catch (error) {
       console.error('Booking error:', error);
       alert('Failed to create booking. Please try again.');
@@ -212,6 +260,90 @@ Payment ID: ${paymentResponse.data.data?.paymentId || 'N/A'}`);
                 />
                 <label htmlFor="cod">💵 Cash on Delivery</label>
               </div>
+            </div>
+
+            <div className="payment-extras">
+              <h4>Pickup / Delivery</h4>
+              <div className="payment-methods">
+                <div className="payment-method">
+                  <input
+                    type="radio"
+                    id="self_pickup"
+                    name="delivery"
+                    value="self_pickup"
+                    checked={deliveryOption === 'self_pickup'}
+                    onChange={() => setDeliveryOption('self_pickup')}
+                  />
+                  <label htmlFor="self_pickup">🚶 Self Pickup</label>
+                </div>
+                <div className="payment-method">
+                  <input
+                    type="radio"
+                    id="home_delivery"
+                    name="delivery"
+                    value="home_delivery"
+                    checked={deliveryOption === 'home_delivery'}
+                    onChange={() => setDeliveryOption('home_delivery')}
+                  />
+                  <label htmlFor="home_delivery">🚚 Home Delivery</label>
+                </div>
+              </div>
+
+              {deliveryOption === 'home_delivery' && (
+                <div className="delivery-form">
+                  <div className="form-group">
+                    <label>Street</label>
+                    <input
+                      type="text"
+                      value={deliveryAddress.street}
+                      onChange={(e) => setDeliveryAddress((p) => ({ ...p, street: e.target.value }))}
+                      placeholder="House no, street"
+                    />
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label>City</label>
+                      <input
+                        type="text"
+                        value={deliveryAddress.city}
+                        onChange={(e) => setDeliveryAddress((p) => ({ ...p, city: e.target.value }))}
+                        placeholder="City"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>State</label>
+                      <input
+                        type="text"
+                        value={deliveryAddress.state}
+                        onChange={(e) => setDeliveryAddress((p) => ({ ...p, state: e.target.value }))}
+                        placeholder="State"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Pincode</label>
+                      <input
+                        type="text"
+                        value={deliveryAddress.pincode}
+                        onChange={(e) => setDeliveryAddress((p) => ({ ...p, pincode: e.target.value }))}
+                        placeholder="Pincode"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="delivery-location">
+                    <button className="btn-secondary" type="button" onClick={captureLiveLocation} disabled={locLoading}>
+                      {locLoading ? 'Getting location…' : 'Use Live Location (GPS)'}
+                    </button>
+                    {deliveryAddress.coordinates ? (
+                      <span className="delivery-location-ok">
+                        ✓ GPS captured
+                      </span>
+                    ) : (
+                      <span className="delivery-location-hint">Optional</span>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
             
             <div className="payment-actions">

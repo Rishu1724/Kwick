@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Profile from "../components/Profile";
 import Wishlist from "../components/Wishlist";
@@ -19,6 +19,14 @@ const TABS = [
 const RenterDashboardPage = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("bookings");
+  const location = useLocation();
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get('tab');
+    if (tab && TABS.some((t) => t.id === tab)) {
+      setActiveTab(tab);
+    }
+  }, [location.search]);
 
   if (!user) return <Navigate to="/login" />;
 

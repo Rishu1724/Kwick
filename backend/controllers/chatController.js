@@ -75,12 +75,7 @@ const getConversations = asyncHandler(async (req, res) => {
     if (!conversations[conversationKey]) {
       conversations[conversationKey] = {
         conversationId: conversationKey,
-        participants: [
-          message.senderId._id.toString() === req.user._id.toString() 
-            ? message.receiverId 
-            : message.senderId,
-          req.user
-        ],
+        participants: [message.senderId, message.receiverId],
         product: message.productId,
         lastMessage: message,
         unreadCount: message.receiverId._id.toString() === req.user._id.toString() && !message.isRead ? 1 : 0

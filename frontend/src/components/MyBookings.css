@@ -3,7 +3,7 @@
   width: 100%;
 }
 
-.bookings-filter {
+.my-bookings .bookings-filter {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -12,8 +12,10 @@
   border-bottom: 1px solid #eee;
 }
 
-.bookings-filter button {
+.my-bookings .bookings-filter button {
   flex: 0 0 auto;
+  width: auto;
+  white-space: nowrap;
   padding: 8px 14px;
   border: 1px solid #eee;
   background-color: #fff;
@@ -24,24 +26,24 @@
   color: #444;
 }
 
-.bookings-filter button:hover {
+.my-bookings .bookings-filter button:hover {
   border-color: rgba(255, 107, 0, 0.35);
   background-color: rgba(255, 107, 0, 0.06);
 }
 
-.bookings-filter button.active {
+.my-bookings .bookings-filter button.active {
   background-color: #ff6b00;
   color: #fff;
   border-color: #ff6b00;
 }
 
-.bookings-list {
+.my-bookings .bookings-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.booking-card {
+.my-bookings .booking-card {
   border: 1px solid #eee;
   border-radius: 14px;
   padding: 16px;
@@ -49,7 +51,7 @@
   box-shadow: 0 1px 6px rgba(0,0,0,0.06);
 }
 
-.booking-header {
+.my-bookings .booking-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -58,13 +60,13 @@
   border-bottom: 1px solid #eee;
 }
 
-.booking-header h3 {
+.my-bookings .booking-header h3 {
   margin: 0;
   color: #111;
   font-size: 18px;
 }
 
-.booking-status {
+.my-bookings .booking-status {
   padding: 4px 8px;
   border-radius: 4px;
   color: white;
@@ -73,37 +75,39 @@
   text-transform: uppercase;
 }
 
-.booking-details {
+.my-bookings .booking-details {
   margin-bottom: 15px;
 }
 
-.booking-details p {
+.my-bookings .booking-details p {
   margin: 5px 0;
   color: #555;
 }
 
-.booking-details strong {
+.my-bookings .booking-details strong {
   color: #333;
 }
 
-.booking-actions {
+.my-bookings .booking-actions {
   display: flex;
   gap: 10px;
   justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .my-bookings .btn-primary {
-  background-color: #ff6b00;
+  background: #ff6b00;
   color: #fff;
   border: none;
   padding: 8px 16px;
   border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
+  box-shadow: none;
 }
 
 .my-bookings .btn-primary:hover {
-  background-color: #ff7d1f;
+  background: #ff7d1f;
 }
 
 .my-bookings .btn-secondary {
@@ -134,19 +138,19 @@
     padding: 15px;
   }
   
-  .bookings-filter {
+  .my-bookings .bookings-filter {
     flex-wrap: nowrap;
     overflow-x: auto;
     padding-bottom: 10px;
   }
   
-  .booking-header {
+  .my-bookings .booking-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
   
-  .booking-actions {
+  .my-bookings .booking-actions {
     flex-direction: column;
   }
   

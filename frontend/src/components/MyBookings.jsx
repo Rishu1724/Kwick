@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import ChatWindow from './Chat/ChatWindow';
 import './MyBookings.css';
 
 const MyBookings = () => {
@@ -7,6 +8,7 @@ const MyBookings = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filter, setFilter] = useState('all');
+  const [activeChat, setActiveChat] = useState(null);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -22,6 +24,27 @@ const MyBookings = () => {
 
     fetchBookings();
   }, []);
+
+  const refreshBookings = async () => {
+    try {
+      const response = await api.get('/api/bookings', { params: { role: 'renter' } });
+      setBookings(response.data.data || []);
+    } catch (err) {
+      setError('Failed to fetch bookings');
+    }
+  };
+
+  const handleCancelBooking = async (bookingId) => {
+    const ok = window.confirm('Cancel this booking?');
+    if (!ok) return;
+
+    try {
+      await api.post(`/api/bookings/${bookingId}/cancel`, { reason: 'Cancelled by renter' });
+      await refreshBookings();
+    } catch (err) {
+      setError('Failed to cancel booking');
+    }
+  };
 
   const filteredBookings = bookings.filter(booking => {
     if (filter === 'all') return true;
@@ -101,20 +124,39 @@ const MyBookings = () => {
               </div>
               <div className="booking-details">
                 <p><strong>Dates:</strong> {new Date(booking.startDate).toLocaleDateString()} - {new Date(booking.endDate).toLocaleDateString()}</p>
-                <p><strong>Total:</strong> ${booking.totalAmount}</p>
+                <p><strong>Total:</strong> ₹{booking.totalAmount}</p>
                 <p><strong>Owner:</strong> {booking.ownerId?.name}</p>
               </div>
               <div className="booking-actions">
                 {booking.status === 'pending' && (
-                  <button className="btn-secondary">Cancel Booking</button>
+                  <button className="btn-secondary" onClick={() => handleCancelBooking(booking._id)}>
+                    Cancel Booking
+                  </button>
                 )}
                 {booking.status === 'confirmed' && (
-                  <button className="btn-primary">Contact Owner</button>
+                  <button
+                    className="btn-primary"
+                    onClick={() => setActiveChat({
+                      productId: booking.equipmentId?._id,
+                      sellerId: booking.ownerId?._id,
+                    })}
+                    disabled={!booking.equipmentId?._id || !booking.ownerId?._id}
+                  >
+                    Contact Owner
+                  </button>
                 )}
               </div>
             </div>
           ))}
         </div>
+      )}
+
+      {activeChat?.productId && activeChat?.sellerId && (
+        <ChatWindow
+          productId={activeChat.productId}
+          sellerId={activeChat.sellerId}
+          onClose={() => setActiveChat(null)}
+        />
       )}
     </div>
   );

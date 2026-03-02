@@ -27,18 +27,20 @@ const createPaymentIntent = asyncHandler(async (req, res) => {
   // In a real implementation, you would integrate with Stripe/PayPal/Razorpay here
   // For now, we'll simulate creating a payment record
   
+  // Demo flow: treat intent creation as immediate payment success.
   const payment = await Payment.create({
     bookingId,
     userId: req.user._id,
     amount,
     currency,
     paymentMethod,
-    status: 'pending',
+    status: 'completed',
     netAmount: amount // Simplified for now
   });
 
-  // Update booking status to confirmed
-  await Booking.findByIdAndUpdate(bookingId, { status: 'confirmed' });
+  // IMPORTANT: booking confirmation is owner-controlled.
+  // Only mark payment as paid here; keep booking status as 'pending' until owner confirms.
+  await Booking.findByIdAndUpdate(bookingId, { paymentStatus: 'paid' });
 
   res.status(201).json({
     success: true,
@@ -80,11 +82,10 @@ const confirmPayment = asyncHandler(async (req, res) => {
     }
   );
 
-  // Update booking status to active
-  await Booking.findByIdAndUpdate(payment.bookingId, { 
-    status: 'active',
-    paymentStatus: 'paid'
-  });
+  // IMPORTANT: booking confirmation is owner-controlled.
+  // Confirming payment should not confirm/activate the booking.
+  // Keep booking status as-is; only mark paymentStatus as paid.
+  await Booking.findByIdAndUpdate(payment.bookingId, { paymentStatus: 'paid' });
 
   res.status(200).json({
     success: true,
