@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
-const FavoriteToggle = ({ productId, isFavorited, onToggle }) => {
+const FavoriteToggle = ({ productId, isFavorited, onToggle, variant = 'star' }) => {
   const [favorited, setFavorited] = useState(isFavorited);
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
@@ -32,13 +32,20 @@ const FavoriteToggle = ({ productId, isFavorited, onToggle }) => {
     setLoading(false);
   };
 
+  const onClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleToggle();
+  };
+
   return (
     <button 
       className={`favorite-toggle ${favorited ? 'favorited' : ''}`}
-      onClick={handleToggle}
+      onClick={onClick}
       disabled={loading}
+      aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
     >
-      {favorited ? '★' : '☆'}
+      {variant === 'heart' ? (favorited ? '♥' : '♡') : (favorited ? '★' : '☆')}
     </button>
   );
 };

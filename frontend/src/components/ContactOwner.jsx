@@ -45,7 +45,7 @@ const ContactOwner = ({ ownerId, equipmentId }) => {
 
     try {
       // Send message to the backend
-      await api.post('/api/chats', { receiverId: ownerId, equipmentId, message });
+      await api.post('/api/chats', { receiverId: ownerId, productId: equipmentId, message });
       
       setSuccess(true);
       setMessage('');

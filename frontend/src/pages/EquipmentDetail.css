@@ -1,77 +1,287 @@
 .equipment-detail-page {
-  padding: 20px;
-  background: #f5f5f5;
+  padding: 24px 16px;
+  background: #f3f4f6;
   min-height: 100vh;
 }
 
 .detail-container {
-  display: flex;
-  gap: 25px;
   max-width: 1200px;
   margin: auto;
 }
 
-.left-section {
-  flex: 2;
+.detail-top {
+  margin-bottom: 12px;
 }
 
-.right-section {
-  flex: 1;
+.detail-back {
+  display: inline-block;
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 700;
 }
 
-.equipment-gallery {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+.detail-back:hover {
+  color: #111;
 }
 
-.equipment-image {
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.detail-left {
+  min-width: 0;
+}
+
+.detail-image-wrap {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.detail-image-wrap img {
   width: 100%;
-  border-radius: 8px;
-  margin-bottom: 10px;
+  height: 420px;
   object-fit: cover;
+  display: block;
 }
 
-.description-card,
-.info-card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+.detail-info-card {
+  margin-top: 14px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 16px;
 }
 
-.pricing-box {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 0;
+.detail-info-card h2 {
+  font-size: 1.1rem;
+  font-weight: 900;
+  margin-bottom: 8px;
 }
 
-.price {
-  font-size: 20px;
-  font-weight: bold;
-  color: #4CAF50;
+.detail-desc {
+  color: #4b5563;
+  margin-bottom: 14px;
 }
 
-.specs p {
-  margin: 6px 0;
+.detail-spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
-.booking-card {
-  margin-top: 20px;
+.detail-spec {
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  background: #fff;
 }
 
-.action-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-  flex-wrap: wrap;
+.detail-spec-label {
+  color: #6b7280;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.detail-spec-value {
+  font-weight: 900;
+  color: #111;
+}
+
+.detail-availability {
+  font-weight: 900;
+}
+
+.detail-availability.ok {
+  color: #16a34a;
+}
+
+.detail-availability.no {
+  color: #dc2626;
 }
 
 .review-section {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
+  margin-top: 14px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.detail-right {
+  position: sticky;
+  top: 88px;
+}
+
+.booking-panel {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.detail-title {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.detail-subrow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  color: #6b7280;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.detail-rating {
+  color: #111;
+}
+
+.detail-dot {
+  color: #cbd5e1;
+}
+
+.booking-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin-top: 12px;
+}
+
+.booking-price {
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #ff6b00;
+}
+
+.booking-price span {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 800;
+  margin-left: 2px;
+}
+
+.booking-week {
+  color: #111;
+  background: #f3f4f6;
+  border: 1px solid #eee;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.booking-calendar-wrap {
+  margin-top: 12px;
+}
+
+.booking-panel .booking-calendar {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.booking-panel .date-selection {
+  margin: 0.75rem 0 0.9rem;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.detail-actions .btn-contact {
+  flex: 1;
+  background: #f3f4f6;
+  color: #111;
+  border: 1px solid #eee;
+}
+
+.detail-actions .btn-contact:hover {
+  background: #eaecef;
+}
+
+.detail-actions .favorite-toggle {
+  position: static;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  background: #fff;
+}
+
+.detail-guarantee {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+  border-radius: 12px;
+  color: #6b7280;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.detail-guarantee-icon {
+  color: #16a34a;
+}
+
+.detail-owner-card {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.detail-owner-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 107, 0, 0.12);
+  color: #ff6b00;
+  font-weight: 900;
+}
+
+.detail-owner-name {
+  font-weight: 900;
+  color: #111;
+}
+
+.detail-owner-role {
+  color: #6b7280;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.detail-bottom-row {
+  margin-top: 12px;
+}
+
+.share-box {
+  margin-top: 12px;
 }
 
 .status-message {
@@ -87,16 +297,15 @@
 /* ================= MOBILE RESPONSIVE ================= */
 
 @media (max-width: 768px) {
-  .detail-container {
-    flex-direction: column;
+  .detail-grid {
+    grid-template-columns: 1fr;
   }
 
-  .pricing-box {
-    flex-direction: column;
-    gap: 10px;
+  .detail-right {
+    position: static;
   }
 
-  .action-buttons {
-    flex-direction: column;
+  .detail-image-wrap img {
+    height: 320px;
   }
 }

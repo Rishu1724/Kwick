@@ -7,14 +7,15 @@
 
 .equipment-card-enhanced {
   background-color: white;
-  border-radius: 8px;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
+  border: 1px solid #eee;
 }
 
 .equipment-card-enhanced:hover {
@@ -36,17 +37,45 @@
   display: block;
 }
 
-.rental-badge {
+
+.featured-pill {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff6b00;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  z-index: 2;
+}
+
+.favorite-toggle {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #4CAF50;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: bold;
   z-index: 2;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.85);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.favorite-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.favorite-toggle.favorited {
+  color: #ff2b2b;
 }
 
 .equipment-info-enhanced {
@@ -72,73 +101,55 @@
   color: #4CAF50;
 }
 
-.sport-category {
-  color: #666;
-  font-size: 14px;
-  margin: 0 0 10px 0;
-  font-style: italic;
-}
 
-.pricing-info {
-  display: flex;
-  gap: 15px;
-  margin: 10px 0;
-}
-
-.rate {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.amount {
-  font-weight: bold;
-  color: #4CAF50;
-  font-size: 18px;
-}
-
-.period {
-  font-size: 12px;
-  color: #666;
-}
-
-.location-enhanced {
+.equipment-subrow {
   display: flex;
   align-items: center;
-  gap: 5px;
-  color: #666;
-  font-size: 14px;
-  margin: 8px 0;
+  gap: 0.5rem;
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+
+.equipment-rating {
+  color: #111;
+  font-weight: 800;
+}
+
+.equipment-dot {
+  color: #cbd5e1;
+}
+
+.equipment-location {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.location-icon {
-  font-size: 16px;
-}
-
-.equipment-meta {
+.equipment-price-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   margin-top: auto;
-  padding-top: 10px;
-  border-top: 1px solid #f0f0f0;
 }
 
-.condition-badge {
-  background-color: #2196F3;
-  color: white;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
+.equipment-price {
+  color: #ff6b00;
+  font-weight: 900;
+  font-size: 1.15rem;
 }
 
-.rating {
-  color: #FF9800;
-  font-weight: bold;
-  font-size: 14px;
+.equipment-price-unit {
+  color: #6b7280;
+  font-weight: 700;
+  margin-left: 2px;
+  font-size: 0.9rem;
+}
+
+.equipment-price-secondary {
+  color: #6b7280;
+  font-weight: 700;
+  font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
@@ -148,13 +159,5 @@
   
   .equipment-image-container-enhanced {
     height: 180px;
-  }
-  
-  .pricing-info {
-    gap: 10px;
-  }
-  
-  .amount {
-    font-size: 16px;
   }
 }

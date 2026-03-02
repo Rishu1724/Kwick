@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 
-const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate }) => {
+const BookingCalendar = ({ equipmentId, ownerId, hourlyRate, dailyRate, variant = 'default' }) => {
   const { user } = useAuth();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [bookingType, setBookingType] = useState('daily');
   const [totalCost, setTotalCost] = useState(0);
   const [showPayment, setShowPayment] = useState(false);
+
+  const isCompact = useMemo(() => variant === 'compact', [variant]);
 
   const calculateCost = () => {
     if (!startDate || !endDate) return 0;
@@ -118,17 +120,19 @@ Payment ID: ${paymentResponse.data.data?.paymentId || 'N/A'}`);
 
   return (
     <div className="booking-calendar">
-      <h3>Booking Information</h3>
+      {isCompact ? null : <h3>Booking Information</h3>}
       
       <div className="booking-form">
-        <div className="form-group">
-          <label>Booking Type:</label>
-          <select value={bookingType} onChange={handleBookingTypeChange}>
-            <option value="hourly">Hourly (₹{hourlyRate}/hr)</option>
-            <option value="daily">Daily (₹{dailyRate}/day)</option>
-            <option value="weekly">Weekly (₹{dailyRate * 6}/week)</option>
-          </select>
-        </div>
+        {isCompact ? null : (
+          <div className="form-group">
+            <label>Booking Type:</label>
+            <select value={bookingType} onChange={handleBookingTypeChange}>
+              <option value="hourly">Hourly (₹{hourlyRate}/hr)</option>
+              <option value="daily">Daily (₹{dailyRate}/day)</option>
+              <option value="weekly">Weekly (₹{dailyRate * 6}/week)</option>
+            </select>
+          </div>
+        )}
         
         <div className="date-selection">
           <div className="form-group">

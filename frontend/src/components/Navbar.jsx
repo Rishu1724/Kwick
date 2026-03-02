@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import SearchBar from './SearchBar';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -19,37 +18,56 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="nav-brand">
-        <Link to="/">SportRent</Link>
+      <div className="nav-left">
+        <div className="nav-brand">
+          <Link to="/" className="nav-brand-link" onClick={() => setMenuOpen(false)}>
+            <span className="nav-brand-mark">K</span>
+            <span className="nav-brand-name">Kwick</span>
+          </Link>
+        </div>
+
+        <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
+          ☰
+        </button>
       </div>
-      
-      <button className="menu-toggle" onClick={toggleMenu}>
-        ☰
-      </button>
-      
-      <SearchBar />
-      
+
       <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
         <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+        <Link to="/equipment" onClick={() => setMenuOpen(false)}>Browse Equipment</Link>
+        <Link to="/equipment" onClick={() => setMenuOpen(false)}>Categories</Link>
+      </div>
+
+      <div className="nav-actions">
+        <Link className="nav-icon-btn" to="/equipment" aria-label="Search" onClick={() => setMenuOpen(false)}>⌕</Link>
+        <Link className="nav-icon-btn" to={user ? '/renter/dashboard' : '/login'} aria-label="Favorites" onClick={() => setMenuOpen(false)}>♡</Link>
+        <Link className="nav-icon-btn" to={user ? '/renter/dashboard' : '/login'} aria-label="Messages" onClick={() => setMenuOpen(false)}>💬</Link>
+
         {user ? (
           <>
-            {user.role === 'owner' || user.role === 'both' ? (
-              <Link to="/owner/dashboard" onClick={() => setMenuOpen(false)}>Owner Dashboard</Link>
+            {user.role === 'admin' ? (
+              <Link className="nav-auth-btn" to="/admin" onClick={() => setMenuOpen(false)}>Admin</Link>
             ) : (
-              <Link to="/renter/dashboard" onClick={() => setMenuOpen(false)}>Renter Dashboard</Link>
+              <Link
+                className="nav-auth-btn"
+                to={user.role === 'owner' || user.role === 'both' ? '/owner/dashboard' : '/renter/dashboard'}
+                onClick={() => setMenuOpen(false)}
+              >
+                Account
+              </Link>
             )}
-            {/* Admin link - in a real app, you would check for admin role */}
-            {user.role === 'admin' && (
-              <Link to="/admin" onClick={() => setMenuOpen(false)}>Admin</Link>
-            )}
-            <button onClick={() => { handleLogout(); setMenuOpen(false); }}>Logout</button>
+            <button className="nav-auth-btn" onClick={() => { handleLogout(); setMenuOpen(false); }}>Logout</button>
           </>
         ) : (
-          <>
-            <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
-            <Link to="/register" onClick={() => setMenuOpen(false)}>Register</Link>
-          </>
+          <Link className="nav-auth-btn" to="/login" onClick={() => setMenuOpen(false)}>Sign In</Link>
         )}
+
+        <Link
+          className="nav-cta"
+          to={user && (user.role === 'owner' || user.role === 'both') ? '/owner/dashboard' : '/register'}
+          onClick={() => setMenuOpen(false)}
+        >
+          List Equipment
+        </Link>
       </div>
     </nav>
   );

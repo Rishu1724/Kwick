@@ -1,78 +1,122 @@
-import React from "react";
-import Categories from "../components/Categories";
-import FeaturedEquipment from "../components/FeaturedEquipment";
-import RecentEquipment from "../components/RecentEquipment";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Categories from '../components/Categories';
+import FeaturedEquipment from '../components/FeaturedEquipment';
 
 const Home = () => {
+  const [q, setQ] = useState('');
+  const navigate = useNavigate();
+
+  const onHeroSearch = (e) => {
+    e.preventDefault();
+    if (!q.trim()) return;
+    navigate(`/search?q=${encodeURIComponent(q.trim())}`);
+  };
+
   return (
-    <div className="w-full min-h-screen bg-gray-50">
-      {/* Hero Section with Cricket & Badminton Background */}
-      <section
-        className="relative text-white py-24 px-6 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1593341646782-e0b495cff86d?auto=format&fit=crop&w=1600&q=80')",
-        }}
-      >
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+    <div className="home-page">
+      <section className="home-hero">
+        <div className="home-hero-overlay" />
+        <div className="home-hero-container">
+          <div className="home-hero-content">
+            <h1 className="home-hero-title">
+              Rent Premium
+              <span className="home-hero-accent"> Sports Gear</span>
+              <br />
+              Near You
+            </h1>
+            <p className="home-hero-subtitle">
+              Access top-quality equipment for any sport without the commitment of buying. From cricket bats to mountain bikes —
+              rent it all on Kwick.
+            </p>
 
-        <div className="relative max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Rent Cricket & Badminton Gear Near You
-          </h1>
-          <p className="text-lg md:text-xl mb-8 text-gray-200">
-            Cricket bats, badminton rackets, kits and more — affordable rentals from trusted local owners.
-          </p>
+            <form className="home-hero-search" onSubmit={onHeroSearch}>
+              <div className="home-hero-search-icon">⌕</div>
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                type="text"
+                placeholder="Search for equipment..."
+                aria-label="Search for equipment"
+              />
+              <button type="submit">Search</button>
+            </form>
 
-          {/* Search Bar */}
-          <div className="flex flex-col md:flex-row justify-center bg-white rounded-lg overflow-hidden max-w-2xl mx-auto mb-6">
-            <input
-              type="text"
-              placeholder="Search cricket bat, badminton racket..."
-              className="flex-1 px-4 py-3 text-gray-700 outline-none"
-            />
-            <button className="bg-green-600 text-white px-8 py-3">
-              Search
-            </button>
-          </div>
-
-          <div className="flex flex-col md:flex-row justify-center gap-4">
-            <button className="bg-green-600 px-8 py-3 rounded-lg font-semibold">
-              Browse Equipment
-            </button>
-            <button className="bg-white text-green-700 px-8 py-3 rounded-lg font-semibold">
-              Become an Owner
-            </button>
+            <div className="home-hero-popular">
+              <span className="home-hero-popular-label">Popular:</span>
+              <button type="button" className="home-chip" onClick={() => navigate('/search?q=Badminton')}>Badminton</button>
+              <button type="button" className="home-chip" onClick={() => navigate('/search?q=Cricket')}>Cricket</button>
+              <button type="button" className="home-chip" onClick={() => navigate('/search?q=Cycling')}>Cycling</button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="py-12 px-6 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6 text-center">
-          Browse by Category
-        </h2>
+      <section className="home-stats">
+        <div className="home-stats-container">
+          <div className="home-stat">
+            <div className="home-stat-value">2,500+</div>
+            <div className="home-stat-label">Active Listings</div>
+          </div>
+          <div className="home-stat">
+            <div className="home-stat-value">10,000+</div>
+            <div className="home-stat-label">Happy Renters</div>
+          </div>
+          <div className="home-stat">
+            <div className="home-stat-value">50+</div>
+            <div className="home-stat-label">Cities Covered</div>
+          </div>
+          <div className="home-stat">
+            <div className="home-stat-value">1,200+</div>
+            <div className="home-stat-label">Equipment Owners</div>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-section">
         <Categories />
       </section>
 
-      {/* Featured Equipment */}
-      <section className="py-12 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6 text-center">
-            Featured Equipment
-          </h2>
-          <FeaturedEquipment />
+      <section className="home-section home-section-muted">
+        <FeaturedEquipment />
+      </section>
+
+      <section className="home-section">
+        <div className="home-section-container">
+          <div className="home-section-header center">
+            <h2>How Kwick Works</h2>
+            <p>Three simple steps to get playing</p>
+          </div>
+
+          <div className="home-steps">
+            <div className="home-step">
+              <div className="home-step-icon">⌕</div>
+              <h3>Find Your Gear</h3>
+              <p>Browse thousands of listings or search for the exact equipment you need.</p>
+            </div>
+            <div className="home-step">
+              <div className="home-step-icon">⏱</div>
+              <h3>Book &amp; Pay</h3>
+              <p>Select your rental dates, chat with the owner, and confirm your booking securely.</p>
+            </div>
+            <div className="home-step">
+              <div className="home-step-icon">★</div>
+              <h3>Play &amp; Return</h3>
+              <p>Pick up or get it delivered, enjoy your sport, and return when you’re done.</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Recent Equipment */}
-      <section className="py-12 px-6 bg-gray-100">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6 text-center">
-            Recently Added
-          </h2>
-          <RecentEquipment />
+      <section className="home-cta">
+        <div className="home-cta-container">
+          <div className="home-cta-shield">🛡</div>
+          <h2>Rent with Confidence</h2>
+          <p>Every booking is protected. Verified owners, secure payments, and quality-checked equipment.</p>
+          <div className="home-cta-actions">
+            <button className="btn-primary" onClick={() => navigate('/equipment')}>Start Browsing</button>
+            <button className="btn-secondary" onClick={() => navigate('/register')}>List Your Equipment</button>
+          </div>
         </div>
       </section>
     </div>

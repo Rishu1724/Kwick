@@ -11,7 +11,7 @@ const Wishlist = () => {
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
-        const response = await api.get('/api/wishlist');
+        const response = await api.get('/api/favorites');
         setWishlistItems(response.data);
         setLoading(false);
       } catch (err) {
@@ -25,8 +25,8 @@ const Wishlist = () => {
 
   const removeFromWishlist = async (equipmentId) => {
     try {
-      await api.delete(`/api/wishlist/${equipmentId}`);
-      setWishlistItems(wishlistItems.filter(item => item.equipmentId._id !== equipmentId));
+      await api.delete(`/api/favorites/${equipmentId}`);
+      setWishlistItems(wishlistItems.filter(item => item.productId._id !== equipmentId));
     } catch (err) {
       setError('Failed to remove from wishlist');
     }
@@ -43,11 +43,11 @@ const Wishlist = () => {
       ) : (
         <div className="equipment-grid">
           {wishlistItems.map((item) => (
-            <div key={item.equipmentId._id} className="wishlist-item">
-              <EquipmentCard equipment={item.equipmentId} />
+            <div key={item.productId._id} className="wishlist-item">
+              <EquipmentCard equipment={item.productId} />
               <button 
                 className="remove-wishlist" 
-                onClick={() => removeFromWishlist(item.equipmentId._id)}
+                onClick={() => removeFromWishlist(item.productId._id)}
               >
                 Remove from Wishlist
               </button>
