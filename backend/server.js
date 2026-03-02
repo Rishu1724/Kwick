@@ -46,6 +46,12 @@ app.use(cors({
     if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
       return callback(null, true);
     }
+
+    // Allow Vercel preview + production domains (React SPA deployed on Vercel)
+    // Example: https://your-app-name.vercel.app or https://your-app-name-git-branch-xxx.vercel.app
+    if (origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
     
     // Check if the origin is in our allowed list
     const isValidOrigin = allowedOrigins.includes(origin);
