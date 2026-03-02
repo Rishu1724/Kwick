@@ -222,11 +222,17 @@ main {
 /* Mobile menu toggle */
 .menu-toggle {
   display: none;
-  background: none;
-  border: none;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #eee;
   color: #111;
   font-size: 1.5rem;
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
@@ -238,8 +244,9 @@ main {
 
   .nav-left {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex: 0 0 auto;
+    padding-right: 56px;
   }
   
   .nav-brand a {
@@ -247,8 +254,11 @@ main {
   }
   
   .menu-toggle {
-    display: block;
-    margin-left: auto;
+    display: inline-flex;
+    position: absolute;
+    top: 0.85rem;
+    right: 1rem;
+    z-index: 110;
   }
   
   .nav-links {
