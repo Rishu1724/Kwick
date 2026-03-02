@@ -2,6 +2,33 @@ import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
+const IconSearch = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" {...props}>
+    <circle cx="11" cy="11" r="7" />
+    <path d="M21 21l-4.3-4.3" />
+  </svg>
+);
+
+const IconHeart = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" {...props}>
+    <path d="M20.8 4.6c-1.6-1.6-4.3-1.6-5.9 0L12 7.5 9.1 4.6c-1.6-1.6-4.3-1.6-5.9 0s-1.6 4.3 0 5.9L12 19.3l8.8-8.8c1.6-1.6 1.6-4.3 0-5.9z" />
+  </svg>
+);
+
+const IconChat = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" {...props}>
+    <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+  </svg>
+);
+
+const IconMenu = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" {...props}>
+    <path d="M4 6h16" />
+    <path d="M4 12h16" />
+    <path d="M4 18h16" />
+  </svg>
+);
+
 const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -44,7 +71,7 @@ const Navbar = () => {
         </div>
 
         <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
-          ☰
+          <IconMenu className="nav-icon" />
         </button>
       </div>
 
@@ -55,9 +82,15 @@ const Navbar = () => {
       </div>
 
       <div className="nav-actions">
-        <Link className="nav-icon-btn" to="/equipment" aria-label="Search" onClick={() => setMenuOpen(false)}>⌕</Link>
-        <Link className="nav-icon-btn" to={user ? '/renter/dashboard' : '/login'} aria-label="Favorites" onClick={() => setMenuOpen(false)}>♡</Link>
-        <Link className="nav-icon-btn" to={getMessagesLink()} aria-label="Messages" onClick={() => setMenuOpen(false)}>💬</Link>
+        <Link className="nav-icon-btn" to="/equipment" aria-label="Search" onClick={() => setMenuOpen(false)}>
+          <IconSearch className="nav-icon" />
+        </Link>
+        <Link className="nav-icon-btn" to={user ? '/renter/dashboard' : '/login'} aria-label="Favorites" onClick={() => setMenuOpen(false)}>
+          <IconHeart className="nav-icon" />
+        </Link>
+        <Link className="nav-icon-btn" to={getMessagesLink()} aria-label="Messages" onClick={() => setMenuOpen(false)}>
+          <IconChat className="nav-icon" />
+        </Link>
 
         {user ? (
           <>

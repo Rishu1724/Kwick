@@ -2,3 +2,8 @@ node_modules
 
 # Frontend build output
 frontend/dist
+
+# Environment files (secrets)
+.env
+backend/.env
+frontend/.env
